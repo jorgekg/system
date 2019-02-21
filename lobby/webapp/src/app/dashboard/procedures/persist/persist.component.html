@@ -1,0 +1,97 @@
+<div id="page-top" class="sidebar-toggled">
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'procedures' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h4 class="h5 mb-0 text-gray-800">{{'bradcrumb' | translate}}</h4>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <form [formGroup]="form" (submit)="save()">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <label>{{'procedures.name' | translate}}</label>
+                      <input type="name" id="name" formControlName="name" class="form-control form-control-user" 
+                        placeholder="{{'procedures.name.input' | translate}}"  maxlength="255" minlength="4"
+                        appRequired [isValidate]="isSubmit" [formControl]="form.get('name')" [place]="'left'">
+                    </div>
+                    <div class="col-sm-4">
+                      <label>{{'procedures.price' | translate}}</label>
+                      <input type="price" id="price" formControlName="price" class="form-control form-control-user"
+                        placeholder="{{'procedures.price.input' | translate}}"  maxlength="255" minlength="0" currencyMask
+                        appRequired [isValidate]="isSubmit" [formControl]="form.get('price')" [place]="'left'" 
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                    </div>
+                    <div class="col-md-12">
+                      <br>
+                      <label>{{'procedures.time' | translate}}</label>
+                      <input type="text" id="time" formControlName="time" class="form-control form-control-user"
+                        placeholder="{{'procedures.time.input' | translate}}"  maxlength="255" minlength="0" 
+                        appRequired [isValidate]="isSubmit" [formControl]="form.get('time')" [place]="'left'" 
+                        mask="sh:sh">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <br>
+                      <label>{{'procedures.detail' | translate}}</label>
+                      <textarea type="detail" id="detail" formControlName="detail" class="form-control form-control-user" 
+                        placeholder="{{'procedures.detail.input' | translate}}">
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class=row>
+                  <div class="col-sm-2 offset-sm-7">
+                    <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/procedures']">
+                      {{(isNew() ? 'cancel' : 'close') | translate}}
+                    </button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button #button type="submit" class="btn btn-primary btn-user btn-block">
+                      {{(isNew() ? 'add' : 'update') | translate}}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card shadow mb-4" *ngIf="!isNew()">
+            <div class="card-header">
+              {{'procedures.requirement' | translate}}
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>{{'procedures.requirement.select' | translate}}</label>
+                  <br>
+                  <p-autoComplete [(ngModel)]="requirement" [suggestions]="requirementList" [(ngModel)]="requirement"
+                    (completeMethod)="onSearch($event)" [forceSelection]="true" field="name"
+                    [immutable]=false [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                    (onSelect)="onSelect($event)" [placeholder]="'procedure.requirement.search' | translate"></p-autoComplete>
+                </div>
+              </div>
+              <br>
+              <app-table [columns]="columns" [template]="template" [data]="procedureRequirementList"
+                [headerHide]=true (delete)="onDelete($event)">
+                <ng-template #columns>
+                  <th>{{'procedures.requirement' | translate}}</th>
+                  <th>{{'procedures.vinculated' | translate}}</th>
+                </ng-template>
+                <ng-template #template let-requirement>
+                  <td>{{requirement.name}}</td>
+                  <td>{{requirement.update_at}}</td>
+                </ng-template>
+              </app-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

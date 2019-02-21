@@ -1,0 +1,42 @@
+<div class="row" *ngIf="!headerHide">
+  <div class="col-sm-8 mb-4">
+    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+      style="color: white" (click)="addItem()">
+      {{'add' | translate}}
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <input type="text"  class="form-control form-control-user" [(ngModel)]="searchInput"
+        [placeholder]="'search' | translate" (keyup)="search()">
+    </div>
+  </div>
+</div>
+<table class="table table-hover">
+  <thead>
+    <th width="20px"></th>
+    <ng-container *ngTemplateOutlet="columns; context: {$implicit:null}"></ng-container>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of manipuledData">
+      <td><app-delete [id]="item.id" (delete)=onDelete($event)></app-delete></td>
+      <ng-container *ngTemplateOutlet="template; context: {$implicit:item}"></ng-container>
+    </tr>
+    <tr *ngIf="!manipuledData || manipuledData.length === 0">
+      <td colspan=20 align=center>Nenhum registro encontrado</td>
+    </tr>
+  </tbody>
+</table>
+<div class="row">
+  <nav class="col-md-9">
+    <ul class="pagination">
+      <li class="page-item" *ngFor="let page of totalElements; let i = index">
+        <a class="page-link" href="#">{{i + 1}}</a>
+        <span class="sr-only">(current)</span>
+      </li>
+    </ul>
+  </nav>
+  <div class="col-md-3">
+    <span style="text-align: right;">Mostrando {{totalElements.length}} de {{manipuledData.length}} elementos</span>
+  </div>
+</div>

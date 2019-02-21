@@ -1,0 +1,38 @@
+<div id="page-top" class="sidebar-toggled">
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'procedures' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <app-table [columns]="columns" [template]="template" [data]="proceduresList"
+                (add)="add()" (delete)="onDelete($event)">
+                <ng-template #columns>
+                  <th>{{ "procedures.name" | translate }}</th>
+                  <th width="20%">{{ "procedures.price" | translate }}</th>
+                  <th width="20%">{{ "procedures.time" | translate }}</th>
+                  <th width="50px"></th>
+                </ng-template>
+                <ng-template #template let-procedures>
+                    <td>{{procedures.name}}</td>
+                    <td>R$ {{procedures.price | price}}</td>
+                    <td>
+                      {{procedures.time}}
+                    </td>
+                    <td nowrap>
+                      <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/procedures', procedures.id]">Detalhes</button>
+                    </td>
+                </ng-template>
+              </app-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

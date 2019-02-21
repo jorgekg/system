@@ -1,0 +1,92 @@
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+.required {
+	border-color: red;
+	transition: all .4s;
+}
+
+.notify-error {
+	background: red!important;
+	color: white
+}
+
+.fieldRequired {
+	font-size: 11px;
+	color: red;
+	margin-left: 20px;
+	margin-bottom: 5px;
+	padding-bottom: 0;
+}
+
+.backdrop-filter {
+	background: white!important
+}
+
+.ui-autocomplete-panel {
+	border: solid 1px #cccccc;
+}
+
+.popover {
+	background: red;
+	color: white!important
+}
+
+.arrow::after {
+	border-left-color: red!important;
+	border-right-color: red!important;
+}
+
+.popover-body {
+	color: white
+}
+
+.btn-no-padding {
+	padding: 0
+}
+
+.table thead th{
+	border-top-color: white!important
+}
+
+.select2 {
+	width: 100%!important;
+}
+
+.select2-container--default .select2-selection--single {
+	border-color: #cccccc!important;
+	padding: 20px
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: 36px!important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+	padding-left: 0px!important;
+	margin-top: -13px;
+}
+
+.dropdown-btn {
+	border-color: #cccccc!important
+}
+
+.wc-date-container {
+	border-color: #cccccc!important;
+	border-radius: 5px;
+	padding: 10px!important;
+	height: 38px!important
+}
+
+.wc-date-container span{
+	color: #858796!important;
+}
+.dp-calendar-weekday {
+	width: 40px!important;
+}
+
+.dp-calendar-day {
+	width: 40px!important;
+}

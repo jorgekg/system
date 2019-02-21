@@ -1,0 +1,58 @@
+<div id="page-top" class="sidebar-toggled">
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'lobby' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <form [formGroup]="form" (submit)="save()">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label>{{'lobby.name' | translate}}</label>
+                      <input type="name" id="name" formControlName="name" class="form-control form-control-user" 
+                        placeholder="{{'lobby.name.input' | translate}}"  maxlength="255" minlength="4"
+                        appRequired [isValidate]="isSubmit" [formControl]="form.get('name')" [place]="'left'">
+                    </div>
+                    <div class="col-sm-6">
+                      <br>
+                      <label>{{'lobby.startDate' | translate}}</label>
+                      <input type="startDate" id="startDate" formControlName="start_date" class="form-control form-control-user" 
+                        placeholder="{{'lobby.startDate.input' | translate}}"  maxlength="255" minlength="4" mask="Hh:sh:sh"
+                        appRequired [isValidate]="isSubmit" [formControl]="form.get('start_date')" [place]="'left'">
+                    </div>
+                    <div class="col-sm-6">
+                      <br>
+                      <label>{{'lobby.endDate' | translate}}</label>
+                      <input type="endDate" id="endDate" formControlName="end_date" class="form-control form-control-user" 
+                        placeholder="{{'lobby.endDate.input' | translate}}"  maxlength="255" minlength="4" mask="Hh:sh:sh"
+                        appRequired [isValidate]="isSubmit" [formControl]="form.get('end_date')" [place]="'left'">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class=row>
+                  <div class="col-sm-2 offset-sm-7">
+                    <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/lobby']">
+                      {{'cancel' | translate}}
+                    </button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button #button type="submit" class="btn btn-primary btn-user btn-block">
+                      {{(isNew() ? 'add' : 'update') | translate}}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

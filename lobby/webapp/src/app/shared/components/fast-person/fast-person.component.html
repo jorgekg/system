@@ -1,0 +1,52 @@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" 
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'person.register' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div autocomplete="off">
+          <form [formGroup]="form" class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label>{{'person.document.type' | translate}}</label>
+                <ng-multiselect-dropdown [placeholder]="'scheduling.procedures'"
+                  [data]="documentTypeList" formControlName="document_type_id" [settings]="documentTypeSetting">
+                </ng-multiselect-dropdown>
+              </div>
+              <div class="col-md-6">
+                <label>{{'person.document' | translate}}</label>
+                <input autofocus type="text" id="document" formControlName="document" class="form-control form-control-user" 
+                  placeholder="{{'person.document' | translate}}" autocomplete="off" [dropSpecialCharacters]="false" [mask]="mask">
+              </div>
+              <div class="col-md-12 mar-t">
+                <label>{{'person.name' | translate}}</label>
+                <input type="text" id="name" formControlName="name" class="form-control form-control-user" 
+                  placeholder="{{'person.name' | translate}}" autocomplete="off">
+              </div>
+              <div class="col-md-8 mar-t">
+                <label>{{'person.email' | translate}}</label>
+                <input type="text" id="email" formControlName="email" class="form-control form-control-user" 
+                  placeholder="{{'person.email' | translate}}" autocomplete="off">
+              </div>
+              <div class="col-md-4 mar-t">
+                <label>{{'person.phone' | translate}}</label>
+                <sam-phone-mask id="phone" formControlName="phone" styleClass="form-control form-control-user" 
+                  placeholder="{{'person.phone' | translate}}" autocomplete="off">
+                </sam-phone-mask>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'cancel' | translate}}</button>
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">{{'add' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

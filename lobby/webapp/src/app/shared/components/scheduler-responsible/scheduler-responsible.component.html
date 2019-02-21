@@ -1,0 +1,23 @@
+<br>
+<div class="row">
+  <div class="col-sm-12">
+    <p-autoComplete [suggestions]="personList" [forceSelection]="true" 
+      field="name" (completeMethod)="onSeach($event)"
+      [immutable]=false [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+      [placeholder]="'scheduling.search' | translate"></p-autoComplete>
+  </div>
+</div>
+<br>
+<app-table [columns]="columns" [template]="template" [data]="responsibleList"
+  [headerHide]=true>
+  <ng-template #columns>
+    <th>{{'scheduling.name' | translate}}</th>
+    <th>{{'scheduling.email' | translate}}</th>
+    <th>{{'scheduling.phone' | translate}}</th>
+  </ng-template>
+  <ng-template #template let-scheduling>
+    <td>{{scheduling.name}}</td>
+    <td>{{scheduling.email}}</td>
+    <td>{{scheduling.photo}}</td>
+  </ng-template>
+</app-table>
