@@ -76,9 +76,7 @@ export class SchedulingPersistComponent implements OnInit {
     timeSeparator: ':',
     multipleYearsNavigateBy: 10,
     showMultipleYearsNavigation: false,
-    locale: 'pt-br',
-    // min:'2017-08-29 15:50',
-    // minTime:'2017-08-29 15:50'
+    locale: 'pt-br'
   };
 
   private schedulingData;
@@ -86,7 +84,7 @@ export class SchedulingPersistComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -95,8 +93,8 @@ export class SchedulingPersistComponent implements OnInit {
       procedures: [],
       start_date: new FormControl('', Validators.compose([Validators.required])),
       end_date: new FormControl('', Validators.compose([Validators.required])),
-      price: new FormControl(''),
-      discount: new FormControl('')
+      reponsible: [],
+      visitor: []
     });
     this.schedulingData = this.activedRoute.snapshot.data.scheduling;
     this.loadProcedures();

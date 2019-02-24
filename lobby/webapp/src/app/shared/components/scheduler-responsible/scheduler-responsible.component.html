@@ -1,23 +1,25 @@
+<app-fast-person [personName]="personAdd" [responsible]="'S'"
+  (selectPerson)="onAddPerson($event)"></app-fast-person>
 <br>
 <div class="row">
   <div class="col-sm-12">
-    <p-autoComplete [suggestions]="personList" [forceSelection]="true" 
-      field="name" (completeMethod)="onSeach($event)"
+    <p-autoComplete [suggestions]="personList" [forceSelection]="true" [(ngModel)]="person"
+      field="label" (completeMethod)="onSeach($event)" (onSelect)="selectPerson($event)"
       [immutable]=false [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-      [placeholder]="'scheduling.search' | translate"></p-autoComplete>
+      [placeholder]="'responsible.search' | translate"></p-autoComplete>
   </div>
 </div>
 <br>
 <app-table [columns]="columns" [template]="template" [data]="responsibleList"
-  [headerHide]=true>
+  [headerHide]=true (delete)="onDelete($event)">
   <ng-template #columns>
-    <th>{{'scheduling.name' | translate}}</th>
-    <th>{{'scheduling.email' | translate}}</th>
-    <th>{{'scheduling.phone' | translate}}</th>
+    <th>{{'responsible.name' | translate}}</th>
+    <th>{{'responsible.email' | translate}}</th>
+    <th>{{'responsible.phone' | translate}}</th>
   </ng-template>
-  <ng-template #template let-scheduling>
-    <td>{{scheduling.name}}</td>
-    <td>{{scheduling.email}}</td>
-    <td>{{scheduling.photo}}</td>
+  <ng-template #template let-responsible>
+    <td>{{responsible?.person?.name}}</td>
+    <td>{{responsible?.person?.emails[0]?.contact}}</td>
+    <td>{{responsible?.person?.phones[0]?.contact | phoneMaskPipe}}</td>
   </ng-template>
 </app-table>

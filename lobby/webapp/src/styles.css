@@ -3,9 +3,9 @@ html, body {
 	margin: 0;
 }
 
-.required {
-	border-color: red;
-	transition: all .4s;
+.require::after {
+	content: ' *';
+	color: red
 }
 
 .notify-error {
@@ -89,4 +89,8 @@ html, body {
 
 .dp-calendar-day {
 	width: 40px!important;
+}
+
+.validate .ng-invalid {
+	border-color: red!important
 }

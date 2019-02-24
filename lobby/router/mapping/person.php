@@ -18,10 +18,23 @@ $app->get('/person',
 		return $response;
 });
 
-$app->get('/person_all',
+$app->get('/person/all',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
-		$response->getBody()->write($person->getPerson(1)->asJson());
+		$response->getBody()->write($person->getPerson(
+			$request->getQueryParam('id')
+		)->asJson());
+		return $response;
+});
+
+$app->get('/person/byname',
+	function (Request $request, Response $response, array $args) use($database) {
+		$person = new PersonController($database);
+		$response->getBody()->write($person->getPersonByName(
+			$request->getQueryParam('name'),
+			$request->getQueryParam('responsible'),
+			$request->getQueryParam('company_id')
+		)->asJson());
 		return $response;
 });
 

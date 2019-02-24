@@ -45,6 +45,7 @@ Class Controller {
 
 	public function hasError() {
 		if ($this->database->error()[0] == 23000) {
+			$this->hasEmpty($this->database->error()[2]);
 			echo json_encode([
 				"error" => 401,
 				"message" => "error.delete.fk"
@@ -57,6 +58,22 @@ Class Controller {
 			var_dump($this->database->error());
 			http_response_code(500);
 			exit;
+		}
+	}
+
+	private function hasEmpty($error) {
+		$fields = get_object_vars($this->model);
+		if (!empty($fields)) {
+			foreach($fields as $key => $value) {
+				if ($error == "Column '{$key}' cannot be null") {
+					echo json_encode([
+						"error" => 400,
+						"message" => "error.{$key}.null"
+					]);
+					http_response_code(400);
+					exit;
+				}
+			}
 		}
 	}
 

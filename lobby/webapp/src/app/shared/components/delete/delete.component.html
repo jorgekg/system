@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+<div class="modal fade {{classModal}}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -12,7 +12,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-dismiss="modal">{{'close' | translate}}</button>
-        <button type="button" class="btn btn-danger" (click)="onDelete()">{{'delete' | translate}}</button>
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
+          (click)="onDelete()">{{'delete' | translate}}</button>
       </div>
     </div>
   </div>

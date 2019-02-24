@@ -19,6 +19,9 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { SchedulerResponsibleComponent } from './components/scheduler-responsible/scheduler-responsible.component';
 import { FastPersonComponent } from './components/fast-person/fast-person.component';
 import { PhoneMaskModule } from '@sam-senior/phone-mask';
+import { PhoneMaskPipe } from './pipe/phone.pipe';
+import { SchedulerVisitorComponent } from './components/scheduler-visitor/scheduler-visitor.component';
+import { WarningComponent } from './components/warning/warning.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { PhoneMaskModule } from '@sam-senior/phone-mask';
     PricePipe,
     DeleteComponent,
     SchedulerResponsibleComponent,
-    FastPersonComponent
+    FastPersonComponent,
+    PhoneMaskPipe,
+    SchedulerVisitorComponent,
+    WarningComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +69,10 @@ import { PhoneMaskModule } from '@sam-senior/phone-mask';
     DpDatePickerModule,
     SchedulerResponsibleComponent,
     FastPersonComponent,
-    PhoneMaskModule
+    PhoneMaskModule,
+    PhoneMaskPipe,
+    SchedulerVisitorComponent,
+    WarningComponent
   ]
 })
 export class SharedModule {}

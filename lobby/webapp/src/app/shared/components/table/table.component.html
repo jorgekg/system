@@ -19,7 +19,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of manipuledData">
-      <td><app-delete [id]="item.id" (delete)=onDelete($event)></app-delete></td>
+      <td><app-delete [classModal]="modalDelete+item.id" [id]="item.id" (delete)=onDelete($event)></app-delete></td>
       <ng-container *ngTemplateOutlet="template; context: {$implicit:item}"></ng-container>
     </tr>
     <tr *ngIf="!manipuledData || manipuledData.length === 0">

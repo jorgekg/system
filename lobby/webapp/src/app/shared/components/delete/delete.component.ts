@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-const modal = () => {
+const modal = classModal => {
   const wd = window as any;
-  wd.jQuery('#modalDelete').modal('show');
+  wd.jQuery(`.${classModal}`).modal('show');
 };
 
-const hide = () => {
+const hide = classModal => {
   const wd = window as any;
-  wd.jQuery('#modalDelete').modal('hide');
+  wd.jQuery(`.${classModal}`).modal('hide');
 };
 
 let itemDelete = null;
@@ -20,9 +20,8 @@ let itemDelete = null;
 export class DeleteComponent implements OnInit {
 
   @Input() id: number;
+  @Input() classModal = 'modal-delete';
   @Output() delete = new EventEmitter();
-
-  
 
   constructor() { }
 
@@ -31,12 +30,12 @@ export class DeleteComponent implements OnInit {
 
   public onDelete() {
     this.delete.emit(itemDelete);
-    hide();
+    hide(this.classModal);
   }
 
   public modaDelete() {
     itemDelete = this.id;
-    modal();
+    modal(this.classModal);
   }
 
 }

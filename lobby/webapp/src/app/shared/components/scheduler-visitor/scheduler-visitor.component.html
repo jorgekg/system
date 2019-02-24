@@ -1,0 +1,29 @@
+<app-fast-person [personName]="personAdd"
+  (selectPerson)="onAddPerson($event)" classModal="visitor-modal"></app-fast-person>
+<br>
+<div class="row">
+  <div class="col-sm-12">
+    <p-autoComplete [suggestions]="personList" [forceSelection]="true" [(ngModel)]="person"
+      field="label" (completeMethod)="onSeach($event)" (onSelect)="selectPerson($event)"
+      [immutable]=false [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+      [placeholder]="'visitor.search' | translate"></p-autoComplete>
+  </div>
+</div>
+<br>
+<app-table [columns]="columns" [template]="template" [data]="visitorList"
+  [headerHide]=true (delete)="onDelete($event)" modalDelete="visitor-delete">
+  <ng-template #columns>
+    <th>{{'visitor.name' | translate}}</th>
+    <th>{{'visitor.email' | translate}}</th>
+    <th>{{'visitor.phone' | translate}}</th>
+    <th style="text-align: center">{{'visitor.status' | translate}}</th>
+  </ng-template>
+  <ng-template #template let-visitor>
+    <td>{{visitor?.person?.name}}</td>
+    <td>{{visitor?.person?.emails[0]?.contact}}</td>
+    <td>{{visitor?.person?.phones[0]?.contact | phoneMaskPipe}}</td>
+    <th style="text-align: center">
+    <app-warning [message]="'visitor.not.status' | translate"></app-warning>
+    </th>
+  </ng-template>
+</app-table>

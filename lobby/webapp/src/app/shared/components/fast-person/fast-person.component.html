@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" 
+<div class="modal fade bd-example-modal-lg {{classModal}}" tabindex="-1" role="dialog" 
   aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -10,33 +10,33 @@
       </div>
       <div class="modal-body">
         <div autocomplete="off">
-          <form [formGroup]="form" class="form-group">
+          <form [formGroup]="form" class="form-group {{validator ? 'validate' : ''}}">
             <div class="row">
               <div class="col-md-6">
-                <label>{{'person.document.type' | translate}}</label>
-                <ng-multiselect-dropdown [placeholder]="'scheduling.procedures'"
+                <label class=require>{{'person.document.type' | translate}}</label>
+                <ng-multiselect-dropdown [placeholder]="'person.document.type.input'"
                   [data]="documentTypeList" formControlName="document_type_id" [settings]="documentTypeSetting">
                 </ng-multiselect-dropdown>
               </div>
               <div class="col-md-6">
-                <label>{{'person.document' | translate}}</label>
-                <input autofocus type="text" id="document" formControlName="document" class="form-control form-control-user" 
-                  placeholder="{{'person.document' | translate}}" autocomplete="off" [dropSpecialCharacters]="false" [mask]="mask">
+                <label class=require>{{'person.document' | translate}}</label>
+                <input pInputText autofocus type="text" id="document" formControlName="document" class="form-control form-control-user" 
+                  placeholder="{{'person.document.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false" [mask]="mask">
               </div>
               <div class="col-md-12 mar-t">
-                <label>{{'person.name' | translate}}</label>
-                <input type="text" id="name" formControlName="name" class="form-control form-control-user" 
-                  placeholder="{{'person.name' | translate}}" autocomplete="off">
+                <label class=require>{{'person.name' | translate}}</label>
+                <input pInputText type="text" id="name" formControlName="name" class="form-control form-control-user" 
+                  placeholder="{{'person.name.input' | translate}}" autocomplete="off">
               </div>
               <div class="col-md-8 mar-t">
                 <label>{{'person.email' | translate}}</label>
-                <input type="text" id="email" formControlName="email" class="form-control form-control-user" 
-                  placeholder="{{'person.email' | translate}}" autocomplete="off">
+                <input pInputText type="text" id="email" formControlName="email" class="form-control form-control-user" 
+                  placeholder="{{'person.email.input' | translate}}" autocomplete="off">
               </div>
               <div class="col-md-4 mar-t">
                 <label>{{'person.phone' | translate}}</label>
                 <sam-phone-mask id="phone" formControlName="phone" styleClass="form-control form-control-user" 
-                  placeholder="{{'person.phone' | translate}}" autocomplete="off">
+                  placeholder="{{'person.phone.input' | translate}}" autocomplete="off">
                 </sam-phone-mask>
               </div>
             </div>
@@ -45,7 +45,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-dismiss="modal">{{'cancel' | translate}}</button>
-        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">{{'add' | translate}}</button>
+        <button type="button" #button (click)="save()"
+          class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">{{'add' | translate}}</button>
       </div>
     </div>
   </div>
