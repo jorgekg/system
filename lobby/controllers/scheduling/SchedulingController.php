@@ -9,11 +9,21 @@ class SchedulingController extends Controller {
 		$this->model = new SchedulingModel();
 	}
 
+	public function getSchedulingById($id, $company) {
+		$this->data = $this->database->select(
+			$this->table, '*', [
+				"id" => $id,
+				"company_id" => $company
+			]
+		);
+	}
+
 	public function createScheduling($scheduling) {
 		$id = null;
 		$this->database->action(function($database) use ($scheduling, &$id) {
 			$schedulingController = new SchedulingController($database);
-			$schedulingController->insert($schedulingController->table, [
+			$this->filter = [];
+			$schedulingController->insert([
 				"company_id" => $scheduling["company_id"],
 				"name" => "Agendamento",
 				"lobby_id" => $scheduling["lobby_id"],
@@ -26,37 +36,31 @@ class SchedulingController extends Controller {
 			$schedulingProceduresController = new SchedulingProceduresController($database);
 			if (!empty($scheduling["procedures"])) {
 				foreach($scheduling["procedures"] as $procedures) {
-					$schedulingProceduresController->insert(
-						$schedulingProceduresController->table, [
-							"company_id" => $scheduling["company_id"],
-							"scheduling_id" => $id,
-							"procedure_id" => $procedures["id"]
-						]
-					);
+					$schedulingProceduresController->insert([
+						"company_id" => $scheduling["company_id"],
+						"scheduling_id" => $id,
+						"procedure_id" => $procedures["id"]
+					]);
 				}
 				if (!empty($scheduling["responsibles"])) {
 					$schedulingResponsibleController = new SchedulingResponsibleController($database);
 					foreach($scheduling["responsibles"] as $responsible) {
-						$schedulingResponsibleController->insert(
-							$schedulingResponsibleController->table, [
-								"company_id" => $scheduling["company_id"],
-								"scheduling_id" => $id,
-								"person_id" => $responsible["person_id"],
-								"active" => "S"
-							]
-						);
+						$schedulingResponsibleController->insert([
+							"company_id" => $scheduling["company_id"],
+							"scheduling_id" => $id,
+							"person_id" => $responsible["person"]["id"],
+							"active" => "S"
+						]);
 					}
 					if (!empty($scheduling["visitors"])) {
 						$schedulingVisitorController = new SchedulingVisitorController($database);
 						foreach($scheduling["visitors"] as $visitor) {
-							$schedulingVisitorController->insert(
-								$schedulingVisitorController->table, [
-									"company_id" => $scheduling["company_id"],
-									"scheduling_id" => $id,
-									"person_id" => $visitor["person_id"],
-									"active" => "S"
-								]
-							);
+							$schedulingVisitorController->insert([
+								"company_id" => $scheduling["company_id"],
+								"scheduling_id" => $id,
+								"person_id" => $visitor["person"]["id"],
+								"active" => "S"
+							]);
 						}
 						return true;
 					} else {
@@ -75,5 +79,7 @@ class SchedulingController extends Controller {
 				exit;
 			}
 		});
+		$this->getSchedulingById($id, $scheduling["company_id"]);
+		return $this;
 	}
 }

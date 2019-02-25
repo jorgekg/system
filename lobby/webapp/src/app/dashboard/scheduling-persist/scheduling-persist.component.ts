@@ -1,4 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
+import { AppStorageService } from './../../core/app-storage/app-storage.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Lobby, LobbyService } from './../../core/entities/lobby/lobby.service';
 import {
@@ -12,6 +13,8 @@ import {
   Procedures,
   ProceduresService
 } from 'src/app/core/entities/procedures/procedures.service';
+import { SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling-persist',
@@ -85,6 +88,9 @@ export class SchedulingPersistComponent implements OnInit {
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
     private activedRoute: ActivatedRoute,
+    private appStorageService: AppStorageService,
+    private schedulingService: SchedulingService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -93,8 +99,8 @@ export class SchedulingPersistComponent implements OnInit {
       procedures: [],
       start_date: new FormControl('', Validators.compose([Validators.required])),
       end_date: new FormControl('', Validators.compose([Validators.required])),
-      reponsible: [],
-      visitor: []
+      responsibles: [],
+      visitors: []
     });
     this.schedulingData = this.activedRoute.snapshot.data.scheduling;
     this.loadProcedures();
@@ -113,5 +119,17 @@ export class SchedulingPersistComponent implements OnInit {
     }
   }
 
-  public onSearch(term) {}
+  public async save() {
+    if (this.form.valid) {
+      const form = this.form.getRawValue();
+      const [lobby] = form.lobby;
+      form.lobby_id = lobby.id;
+      form.company_id = this.appStorageService.getToken().company_id;
+      form.start_date = moment(form.start_date, 'DD/MM/YYYY HH:mm');
+      form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm');
+      form.active = `S`;
+      await this.schedulingService.create(form).toPromise();
+      this.router.navigate(['dashboard/scheduling']);
+    }
+  }
 }

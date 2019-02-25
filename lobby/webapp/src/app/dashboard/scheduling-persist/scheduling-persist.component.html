@@ -10,7 +10,7 @@
             </div>
             <div class="card shadow mb-4">
               <div class="card-body">
-                <form [formGroup]="form" autocomplete="off">
+                <form [formGroup]="form" autocomplete="off" (submit)="save()">
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-6">
@@ -53,10 +53,10 @@
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                       <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <app-scheduler-responsible formControlName="reponsible"></app-scheduler-responsible>
+                        <app-scheduler-responsible formControlName="responsibles"></app-scheduler-responsible>
                       </div>
                       <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <app-scheduler-visitor formControlName="visitor"></app-scheduler-visitor>
+                        <app-scheduler-visitor formControlName="visitors"></app-scheduler-visitor>
                       </div>
                     </div>
                   </div>
@@ -68,7 +68,7 @@
                       </button>
                     </div>
                     <div class="col-sm-1">
-                      <button #button type="submit" class="d-none d-sm-inline-block btn btn-md btn-primary shadow-sm">
+                      <button #button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                         {{'add' | translate}}
                       </button>
                     </div>
