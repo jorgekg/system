@@ -13,18 +13,18 @@
           <form [formGroup]="form" class="form-group {{validator ? 'validate' : ''}}">
             <div class="row">
               <div class="col-md-6">
-                <label class=require>{{'person.document.type' | translate}}</label>
+                <label class="require">{{'person.document.type' | translate}}</label>
                 <ng-multiselect-dropdown [placeholder]="'person.document.type.input'"
                   [data]="documentTypeList" formControlName="document_type_id" [settings]="documentTypeSetting">
                 </ng-multiselect-dropdown>
               </div>
               <div class="col-md-6">
-                <label class=require>{{'person.document' | translate}}</label>
+                <label class="require">{{'person.document' | translate}}</label>
                 <input pInputText autofocus type="text" id="document" formControlName="document" class="form-control form-control-user" 
                   placeholder="{{'person.document.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false" [mask]="mask">
               </div>
               <div class="col-md-12 mar-t">
-                <label class=require>{{'person.name' | translate}}</label>
+                <label class="require">{{'person.name' | translate}}</label>
                 <input pInputText type="text" id="name" formControlName="name" class="form-control form-control-user" 
                   placeholder="{{'person.name.input' | translate}}" autocomplete="off">
               </div>

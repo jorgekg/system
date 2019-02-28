@@ -1,17 +1,18 @@
+import { AppToastService } from './../../core/app-toast/app-toast.service';
+import { MessageService } from 'primeng/api';
 import { AppStorageService } from './../../core/app-storage/app-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Lobby, LobbyService } from './../../core/entities/lobby/lobby.service';
+import { Lobby } from './../../core/entities/lobby/lobby.service';
 import {
   FormGroup,
   FormBuilder,
   FormControl,
   Validators
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {
-  Procedures,
-  ProceduresService
+  Procedures
 } from 'src/app/core/entities/procedures/procedures.service';
 import { SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
 import * as moment from 'moment';
@@ -22,6 +23,7 @@ import * as moment from 'moment';
   styleUrls: ['./scheduling-persist.component.css']
 })
 export class SchedulingPersistComponent implements OnInit {
+  @ViewChild(`visitor`) visitor: ElementRef;
   public isSubmit;
   public form: FormGroup;
   public lobbyList: Lobby[] = [];
@@ -83,6 +85,7 @@ export class SchedulingPersistComponent implements OnInit {
   };
 
   private schedulingData;
+  public validator = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -90,17 +93,19 @@ export class SchedulingPersistComponent implements OnInit {
     private activedRoute: ActivatedRoute,
     private appStorageService: AppStorageService,
     private schedulingService: SchedulingService,
-    private router: Router
+    private router: Router,
+    private appToastService: AppToastService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      lobby: [],
-      procedures: [],
+      lobby: new FormControl('', Validators.compose([Validators.required])),
+      procedures: new FormControl('', Validators.compose([Validators.required])),
       start_date: new FormControl('', Validators.compose([Validators.required])),
       end_date: new FormControl('', Validators.compose([Validators.required])),
-      responsibles: [],
-      visitors: []
+      responsibles: new FormControl('', Validators.compose([Validators.required])),
+      visitors: new FormControl('', Validators.compose([Validators.required]))
     });
     this.schedulingData = this.activedRoute.snapshot.data.scheduling;
     this.loadProcedures();
@@ -120,6 +125,7 @@ export class SchedulingPersistComponent implements OnInit {
   }
 
   public async save() {
+    this.validator = true;
     if (this.form.valid) {
       const form = this.form.getRawValue();
       const [lobby] = form.lobby;
@@ -130,6 +136,23 @@ export class SchedulingPersistComponent implements OnInit {
       form.active = `S`;
       await this.schedulingService.create(form).toPromise();
       this.router.navigate(['dashboard/scheduling']);
+      this.appToastService.success(
+        'success',
+        'scheduling.sucsess'
+      );
+    } else {
+      if (!this.form.get(`responsibles`).valid) {
+        this.appToastService.error(
+          'scheduling.responsible.required',
+          'scheduling.responsible.required.message'
+        );
+      } else if (!this.form.get(`visitors`).valid) {
+        this.appToastService.error(
+          'scheduling.visitor.required',
+          'scheduling.visitor.required.message'
+        );
+        (this.visitor.nativeElement as HTMLInputElement).click();
+      }
     }
   }
 }

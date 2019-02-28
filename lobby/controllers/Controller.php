@@ -34,6 +34,17 @@ Class Controller {
 		return $this;
 	}
 
+	public function select($params, $fields, $join) {
+		$this->data = $this->database->select(
+			$this->table,
+			$join,
+			$fields,
+			$params
+		);
+		$this->hasError();
+		return $this;
+	}
+
 	public function delete(Request $params) {
 		$this->getFilters($params);
 		$this->database->delete($this->table, [

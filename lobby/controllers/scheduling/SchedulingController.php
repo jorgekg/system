@@ -9,6 +9,67 @@ class SchedulingController extends Controller {
 		$this->model = new SchedulingModel();
 	}
 
+	public function getSchedulings($name, $company, $situation = 1, $page = 0) {
+		$this->data = $this->database->select(
+			$this->table,[
+				"[><]lobby" => ["lobby_id" => "id"]
+			], [
+				"lobby.name(lobby_name)",
+				"scheduling.id",
+				"scheduling.name",
+				"scheduling.lobby_id",
+				"scheduling.start_date",
+				"scheduling.end_date"
+			], [
+				"scheduling.company_id" => $company,
+				"scheduling.situation" => $situation,
+				'GROUP' => [
+					"lobby.name",
+					"scheduling.id",
+					"scheduling.name",
+					"scheduling.lobby_id",
+					"scheduling.start_date",
+					"scheduling.end_date"
+				],
+				'LIMIT' => [$page, 10],
+			]
+		);
+		for($i = 0; $i < count($this->data); $i++){
+			$this->data[$i]["responsibles"] = $this->getResponsible($this->data[$i]["id"]);
+			$this->data[$i]["visitors"] = $this->getVisitor($this->data[$i]["id"]);
+		}
+		return $this;
+	}
+
+	private function getResponsible($id) {
+		$responsible = new SchedulingResponsibleController($this->database);
+		$responsible->select([
+			"scheduling_id" => $id
+			], [
+				"person.name",
+				"scheduling_responsible.id",
+				"scheduling_responsible.active"
+			], [
+				"[><]person" => ["person_id" => "id"]
+		]);
+		return $responsible->asObject();
+	}
+
+	private function getVisitor($id) {
+		$visitor = new SchedulingVisitorController($this->database);
+		$visitor->data = null;
+		$visitor->select([
+			"scheduling_id" => $id
+			], [
+				"person.name",
+				"scheduling_visitor.id",
+				"scheduling_visitor.active"
+			], [
+				"[><]person" => ["person_id" => "id"]
+		]);
+		return $visitor->asObject();
+	}
+
 	public function getSchedulingById($id, $company) {
 		$this->data = $this->database->select(
 			$this->table, '*', [
@@ -29,6 +90,7 @@ class SchedulingController extends Controller {
 				"lobby_id" => $scheduling["lobby_id"],
 				"start_date" => $scheduling["start_date"],
 				"end_date" => $scheduling["end_date"],
+				"situation" => 1,
 				"active" => $scheduling["active"]
 			]);
 			$schedulingResult = $schedulingController->asObject();

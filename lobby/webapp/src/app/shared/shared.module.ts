@@ -1,3 +1,4 @@
+import { ToastModule } from 'primeng/toast';
 import { PricePipe } from './../price.pipe';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -22,6 +23,7 @@ import { PhoneMaskModule } from '@sam-senior/phone-mask';
 import { PhoneMaskPipe } from './pipe/phone.pipe';
 import { SchedulerVisitorComponent } from './components/scheduler-visitor/scheduler-visitor.component';
 import { WarningComponent } from './components/warning/warning.component';
+import { PersonOnListComponent } from './components/person-on-list/person-on-list.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { WarningComponent } from './components/warning/warning.component';
     FastPersonComponent,
     PhoneMaskPipe,
     SchedulerVisitorComponent,
-    WarningComponent
+    WarningComponent,
+    PersonOnListComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +52,8 @@ import { WarningComponent } from './components/warning/warning.component';
     AutoCompleteModule,
     NgMultiSelectDropDownModule.forRoot(),
     DpDatePickerModule,
-    PhoneMaskModule
+    PhoneMaskModule,
+    ToastModule
   ],
   exports: [
     TranslateModule,
@@ -72,7 +76,9 @@ import { WarningComponent } from './components/warning/warning.component';
     PhoneMaskModule,
     PhoneMaskPipe,
     SchedulerVisitorComponent,
-    WarningComponent
+    WarningComponent,
+    ToastModule,
+    PersonOnListComponent
   ]
 })
 export class SharedModule {}

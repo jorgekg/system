@@ -1,3 +1,4 @@
+import { SchedulingService, Scheduling, SchedulingSituation } from './../../core/entities/scheduling/scheduling.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchedulingComponent implements OnInit {
 
-  constructor() { }
+  public schedulingList = [] as Scheduling[];
+
+  constructor(
+    private schedulingService: SchedulingService
+  ) { }
 
   ngOnInit() {
+    this.getSchedulings();
+  }
+
+  public async getSchedulings() {
+    this.schedulingList = await this.schedulingService.getScheduling(
+      ``, SchedulingSituation.PENDING, 0
+    ).toPromise();
   }
 
 }

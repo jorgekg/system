@@ -1,84 +1,83 @@
 <div id="page-top" class="sidebar-toggled">
-    <div id="wrapper">
-      <app-navbar-left></app-navbar-left>
-      <div id="content-wrapper" class="d-flex flex-column">
-        <div id="content">
-          <app-navbar-top [title]="'scheduling' | translate"></app-navbar-top>
-          <div class="container">
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
-            </div>
-            <div class="card shadow mb-4">
-              <div class="card-body">
-                <form [formGroup]="form" autocomplete="off" (submit)="save()">
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>{{'scheduling.lobby' | translate}}</label>
-                        <ng-multiselect-dropdown [placeholder]="'scheduling.lobby.input' | translate" [(ngModel)]="lobbySelect"
-                          [data]="lobbyList" formControlName="lobby" [settings]="lobbySettings">
-                        </ng-multiselect-dropdown>
-                      </div>
-                      <div class="col-md-6">
-                        <label>{{'scheduling.procedures' | translate}}</label>
-                        <ng-multiselect-dropdown [placeholder]="'scheduling.procedures.input' | translate"
-                          [data]="proceduresList" formControlName="procedures" [settings]="proceduresSettings">
-                        </ng-multiselect-dropdown>
-                      </div>
-                      <div class="col-sm-6">
-                        <br>
-                        <label>{{'scheduling.start_date' | translate}}</label>
-                        <input type="start_date" id="start_date" formControlName="start_date" class="form-control form-control-user" 
-                          placeholder="{{'scheduling.start_date.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false"
-                          mode="daytime" [dpDayPicker]="datePickerConfig" theme="dp-material" appendTo="body" mask="00/00/0000 00:00">
-                      </div>
-                      <div class="col-sm-6">
-                        <br>
-                        <label>{{'scheduling.end_date' | translate}}</label>
-                        <input type="end_date" id="end_date" formControlName="end_date" class="form-control form-control-user" 
-                          placeholder="{{'scheduling.end_date.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false"
-                          mode="daytime" [dpDayPicker]="datePickerConfig" theme="dp-material" appendTo="body" mask="00/00/0000 00:00">
-                      </div>
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'scheduling' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <form [formGroup]="form" autocomplete="off" [class]="validator ? 'validate' : ''">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="require">{{'scheduling.lobby' | translate}}</label>
+                      <ng-multiselect-dropdown [placeholder]="'scheduling.lobby.input' | translate" [(ngModel)]="lobbySelect"
+                        [data]="lobbyList" formControlName="lobby" [settings]="lobbySettings">
+                      </ng-multiselect-dropdown>
                     </div>
-                    <br>
-                    <nav>
-                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home">
-                          {{'scheduling.responsible' | translate}}
-                        </a>
-                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">
-                          {{'scheduling.visitor' | translate}}
-                        </a>
-                      </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <app-scheduler-responsible formControlName="responsibles"></app-scheduler-responsible>
-                      </div>
-                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <app-scheduler-visitor formControlName="visitors"></app-scheduler-visitor>
-                      </div>
+                    <div class="col-md-6">
+                      <label class="require">{{'scheduling.procedures' | translate}}</label>
+                      <ng-multiselect-dropdown [placeholder]="'scheduling.procedures.input' | translate"
+                        [data]="proceduresList" formControlName="procedures" [settings]="proceduresSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-6">
+                      <br>
+                      <label class="require">{{'scheduling.start_date' | translate}}</label>
+                      <input type="start_date" id="start_date" formControlName="start_date" class="form-control form-control-user" 
+                        placeholder="{{'scheduling.start_date.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false"
+                        mode="daytime" [dpDayPicker]="datePickerConfig" theme="dp-material" appendTo="body" mask="00/00/0000 00:00">
+                    </div>
+                    <div class="col-sm-6">
+                      <br>
+                      <label class="require">{{'scheduling.end_date' | translate}}</label>
+                      <input type="end_date" id="end_date" formControlName="end_date" class="form-control form-control-user" 
+                        placeholder="{{'scheduling.end_date.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false"
+                        mode="daytime" [dpDayPicker]="datePickerConfig" theme="dp-material" appendTo="body" mask="00/00/0000 00:00">
                     </div>
                   </div>
-                  <hr>
-                  <div class=row>
-                    <div class="col-sm-2 offset-sm-8">
-                      <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/lobby']">
-                        {{'cancel' | translate}}
-                      </button>
+                  <br>
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a #responsible class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home">
+                        {{'scheduling.responsible' | translate}}
+                      </a>
+                      <a #visitor class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">
+                        {{'scheduling.visitor' | translate}}
+                      </a>
                     </div>
-                    <div class="col-sm-1">
-                      <button #button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                        {{'add' | translate}}
-                      </button>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                      <app-scheduler-responsible formControlName="responsibles"></app-scheduler-responsible>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                      <app-scheduler-visitor formControlName="visitors"></app-scheduler-visitor>
                     </div>
                   </div>
-                </form>
-              </div>
+                </div>
+                <hr>
+                <div class=row>
+                  <div class="col-sm-2 offset-sm-8">
+                    <button type="button" class="btn btn-link btn-sm btn-block" [routerLink]="['/dashboard/scheduling']">
+                      {{'cancel' | translate}}
+                    </button>
+                  </div>
+                  <div class="col-sm-2">
+                    <button #button type="submit" (click)="save()" class="btn btn-sm btn-primary">
+                      {{'scheduling.add' | translate}}
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

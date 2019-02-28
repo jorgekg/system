@@ -29,7 +29,31 @@
                 </div>
               </nav>
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <app-table [columns]="columns" [template]="template" [headerHide]="true"
+                    [data]="schedulingList">
+                    <ng-template #columns>
+                      <th>{{ "scheduling.lobby" | translate }}</th>
+                      <th>{{ "scheduling.responsible" | translate }}</th>
+                      <th>{{ "scheduling.visitor" | translate }}</th>
+                      <th>{{ "scheduling.start_date" | translate }}</th>
+                      <th width="50px"></th>
+                    </ng-template>
+                    <ng-template #template let-scheduling>
+                        <td>{{scheduling.lobby_name}}</td>
+                        <td>
+                          <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
+                        </td>
+                        <td>
+                            <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
+                        </td>
+                        <td>{{scheduling.start_date}}</td>
+                        <td>
+                          <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
+                        </td>
+                    </ng-template>
+                  </app-table>
+                </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
               </div>

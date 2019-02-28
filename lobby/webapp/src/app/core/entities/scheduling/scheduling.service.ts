@@ -1,3 +1,4 @@
+import { AppStorageService } from './../../app-storage/app-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -8,13 +9,29 @@ import { environment } from 'src/environments/environment';
 export class SchedulingService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private appStorageSerice: AppStorageService
   ) { }
+
+  public getScheduling(personName, schedulingSituation, page = 0) {
+    return this.http.get<Scheduling[]>(`${environment.url}/schedulings`, {
+      params: {
+        name: personName,
+        situation: schedulingSituation,
+        page: page.toString(),
+        company_id: this.appStorageSerice.getToken().company_id.toString()
+      }
+    });
+  }
 
   public create(scheduling: Scheduling) {
     return this.http.post<Scheduling>(`${environment.url}/create_scheduling`, scheduling);
   }
 
+}
+
+export enum SchedulingSituation {
+  PENDING = 1
 }
 
 export interface Scheduling {

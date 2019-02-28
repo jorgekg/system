@@ -20,3 +20,15 @@ function (Request $request, Response $response, array $args) use($database) {
 	$response->getBody()->write($scheduling->createScheduling($params)->asJson());
 	return $response;
 });
+
+$app->get('/schedulings',
+	function (Request $request, Response $response, array $args) use($database) {
+		$scheduling = new SchedulingController($database);
+		$response->getBody()->write($scheduling->getSchedulings(
+			$request->getQueryParam('name'),
+			$request->getQueryParam('company_id'),
+			$request->getQueryParam('situation'),
+			$request->getQueryParam('page')
+		)->asJson());
+		return $response;
+});

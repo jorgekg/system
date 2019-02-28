@@ -3,9 +3,16 @@ html, body {
 	margin: 0;
 }
 
+.dropdown-btn {
+	border-color: #cccccc!important
+}
+
 .require::after {
 	content: ' *';
 	color: red
+}
+.validate .ng-invalid .dropdown-btn {
+	border-color: red!important
 }
 
 .notify-error {
@@ -69,10 +76,6 @@ html, body {
 	margin-top: -13px;
 }
 
-.dropdown-btn {
-	border-color: #cccccc!important
-}
-
 .wc-date-container {
 	border-color: #cccccc!important;
 	border-radius: 5px;
@@ -93,4 +96,9 @@ html, body {
 
 .validate .ng-invalid {
 	border-color: red!important
+}
+
+.ui-toast-message-error {
+	background: red;
+	color: white
 }
