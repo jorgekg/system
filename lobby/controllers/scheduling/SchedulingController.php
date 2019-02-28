@@ -45,38 +45,54 @@ class SchedulingController extends Controller {
 		$responsible = new SchedulingResponsibleController($this->database);
 		$responsible->select([
 			"scheduling_id" => $id
-			], [
-				"person.name",
-				"scheduling_responsible.id",
-				"scheduling_responsible.active"
-			], [
-				"[><]person" => ["person_id" => "id"]
 		]);
+		$person = new PersonController($this->database);
+		for($i = 0; $i < count($responsible->data); $i++){
+			$personData = ($person->getPerson($responsible->data[$i]["person_id"]))->asObject();
+			if (!empty($personData)) {
+				$responsible->data[$i]["person"] = $personData[0];
+			}
+		}
 		return $responsible->asObject();
 	}
 
 	private function getVisitor($id) {
 		$visitor = new SchedulingVisitorController($this->database);
-		$visitor->data = null;
 		$visitor->select([
 			"scheduling_id" => $id
-			], [
-				"person.name",
-				"scheduling_visitor.id",
-				"scheduling_visitor.active"
-			], [
-				"[><]person" => ["person_id" => "id"]
 		]);
+		$person = new PersonController($this->database);
+		for($i = 0; $i < count($visitor->data); $i++){
+			$personData = ($person->getPerson($visitor->data[$i]["person_id"]))->asObject();
+			if (!empty($personData)) {
+				$visitor->data[$i]["person"] = $personData[0];
+			}
+		}
 		return $visitor->asObject();
 	}
 
 	public function getSchedulingById($id, $company) {
 		$this->data = $this->database->select(
-			$this->table, '*', [
-				"id" => $id,
-				"company_id" => $company
+			$this->table,[
+				"[><]lobby" => ["lobby_id" => "id"]
+			], [
+				"lobby.name(lobby_name)",
+				"lobby.id(lobby_id)",
+				"scheduling.id",
+				"scheduling.name",
+				"scheduling.lobby_id",
+				"scheduling.start_date",
+				"scheduling.end_date"
+			], [
+				"scheduling.company_id" => $company,
+				"scheduling.id" => $id
 			]
 		);
+		for($i = 0; $i < count($this->data); $i++){
+			$this->data[$i]["responsibles"] = $this->getResponsible($this->data[$i]["id"]);
+			$this->data[$i]["visitors"] = $this->getVisitor($this->data[$i]["id"]);
+		}
+		return $this;
 	}
 
 	public function createScheduling($scheduling) {

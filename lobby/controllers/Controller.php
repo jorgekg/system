@@ -34,11 +34,10 @@ Class Controller {
 		return $this;
 	}
 
-	public function select($params, $fields, $join) {
+	public function select($params) {
 		$this->data = $this->database->select(
 			$this->table,
-			$join,
-			$fields,
+			"*",
 			$params
 		);
 		$this->hasError();

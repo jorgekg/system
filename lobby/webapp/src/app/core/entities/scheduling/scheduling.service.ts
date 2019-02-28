@@ -24,6 +24,15 @@ export class SchedulingService {
     });
   }
 
+  public getSchedulingById(schedulingId: number) {
+    return this.http.get<Scheduling[]>(`${environment.url}/schedulingid`, {
+      params: {
+        id: schedulingId.toString(),
+        company_id: this.appStorageSerice.getToken().company_id.toString()
+      }
+    });
+  }
+
   public create(scheduling: Scheduling) {
     return this.http.post<Scheduling>(`${environment.url}/create_scheduling`, scheduling);
   }

@@ -87,6 +87,8 @@ export class SchedulingPersistComponent implements OnInit {
   private schedulingData;
   public validator = false;
 
+  private id;
+
   constructor(
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
@@ -110,6 +112,18 @@ export class SchedulingPersistComponent implements OnInit {
     this.schedulingData = this.activedRoute.snapshot.data.scheduling;
     this.loadProcedures();
     this.loadLobby();
+    this.activedRoute.params.subscribe(params => this.id = params.id);
+    if (!this.isNew()) {
+      this.setScheduling();
+    }
+  }
+
+  private setScheduling() {
+    this.form.patchValue(this.schedulingData.data);
+  }
+
+  public isNew() {
+    return this.id === `new`;
   }
 
   private loadProcedures() {

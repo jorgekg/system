@@ -32,3 +32,13 @@ $app->get('/schedulings',
 		)->asJson());
 		return $response;
 });
+
+$app->get('/schedulingid',
+	function (Request $request, Response $response, array $args) use($database) {
+		$scheduling = new SchedulingController($database);
+		$response->getBody()->write($scheduling->getSchedulingById(
+			$request->getQueryParam('id'),
+			$request->getQueryParam('company_id')
+		)->asJson());
+		return $response;
+});
