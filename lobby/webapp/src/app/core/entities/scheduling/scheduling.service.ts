@@ -40,7 +40,9 @@ export class SchedulingService {
 }
 
 export enum SchedulingSituation {
-  PENDING = 1
+  PENDING = 1,
+  FINISH = 2,
+  CANCELED = 3
 }
 
 export interface Scheduling {

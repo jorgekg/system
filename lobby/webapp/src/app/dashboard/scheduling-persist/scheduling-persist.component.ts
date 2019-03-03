@@ -125,19 +125,17 @@ export class SchedulingPersistComponent implements OnInit {
     this.onChangeSchedulingSubscription =
     this.form.valueChanges.subscribe(value => {
         this.schedulingChange = value;
-        if (this.form.valid) {
-          setTimeout(async () => {
-            if (this.schedulingChange === value) {
-              try {
-                await this.save(true);
-              } catch (err) {
-                this.onChangeSchedulingSubscription.unsubscribe();
-                this.setScheduling();
-                this.onChangeScheduling();
-              }
+        setTimeout(async () => {
+          if (this.schedulingChange === value) {
+            try {
+              await this.save(true);
+            } catch (err) {
+              this.onChangeSchedulingSubscription.unsubscribe();
+              this.setScheduling();
+              this.onChangeScheduling();
             }
-          }, 500);
-        }
+          }
+        }, 500);
     });
   }
 

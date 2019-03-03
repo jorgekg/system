@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class SchedulingComponent implements OnInit {
 
   public schedulingList = [] as Scheduling[];
+  public situation = SchedulingSituation.PENDING;
 
   constructor(
     private schedulingService: SchedulingService
@@ -20,8 +21,23 @@ export class SchedulingComponent implements OnInit {
 
   public async getSchedulings() {
     this.schedulingList = await this.schedulingService.getScheduling(
-      ``, SchedulingSituation.PENDING, 0
+      ``, this.situation, 0
     ).toPromise();
+  }
+
+  public async setPending() {
+    this.situation = SchedulingSituation.PENDING;
+    await this.getSchedulings();
+  }
+
+  public async setFinish() {
+    this.situation = SchedulingSituation.FINISH;
+    await this.getSchedulings();
+  }
+
+  public async setCanceled() {
+    this.situation = SchedulingSituation.CANCELED;
+    await this.getSchedulings();
   }
 
 }
