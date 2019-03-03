@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { AppToastService } from './../../core/app-toast/app-toast.service';
 import { MessageService } from 'primeng/api';
 import { AppStorageService } from './../../core/app-storage/app-storage.service';
@@ -85,9 +86,11 @@ export class SchedulingPersistComponent implements OnInit {
   };
 
   private schedulingData;
+  private schedulingChange;
   public validator = false;
 
   private id;
+  private onChangeSchedulingSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -96,12 +99,12 @@ export class SchedulingPersistComponent implements OnInit {
     private appStorageService: AppStorageService,
     private schedulingService: SchedulingService,
     private router: Router,
-    private appToastService: AppToastService,
-    private messageService: MessageService
+    private appToastService: AppToastService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      abs_id: [],
       lobby: new FormControl('', Validators.compose([Validators.required])),
       procedures: new FormControl('', Validators.compose([Validators.required])),
       start_date: new FormControl('', Validators.compose([Validators.required])),
@@ -118,8 +121,45 @@ export class SchedulingPersistComponent implements OnInit {
     }
   }
 
+  private onChangeScheduling() {
+    this.onChangeSchedulingSubscription =
+    this.form.valueChanges.subscribe(value => {
+        this.schedulingChange = value;
+        if (this.form.valid) {
+          setTimeout(async () => {
+            if (this.schedulingChange === value) {
+              try {
+                await this.save(true);
+              } catch (err) {
+                this.onChangeSchedulingSubscription.unsubscribe();
+                this.setScheduling();
+                this.onChangeScheduling();
+              }
+            }
+          }, 500);
+        }
+    });
+  }
+
   private setScheduling() {
+    this.schedulingData.data.lobby = [
+      {
+        id: this.schedulingData.data.lobby_id,
+        name: this.schedulingData.data.lobby_name
+      }
+    ];
+    this.schedulingData.data.procedures.forEach(procedure => {
+      procedure.id = procedure.procedures.id;
+      procedure.name = procedure.procedures.name;
+    });
+    this.schedulingData.data.start_date =
+      moment(this.schedulingData.data.start_date);
+    this.schedulingData.data.end_date =
+      moment(this.schedulingData.data.end_date);
     this.form.patchValue(this.schedulingData.data);
+    setTimeout(() => {
+      this.onChangeScheduling();
+    });
   }
 
   public isNew() {
@@ -138,7 +178,7 @@ export class SchedulingPersistComponent implements OnInit {
     }
   }
 
-  public async save() {
+  public async save(navigateById = false) {
     this.validator = true;
     if (this.form.valid) {
       const form = this.form.getRawValue();
@@ -147,9 +187,14 @@ export class SchedulingPersistComponent implements OnInit {
       form.company_id = this.appStorageService.getToken().company_id;
       form.start_date = moment(form.start_date, 'DD/MM/YYYY HH:mm');
       form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm');
-      form.active = `S`;
-      await this.schedulingService.create(form).toPromise();
-      this.router.navigate(['dashboard/scheduling']);
+      form.active = form.active || `S`;
+      const schedulings = await this.schedulingService.create(form).toPromise();
+      if (!navigateById) {
+        this.router.navigate(['dashboard/scheduling']);
+      } else {
+        const [scheduling] = schedulings;
+        this.router.navigate(['dashboard/scheduling', scheduling.id]);
+      }
       this.appToastService.success(
         'success',
         'scheduling.sucsess'

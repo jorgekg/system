@@ -113,6 +113,7 @@ export class SchedulerResponsibleComponent implements ControlValueAccessor {
   public onDelete(id) {
     const index = this.responsibleList.findIndex(responsible => responsible.id === id);
     this.responsibleList.splice(index, 1);
+    this.onChange(this.responsibleList);
   }
 
 }

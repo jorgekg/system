@@ -23,7 +23,8 @@
     <td>{{visitor?.person?.emails[0]?.contact}}</td>
     <td>{{visitor?.person?.phones[0]?.contact | phoneMaskPipe}}</td>
     <th style="text-align: center">
-    <app-warning [message]="'visitor.not.status' | translate"></app-warning>
+      <app-warning *ngIf="isNew" [message]="'visitor.not.status' | translate"></app-warning>
+      <span *ngIf="!isNew">-</span>
     </th>
   </ng-template>
 </app-table>

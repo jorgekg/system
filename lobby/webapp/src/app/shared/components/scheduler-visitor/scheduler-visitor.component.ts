@@ -1,5 +1,5 @@
 import { AppStorageService } from './../../../core/app-storage/app-storage.service';
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from 'src/app/core/entities/person/person.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -17,6 +17,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SchedulerVisitorComponent implements ControlValueAccessor {
+
+  @Input() isNew: boolean;
 
   public visitorList = [];
   public personList = [];
@@ -110,6 +112,7 @@ export class SchedulerVisitorComponent implements ControlValueAccessor {
   public onDelete(id) {
     const index = this.visitorList.findIndex(responsible => responsible.id === id);
     this.visitorList.splice(index, 1);
+    this.onChange(this.visitorList);
   }
 
 }

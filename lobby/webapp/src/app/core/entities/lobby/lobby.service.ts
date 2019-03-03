@@ -39,11 +39,11 @@ export class LobbyService {
 
 export interface Lobby {
   id: number;
-  company_id: number;
+  company_id?: number;
   name: string;
-  start_date: string;
-  end_date: string;
-  company_user: number;
-  create_at: Date;
-  update_at: Date;
+  start_date?: string;
+  end_date?: string;
+  company_user?: number;
+  create_at?: Date;
+  update_at?: Date;
 }

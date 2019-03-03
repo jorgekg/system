@@ -34,7 +34,7 @@ export class SchedulingService {
   }
 
   public create(scheduling: Scheduling) {
-    return this.http.post<Scheduling>(`${environment.url}/create_scheduling`, scheduling);
+    return this.http.post<Scheduling[]>(`${environment.url}/create_scheduling`, scheduling);
   }
 
 }

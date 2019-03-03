@@ -88,7 +88,7 @@
 	"scheduling.responsible.required.message": "Informe um ou mais responsáveis",
 	"scheduling.visitor.required": "Visitante obrigatório!",
 	"scheduling.visitor.required.message": "Informe um ou mais visitante",
-	"scheduling.sucsess": "Agendamento criado!",
+	"scheduling.sucsess": "Agendamento salvo!",
 	"scheduling.add": "Criar agendamento",
 	"responsible.name": "Nome",
 	"responsible.email": "E-mail",

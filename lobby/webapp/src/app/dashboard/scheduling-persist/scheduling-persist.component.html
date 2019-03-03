@@ -15,7 +15,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <label class="require">{{'scheduling.lobby' | translate}}</label>
-                      <ng-multiselect-dropdown [placeholder]="'scheduling.lobby.input' | translate" [(ngModel)]="lobbySelect"
+                      <ng-multiselect-dropdown [placeholder]="'scheduling.lobby.input' | translate"
                         [data]="lobbyList" formControlName="lobby" [settings]="lobbySettings">
                       </ng-multiselect-dropdown>
                     </div>
@@ -56,7 +56,7 @@
                       <app-scheduler-responsible formControlName="responsibles"></app-scheduler-responsible>
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                      <app-scheduler-visitor formControlName="visitors"></app-scheduler-visitor>
+                      <app-scheduler-visitor [isNew]="isNew()" formControlName="visitors"></app-scheduler-visitor>
                     </div>
                   </div>
                 </div>

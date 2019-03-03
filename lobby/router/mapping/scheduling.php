@@ -21,6 +21,15 @@ function (Request $request, Response $response, array $args) use($database) {
 	return $response;
 });
 
+$app->put('/update_scheduling',
+function (Request $request, Response $response, array $args) use($database) {
+	$scheduling = new SchedulingController($database);
+	$scheduling->sessionIsRequired($request);
+	$params = $request->getParsedBody();
+	$response->getBody()->write($scheduling->updateScheduling($params)->asJson());
+	return $response;
+});
+
 $app->get('/schedulings',
 	function (Request $request, Response $response, array $args) use($database) {
 		$scheduling = new SchedulingController($database);
@@ -42,3 +51,4 @@ $app->get('/schedulingid',
 		)->asJson());
 		return $response;
 });
+

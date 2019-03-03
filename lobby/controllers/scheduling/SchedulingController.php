@@ -23,6 +23,7 @@ class SchedulingController extends Controller {
 			], [
 				"scheduling.company_id" => $company,
 				"scheduling.situation" => $situation,
+				"scheduling.active" => "S",
 				'GROUP' => [
 					"lobby.name",
 					"scheduling.id",
@@ -37,8 +38,29 @@ class SchedulingController extends Controller {
 		for($i = 0; $i < count($this->data); $i++){
 			$this->data[$i]["responsibles"] = $this->getResponsible($this->data[$i]["id"]);
 			$this->data[$i]["visitors"] = $this->getVisitor($this->data[$i]["id"]);
+			$this->data[$i]["procedures"] = $this->getProcedures($this->data[$i]["id"]);
+
 		}
 		return $this;
+	}
+
+	private function getProcedures($id) {
+		$procedureSchedulingController = new SchedulingProceduresController($this->database);
+		$procedureSchedulingController->select([
+			"scheduling_id" => $id 
+		]);
+		$proceduresController = new ProceduresController($this->database);
+		for($i = 0; $i < count($procedureSchedulingController->data); $i++){
+			$procedures = (
+				$proceduresController->select([
+					"id" => $procedureSchedulingController->data[$i]["procedure_id"]
+				])
+			)->asObject();
+			if (!empty($procedures)) {
+				$procedureSchedulingController->data[$i]["procedures"] = $procedures[0];
+			}
+		}
+		return $procedureSchedulingController->asObject();
 	}
 
 	private function getResponsible($id) {
@@ -79,6 +101,7 @@ class SchedulingController extends Controller {
 				"lobby.name(lobby_name)",
 				"lobby.id(lobby_id)",
 				"scheduling.id",
+				"scheduling.abs_id",
 				"scheduling.name",
 				"scheduling.lobby_id",
 				"scheduling.start_date",
@@ -91,6 +114,7 @@ class SchedulingController extends Controller {
 		for($i = 0; $i < count($this->data); $i++){
 			$this->data[$i]["responsibles"] = $this->getResponsible($this->data[$i]["id"]);
 			$this->data[$i]["visitors"] = $this->getVisitor($this->data[$i]["id"]);
+			$this->data[$i]["procedures"] = $this->getProcedures($this->data[$i]["id"]);
 		}
 		return $this;
 	}
@@ -98,66 +122,93 @@ class SchedulingController extends Controller {
 	public function createScheduling($scheduling) {
 		$id = null;
 		$this->database->action(function($database) use ($scheduling, &$id) {
-			$schedulingController = new SchedulingController($database);
-			$this->filter = [];
-			$schedulingController->insert([
-				"company_id" => $scheduling["company_id"],
-				"name" => "Agendamento",
-				"lobby_id" => $scheduling["lobby_id"],
-				"start_date" => $scheduling["start_date"],
-				"end_date" => $scheduling["end_date"],
-				"situation" => 1,
-				"active" => $scheduling["active"]
-			]);
-			$schedulingResult = $schedulingController->asObject();
-			$id = $schedulingResult[0]["id"];
-			$schedulingProceduresController = new SchedulingProceduresController($database);
-			if (!empty($scheduling["procedures"])) {
-				foreach($scheduling["procedures"] as $procedures) {
-					$schedulingProceduresController->insert([
+			if (!empty(!$scheduling->id)) {
+				$schedulingController = new SchedulingController($database);
+				$schedulingController->select([
+					"abs_id" => $scheduling["abs_id"],
+					"company_id" => $scheduling["company_id"],
+					"active" => "S"
+				]);
+				$this->removeOldVersioon($schedulingController);
+				$schedulingController->hasError();
+			}
+			return $this->insertScheduling($database, $scheduling, $id);
+		});
+		$this->getSchedulingById($id, $scheduling["company_id"]);
+		return $this;
+	}
+
+	private function removeOldVersioon($schedulingController) {
+		$oldVersion = $schedulingController->asObject();
+		if (!empty($oldVersion)) {
+			foreach($oldVersion as $old) {
+				$schedulingController->update([
+					"id" => $old["id"],
+					"active" => "N"
+				]);
+			}
+		}
+	}
+
+	private function insertScheduling($database, $scheduling, &$id) {
+		$schedulingController = new SchedulingController($database);
+		$this->filter = [];
+		$schedulingController->insert([
+			"company_id" => $scheduling["company_id"],
+			"name" => "Agendamento",
+			"abs_id" => !empty($scheduling["abs_id"]) ? $scheduling["abs_id"] : uniqid(),
+			"lobby_id" => $scheduling["lobby_id"],
+			"start_date" => $scheduling["start_date"],
+			"end_date" => $scheduling["end_date"],
+			"situation" => 1,
+			"active" => $scheduling["active"]
+		]);
+		$schedulingResult = $schedulingController->asObject();
+		$id = $schedulingResult[0]["id"];
+		$schedulingProceduresController = new SchedulingProceduresController($database);
+		if (!empty($scheduling["procedures"])) {
+			foreach($scheduling["procedures"] as $procedures) {
+				$schedulingProceduresController->insert([
+					"company_id" => $scheduling["company_id"],
+					"scheduling_id" => $id,
+					"procedure_id" => $procedures["id"]
+				]);
+			}
+			if (!empty($scheduling["responsibles"])) {
+				$schedulingResponsibleController = new SchedulingResponsibleController($database);
+				foreach($scheduling["responsibles"] as $responsible) {
+					$schedulingResponsibleController->insert([
 						"company_id" => $scheduling["company_id"],
 						"scheduling_id" => $id,
-						"procedure_id" => $procedures["id"]
+						"person_id" => $responsible["person"]["id"],
+						"active" => "S"
 					]);
 				}
-				if (!empty($scheduling["responsibles"])) {
-					$schedulingResponsibleController = new SchedulingResponsibleController($database);
-					foreach($scheduling["responsibles"] as $responsible) {
-						$schedulingResponsibleController->insert([
+				if (!empty($scheduling["visitors"])) {
+					$schedulingVisitorController = new SchedulingVisitorController($database);
+					foreach($scheduling["visitors"] as $visitor) {
+						$schedulingVisitorController->insert([
 							"company_id" => $scheduling["company_id"],
 							"scheduling_id" => $id,
-							"person_id" => $responsible["person"]["id"],
+							"person_id" => $visitor["person"]["id"],
 							"active" => "S"
 						]);
 					}
-					if (!empty($scheduling["visitors"])) {
-						$schedulingVisitorController = new SchedulingVisitorController($database);
-						foreach($scheduling["visitors"] as $visitor) {
-							$schedulingVisitorController->insert([
-								"company_id" => $scheduling["company_id"],
-								"scheduling_id" => $id,
-								"person_id" => $visitor["person"]["id"],
-								"active" => "S"
-							]);
-						}
-						return true;
-					} else {
-						echo json_encode(["code" => 400, "message" => "visitor.requires"]);
-						http_response_code(400);
-						exit;
-					}
+					return true;
 				} else {
-					echo json_encode(["code" => 400, "message" => "responsibles.requires"]);
+					echo json_encode(["code" => 400, "message" => "visitor.requires"]);
 					http_response_code(400);
 					exit;
 				}
 			} else {
-				echo json_encode(["code" => 400, "message" => "procedures.requires"]);
+				echo json_encode(["code" => 400, "message" => "responsibles.requires"]);
 				http_response_code(400);
 				exit;
 			}
-		});
-		$this->getSchedulingById($id, $scheduling["company_id"]);
-		return $this;
+		} else {
+			echo json_encode(["code" => 400, "message" => "procedures.requires"]);
+			http_response_code(400);
+			exit;
+		}
 	}
 }
