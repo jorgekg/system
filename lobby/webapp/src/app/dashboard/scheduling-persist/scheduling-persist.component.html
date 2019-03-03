@@ -62,14 +62,17 @@
                 </div>
                 <hr>
                 <div class=row>
-                  <div class="col-sm-2 {{isNew() ? 'offset-sm-8' : 'offset-sm-10'}}">
+                  <div class="col-sm-2 offset-sm-7">
                     <button type="button" class="btn btn-link btn-block" [routerLink]="['/dashboard/scheduling']">
                       {{(isNew() ? 'cancel' : 'close') | translate}}
                     </button>
                   </div>
-                  <div class="col-sm-2" *ngIf="isNew()">
-                    <button #button type="submit" (click)="save()" class="btn btn-sm btn-primary">
+                  <div class="col-sm-3">
+                    <button #button *ngIf="isNew()" style="width: 100%" type="submit" (click)="save()" class="btn btn-sm btn-primary">
                       {{'scheduling.add' | translate}}
+                    </button>
+                    <button #button *ngIf="!isNew()" style="width: 100%" type="submit" (click)="save()" class="btn btn-sm btn-danger">
+                      {{'scheduling.cancel' | translate}}
                     </button>
                   </div>
                 </div>
