@@ -1,0 +1,9 @@
+.delete {
+	transform: scale(1);
+	transition: all 0.4s;
+}
+
+.delete:hover {
+	transform: scale(1.2);
+	transition: all 0.4s;
+}

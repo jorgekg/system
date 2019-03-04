@@ -17,6 +17,7 @@ export class TableComponent implements OnInit {
   @Input() field;
   @Input() headerHide = false;
   @Input() modalDelete = 'delete-modal';
+  @Input() hasDelete = true;
 
   @Output() add = new EventEmitter();
   @Output() delete = new EventEmitter();

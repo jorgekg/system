@@ -3,9 +3,9 @@
 //
 
 .sr-only {
-  @include sr-only();
+  @include_once sr-only();
 }
 
 .sr-only-focusable {
-  @include sr-only-focusable();
+  @include_once sr-only-focusable();
 }

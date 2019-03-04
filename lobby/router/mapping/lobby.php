@@ -3,10 +3,10 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-include __DIR__.'/../../controllers/lobby/LobbyController.php';
-include __DIR__.'/../../models/lobby/LobbyModel.php';
+include_once __DIR__.'/../../controllers/lobby/LobbyController.php';
+include_once __DIR__.'/../../models/lobby/LobbyModel.php';
 
-$app->get('/lobby',
+$app->get('/api/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);
 		$lobby->sessionIsRequired($request);
@@ -14,7 +14,7 @@ $app->get('/lobby',
 		return $response;
 });
 
-$app->post('/lobby',
+$app->post('/api/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);
 		$lobby->sessionIsRequired($request);
@@ -23,7 +23,7 @@ $app->post('/lobby',
 		return $response;
 });
 
-$app->put('/lobby',
+$app->put('/api/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);
 		$lobby->sessionIsRequired($request);
@@ -32,7 +32,7 @@ $app->put('/lobby',
 		return $response;
 });
 
-$app->delete('/lobby',
+$app->delete('/api/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);
 		$lobby->sessionIsRequired($request);

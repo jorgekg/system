@@ -11,7 +11,7 @@
  * copies of the Software, and to permit persons to whom the Software is furnished
  * to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
+ * The above copyright notice and this permission notice shall be include_onced in all
  * copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -24,21 +24,21 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include_once "config.h"
 #endif
 
-#include "php.h"
-#include "php_ini.h"
-#include "ext/standard/info.h"
-#include "php_pimple.h"
-#include "pimple_compat.h"
-#include "zend_interfaces.h"
-#include "zend.h"
-#include "Zend/zend_closures.h"
-#include "ext/spl/spl_exceptions.h"
-#include "Zend/zend_exceptions.h"
-#include "main/php_output.h"
-#include "SAPI.h"
+#include_once "php.h"
+#include_once "php_ini.h"
+#include_once "ext/standard/info.h"
+#include_once "php_pimple.h"
+#include_once "pimple_compat.h"
+#include_once "zend_interfaces.h"
+#include_once "zend.h"
+#include_once "Zend/zend_closures.h"
+#include_once "ext/spl/spl_exceptions.h"
+#include_once "Zend/zend_exceptions.h"
+#include_once "main/php_output.h"
+#include_once "SAPI.h"
 
 static zend_class_entry *pimple_ce_PsrContainerInterface;
 static zend_class_entry *pimple_ce_PsrContainerExceptionInterface;

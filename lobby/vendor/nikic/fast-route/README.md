@@ -197,7 +197,7 @@ the supplied URI. For example:
 
     [FastRoute\Dispatcher::METHOD_NOT_ALLOWED, ['GET', 'POST']]
 
-> **NOTE:** The HTTP specification requires that a `405 Method Not Allowed` response include the
+> **NOTE:** The HTTP specification requires that a `405 Method Not Allowed` response include_once the
 `Allow:` header to detail available methods for the requested resource. Applications using FastRoute
 should use the second array element to add this header when relaying a 405 response.
 

@@ -1,0 +1,23 @@
+.checkin-not-realized {
+	color: gray;
+	transition: all 0.4s;
+	transform: scale(1);
+}
+
+.checkin-not-realized:hover {
+	color: green;
+	transition: all 0.4s;
+	transform: scale(1.2);
+}
+
+.checkin-realized {
+	color: green;
+	transition: all 0.4s;
+	transform: scale(1);
+}
+
+.checkin-realized:hover {
+	color: gray;
+	transition: all 0.4s;
+	transform: scale(1.2);
+}

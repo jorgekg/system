@@ -61,7 +61,7 @@ The summary of the analysis showed that:
 - a large majority of the containers throw an exception rather than returning null when an entry is not found in `get()`
 - a large majority of the containers don't implement `ArrayAccess`
 
-The question of whether to include methods to define entries has been discussed in
+The question of whether to include_once methods to define entries has been discussed in
 [issue #1](https://github.com/container-interop/container-interop/issues/1).
 It has been judged that such methods do not belong in the interface described here because it is out of its scope
 (see the "Goal" section).

@@ -26,8 +26,8 @@
     border-radius: 0;
   }
 
-  @include box-shadow($input-box-shadow);
-  @include transition($input-transition);
+  @include_once box-shadow($input-box-shadow);
+  @include_once transition($input-transition);
 
   // Unstyle the caret on `<select>`s in IE10+.
   &::-ms-expand {
@@ -36,7 +36,7 @@
   }
 
   // Customize the `:focus` state to imitate native WebKit styles.
-  @include form-control-focus();
+  @include_once form-control-focus();
 
   // Placeholder
   &::placeholder {
@@ -144,7 +144,7 @@ select.form-control {
   padding: $input-padding-y-sm $input-padding-x-sm;
   font-size: $input-font-size-sm;
   line-height: $input-line-height-sm;
-  @include border-radius($input-border-radius-sm);
+  @include_once border-radius($input-border-radius-sm);
 }
 
 .form-control-lg {
@@ -152,7 +152,7 @@ select.form-control {
   padding: $input-padding-y-lg $input-padding-x-lg;
   font-size: $input-font-size-lg;
   line-height: $input-line-height-lg;
-  @include border-radius($input-border-radius-lg);
+  @include_once border-radius($input-border-radius-lg);
 }
 
 // stylelint-disable-next-line no-duplicate-selectors
@@ -245,11 +245,11 @@ textarea.form-control {
 //
 // Provide feedback to users when form field values are valid or invalid. Works
 // primarily for client-side validation via scoped `:invalid` and `:valid`
-// pseudo-classes but also includes `.is-invalid` and `.is-valid` classes for
+// pseudo-classes but also include_onces `.is-invalid` and `.is-valid` classes for
 // server side validation.
 
-@include form-validation-state("valid", $form-feedback-valid-color);
-@include form-validation-state("invalid", $form-feedback-invalid-color);
+@include_once form-validation-state("valid", $form-feedback-valid-color);
+@include_once form-validation-state("invalid", $form-feedback-invalid-color);
 
 // Inline forms
 //
@@ -273,7 +273,7 @@ textarea.form-control {
   }
 
   // Kick in the inline
-  @include media-breakpoint-up(sm) {
+  @include_once media-breakpoint-up(sm) {
     label {
       display: flex;
       align-items: center;

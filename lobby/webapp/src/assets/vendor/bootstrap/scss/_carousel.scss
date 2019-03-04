@@ -23,7 +23,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  @include clearfix();
+  @include_once clearfix();
 }
 
 .carousel-item {
@@ -33,7 +33,7 @@
   width: 100%;
   margin-right: -100%;
   backface-visibility: hidden;
-  @include transition($carousel-transition);
+  @include_once transition($carousel-transition);
 }
 
 .carousel-item.active,
@@ -75,7 +75,7 @@
   .active.carousel-item-right {
     z-index: 0;
     opacity: 0;
-    @include transition(0s $carousel-transition-duration opacity);
+    @include_once transition(0s $carousel-transition-duration opacity);
   }
 }
 
@@ -98,10 +98,10 @@
   color: $carousel-control-color;
   text-align: center;
   opacity: $carousel-control-opacity;
-  @include transition($carousel-control-transition);
+  @include_once transition($carousel-control-transition);
 
   // Hover/focus state
-  @include hover-focus {
+  @include_once hover-focus {
     color: $carousel-control-color;
     text-decoration: none;
     outline: 0;
@@ -172,7 +172,7 @@
     border-top: $carousel-indicator-hit-area-height solid transparent;
     border-bottom: $carousel-indicator-hit-area-height solid transparent;
     opacity: .5;
-    @include transition($carousel-indicator-transition);
+    @include_once transition($carousel-indicator-transition);
   }
 
   .active {

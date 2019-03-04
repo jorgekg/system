@@ -11,7 +11,7 @@
     "test.ts",
     "polyfills.ts"
   ],
-  "include": [
+  "include_once": [
     "**/*.spec.ts",
     "**/*.d.ts"
   ]

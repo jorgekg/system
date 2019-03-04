@@ -2,7 +2,7 @@
  * jQuery JavaScript Library v3.3.1
  * https://jquery.com/
  *
- * Includes Sizzle.js
+ * include_onces Sizzle.js
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
@@ -135,7 +135,7 @@ var
 	jQuery = function( selector, context ) {
 
 		// The jQuery object is actually just the init constructor 'enhanced'
-		// Need init if jQuery is called (just allow error to be thrown if not included)
+		// Need init if jQuery is called (just allow error to be thrown if not include_onced)
 		return new jQuery.fn.init( selector, context );
 	},
 
@@ -1604,7 +1604,7 @@ getText = Sizzle.getText = function( elem ) {
 	} else if ( nodeType === 3 || nodeType === 4 ) {
 		return elem.nodeValue;
 	}
-	// Do not include comment or processing instruction nodes
+	// Do not include_once comment or processing instruction nodes
 
 	return ret;
 };
@@ -5444,7 +5444,7 @@ jQuery.Event.prototype = {
 	}
 };
 
-// Includes all common event props including KeyEvent and MouseEvent specific props
+// include_onces all common event props including KeyEvent and MouseEvent specific props
 jQuery.each( {
 	altKey: true,
 	bubbles: true,
@@ -6823,20 +6823,20 @@ function createFxNow() {
 }
 
 // Generate parameters to create a standard animation
-function genFx( type, includeWidth ) {
+function genFx( type, include_onceWidth ) {
 	var which,
 		i = 0,
 		attrs = { height: type };
 
-	// If we include width, step value is 1 to do all cssExpand values,
+	// If we include_once width, step value is 1 to do all cssExpand values,
 	// otherwise step value is 2 to skip over Left and Right
-	includeWidth = includeWidth ? 1 : 0;
-	for ( ; i < 4; i += 2 - includeWidth ) {
+	include_onceWidth = include_onceWidth ? 1 : 0;
+	for ( ; i < 4; i += 2 - include_onceWidth ) {
 		which = cssExpand[ i ];
 		attrs[ "margin" + which ] = attrs[ "padding" + which ] = type;
 	}
 
-	if ( includeWidth ) {
+	if ( include_onceWidth ) {
 		attrs.opacity = attrs.width = type;
 	}
 
@@ -9800,7 +9800,7 @@ support.createHTMLDocument = ( function() {
 // Argument "data" should be string of html
 // context (optional): If specified, the fragment will be created in this context,
 // defaults to document
-// keepScripts (optional): If true, will include scripts passed in the html string
+// keepScripts (optional): If true, will include_once scripts passed in the html string
 jQuery.parseHTML = function( data, context, keepScripts ) {
 	if ( typeof data !== "string" ) {
 		return [];

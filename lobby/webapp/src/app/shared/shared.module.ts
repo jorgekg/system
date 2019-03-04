@@ -24,6 +24,7 @@ import { PhoneMaskPipe } from './pipe/phone.pipe';
 import { SchedulerVisitorComponent } from './components/scheduler-visitor/scheduler-visitor.component';
 import { WarningComponent } from './components/warning/warning.component';
 import { PersonOnListComponent } from './components/person-on-list/person-on-list.component';
+import { CheckinComponent } from './components/checkin/checkin.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PersonOnListComponent } from './components/person-on-list/person-on-lis
     PhoneMaskPipe,
     SchedulerVisitorComponent,
     WarningComponent,
-    PersonOnListComponent
+    PersonOnListComponent,
+    CheckinComponent
   ],
   imports: [
     CommonModule,
@@ -78,7 +80,8 @@ import { PersonOnListComponent } from './components/person-on-list/person-on-lis
     SchedulerVisitorComponent,
     WarningComponent,
     ToastModule,
-    PersonOnListComponent
+    PersonOnListComponent,
+    CheckinComponent
   ]
 })
 export class SharedModule {}

@@ -23,6 +23,7 @@ export class SchedulerResponsibleComponent implements ControlValueAccessor {
 
   public personAdd;
   public person;
+  public disabled = false;
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
@@ -43,6 +44,10 @@ export class SchedulerResponsibleComponent implements ControlValueAccessor {
 
   public writeValue(value: any) {
     this.responsibleList = value && value.length > 0 ? value : null;
+  }
+
+  public setDisabledState(status) {
+    this.disabled = status;
   }
 
   public async onSeach(term) {

@@ -10,10 +10,10 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require 'vendor/autoload.php';
 
-include './config/DatabaseConfig.php';
-include './controllers/Controller.php';
-include './controllers/token/TokenController.php';
-include './models/token/token.php';
+include_once './config/DatabaseConfig.php';
+include_once './controllers/Controller.php';
+include_once './controllers/token/TokenController.php';
+include_once './models/token/token.php';
 
 
 $app = new \Slim\App;
@@ -24,5 +24,5 @@ $app->add(function ($req, $res, $next) {
 		->withHeader('Access-Control-Allow-Headers', '*')
 		->withHeader('Access-Control-Allow-Methods', '*');
 });
-include 'router/router.php';
+include_once 'router/router.php';
 $app->run();

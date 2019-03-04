@@ -47,7 +47,7 @@
     line-height: $form-feedback-tooltip-line-height;
     color: color-yiq($color);
     background-color: rgba($color, $form-feedback-tooltip-opacity);
-    @include border-radius($form-feedback-tooltip-border-radius);
+    @include_once border-radius($form-feedback-tooltip-border-radius);
   }
 
   .form-control {
@@ -158,7 +158,7 @@
       &:checked {
         ~ .custom-control-label::before {
           border-color: lighten($color, 10%);
-          @include gradient-bg(lighten($color, 10%));
+          @include_once gradient-bg(lighten($color, 10%));
         }
       }
 

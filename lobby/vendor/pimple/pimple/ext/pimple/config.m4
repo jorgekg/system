@@ -9,7 +9,7 @@ dnl If your extension references something external, use with:
 
 dnl PHP_ARG_WITH(pimple, for pimple support,
 dnl Make sure that the comment is aligned:
-dnl [  --with-pimple             Include pimple support])
+dnl [  --with-pimple             include_once pimple support])
 
 dnl Otherwise use enable:
 
@@ -22,7 +22,7 @@ if test "$PHP_PIMPLE" != "no"; then
 
   dnl # --with-pimple -> check with-path
   dnl SEARCH_PATH="/usr/local /usr"     # you might want to change this
-  dnl SEARCH_FOR="/include/pimple.h"  # you most likely want to change this
+  dnl SEARCH_FOR="/include_once/pimple.h"  # you most likely want to change this
   dnl if test -r $PHP_PIMPLE/$SEARCH_FOR; then # path given as parameter
   dnl   PIMPLE_DIR=$PHP_PIMPLE
   dnl else # search default path list
@@ -40,8 +40,8 @@ if test "$PHP_PIMPLE" != "no"; then
   dnl   AC_MSG_ERROR([Please reinstall the pimple distribution])
   dnl fi
 
-  dnl # --with-pimple -> add include path
-  dnl PHP_ADD_INCLUDE($PIMPLE_DIR/include)
+  dnl # --with-pimple -> add include_once path
+  dnl PHP_ADD_include_once($PIMPLE_DIR/include_once)
 
   dnl # --with-pimple -> check for lib and symbol presence
   dnl LIBNAME=pimple # you may want to change this

@@ -15,8 +15,9 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {
   Procedures
 } from 'src/app/core/entities/procedures/procedures.service';
-import { SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
+import { SchedulingService, SchedulingSituation } from 'src/app/core/entities/scheduling/scheduling.service';
 import * as moment from 'moment';
+import { ReceptionService } from 'src/app/core/entities/reception/reception.service';
 
 @Component({
   selector: 'app-scheduling-persist',
@@ -91,6 +92,7 @@ export class SchedulingPersistComponent implements OnInit {
 
   private id;
   private onChangeSchedulingSubscription: Subscription;
+  private updateStatus = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -99,12 +101,14 @@ export class SchedulingPersistComponent implements OnInit {
     private appStorageService: AppStorageService,
     private schedulingService: SchedulingService,
     private router: Router,
-    private appToastService: AppToastService
+    private appToastService: AppToastService,
+    private receptionService: ReceptionService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       abs_id: [],
+      id: [],
       lobby: new FormControl('', Validators.compose([Validators.required])),
       procedures: new FormControl('', Validators.compose([Validators.required])),
       start_date: new FormControl('', Validators.compose([Validators.required])),
@@ -119,23 +123,42 @@ export class SchedulingPersistComponent implements OnInit {
     if (!this.isNew()) {
       this.setScheduling();
     }
+    if (this.router.url.includes('reception')) {
+      (this.visitor.nativeElement as HTMLInputElement).click();
+    }
+  }
+
+  public async update() {
+    const schedulings = await
+      this.schedulingService.getSchedulingById(this.schedulingData.data.id).toPromise() as any;
+    if (schedulings && schedulings.length) {
+      const [scheduling] = schedulings;
+      this.schedulingData.data = scheduling;
+      this.updateStatus = true;
+      this.onChangeSchedulingSubscription.unsubscribe();
+      this.setScheduling();
+    }
   }
 
   private onChangeScheduling() {
     this.onChangeSchedulingSubscription =
     this.form.valueChanges.subscribe(value => {
         this.schedulingChange = value;
-        setTimeout(async () => {
-          if (this.schedulingChange === value) {
-            try {
-              await this.save(true);
-            } catch (err) {
-              this.onChangeSchedulingSubscription.unsubscribe();
-              this.setScheduling();
-              this.onChangeScheduling();
+        if (!this.updateStatus) {
+          setTimeout(async () => {
+            if (this.schedulingChange === value) {
+              try {
+                await this.save(true);
+              } catch (err) {
+                this.onChangeSchedulingSubscription.unsubscribe();
+                this.setScheduling();
+                this.onChangeScheduling();
+              }
             }
-          }
-        }, 500);
+          }, 500);
+        } else {
+          this.updateStatus = false;
+        }
     });
   }
 
@@ -155,6 +178,11 @@ export class SchedulingPersistComponent implements OnInit {
     this.schedulingData.data.end_date =
       moment(this.schedulingData.data.end_date);
     this.form.patchValue(this.schedulingData.data);
+    if (this.schedulingData.data.situation !== SchedulingSituation.PENDING) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
     setTimeout(() => {
       this.onChangeScheduling();
     });
@@ -162,6 +190,36 @@ export class SchedulingPersistComponent implements OnInit {
 
   public isNew() {
     return this.id === `new`;
+  }
+
+  public showCancel() {
+    return !this.isNew() &&
+      (
+        this.schedulingData.data.situation === SchedulingSituation.PENDING ||
+        this.isProgress()
+      );
+  }
+
+  public isProgress() {
+    return this.schedulingData.data.situation === SchedulingSituation.IN_PROGRESS;
+  }
+
+  public async finalizeScheduling() {
+    await this.receptionService.updateReception({
+      id: this.form.get('id').value,
+      company_id: this.appStorageService.getToken().company_id,
+      situation: SchedulingSituation.FINISH
+    }).toPromise();
+    this.appToastService.success('scheduling.success', 'scheduling.finish.success');
+    this.routerBack();
+  }
+
+  private routerBack() {
+    if (this.router.url.includes('reception')) {
+      this.router.navigate(['dashboard/reception']);
+    } else {
+      this.router.navigate(['dashboard/scheduling']);
+    }
   }
 
   private loadProcedures() {
@@ -176,6 +234,15 @@ export class SchedulingPersistComponent implements OnInit {
     }
   }
 
+  public async cancel() {
+    await this.schedulingService.updateScheduling({
+      id: this.schedulingData.data.id,
+      company_id: this.appStorageService.getToken().company_id,
+      situation: SchedulingSituation.CANCELED
+    }).toPromise();
+    this.router.navigate(['dashboard/scheduling']);
+  }
+
   public async save(navigateById = false) {
     this.validator = true;
     if (this.form.valid) {
@@ -187,7 +254,7 @@ export class SchedulingPersistComponent implements OnInit {
       form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm');
       form.active = form.active || `S`;
       const schedulings = await this.schedulingService.create(form).toPromise();
-      if (!navigateById) {
+      if (!navigateById && !this.router.url.includes('reception')) {
         this.router.navigate(['dashboard/scheduling']);
       } else {
         const [scheduling] = schedulings;
@@ -195,7 +262,7 @@ export class SchedulingPersistComponent implements OnInit {
       }
       this.appToastService.success(
         'success',
-        'scheduling.sucsess'
+        'scheduling.success'
       );
     } else {
       if (!this.form.get(`responsibles`).valid) {

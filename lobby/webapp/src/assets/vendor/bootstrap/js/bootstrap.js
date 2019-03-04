@@ -4215,7 +4215,7 @@
 
   (function () {
     if (typeof $ === 'undefined') {
-      throw new TypeError('Bootstrap\'s JavaScript requires jQuery. jQuery must be included before Bootstrap\'s JavaScript.');
+      throw new TypeError('Bootstrap\'s JavaScript requires jQuery. jQuery must be include_onced before Bootstrap\'s JavaScript.');
     }
 
     var version = $.fn.jquery.split(' ')[0].split('.');

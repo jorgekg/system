@@ -5,13 +5,13 @@
 
 @mixin button-variant($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%), $active-background: darken($background, 10%), $active-border: darken($border, 12.5%)) {
   color: color-yiq($background);
-  @include gradient-bg($background);
+  @include_once gradient-bg($background);
   border-color: $border;
-  @include box-shadow($btn-box-shadow);
+  @include_once box-shadow($btn-box-shadow);
 
-  @include hover {
+  @include_once hover {
     color: color-yiq($hover-background);
-    @include gradient-bg($hover-background);
+    @include_once gradient-bg($hover-background);
     border-color: $hover-border;
   }
 
@@ -62,7 +62,7 @@
   color: $color;
   border-color: $color;
 
-  @include hover {
+  @include_once hover {
     color: $color-hover;
     background-color: $active-background;
     border-color: $active-border;

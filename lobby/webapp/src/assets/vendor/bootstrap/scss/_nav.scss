@@ -15,7 +15,7 @@
   display: block;
   padding: $nav-link-padding-y $nav-link-padding-x;
 
-  @include hover-focus {
+  @include_once hover-focus {
     text-decoration: none;
   }
 
@@ -40,9 +40,9 @@
 
   .nav-link {
     border: $nav-tabs-border-width solid transparent;
-    @include border-top-radius($nav-tabs-border-radius);
+    @include_once border-top-radius($nav-tabs-border-radius);
 
-    @include hover-focus {
+    @include_once hover-focus {
       border-color: $nav-tabs-link-hover-border-color;
     }
 
@@ -64,7 +64,7 @@
     // Make dropdown border overlap tab border
     margin-top: -$nav-tabs-border-width;
     // Remove the top rounded corners here since there is a hard edge above the menu
-    @include border-top-radius(0);
+    @include_once border-top-radius(0);
   }
 }
 
@@ -75,7 +75,7 @@
 
 .nav-pills {
   .nav-link {
-    @include border-radius($nav-pills-border-radius);
+    @include_once border-radius($nav-pills-border-radius);
   }
 
   .nav-link.active,

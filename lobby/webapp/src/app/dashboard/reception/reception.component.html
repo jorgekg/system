@@ -1,0 +1,160 @@
+<div id="page-top" class="sidebar-toggled">
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'scheduling' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                [routerLink]="['/dashboard/reception/new']">
+                {{'add' | translate}}
+              </button>
+              <br><br>
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                    role="tab" aria-controls="nav-home" aria-selected="true" (click)="setPending()">
+                    {{'scheduling.today' | translate}}
+                  </a>
+                  <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-inProress"
+                    role="tab" aria-controls="nav-inProress" aria-selected="true" (click)="setInProgress()">
+                    {{'scheduling.inprogress' | translate}}
+                  </a>
+                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                    role="tab" aria-controls="nav-profile" aria-selected="false" (click)="setFinish()">
+                    {{'scheduling.finish' | translate}}
+                  </a>
+                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                    role="tab" aria-controls="nav-contact" aria-selected="false" (click)="setCanceled()">
+                    {{'scheduling.canceled' | translate}}
+                  </a>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <app-table [columns]="receptionPendingColumns" [template]="receptionPending" [headerHide]="true"
+                    [data]="schedulingList" (delete)="delete($event)">
+                    <ng-template #receptionPendingColumns>
+                      <th width="10px"></th>
+                      <th>{{ "scheduling.responsible" | translate }}</th>
+                      <th>{{ "scheduling.visitor" | translate }}</th>
+                      <th>{{ "scheduling.start_date" | translate }}</th>
+                      <th width="50px"></th>
+                    </ng-template>
+                    <ng-template #receptionPending let-scheduling>
+                      <td title="visitor.checking">
+                        <app-checkin [visitor]="scheduling?.visitors[0]" (updateScheduling)="getSchedulings()"
+                          [checkin]="scheduling?.visitors[0]?.checkin"></app-checkin>
+                      </td>
+                      <td>
+                        <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
+                      </td>
+                      <td>
+                          <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
+                      </td>
+                      <td>{{scheduling.start_date}}</td>
+                      <td>
+                        <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
+                      </td>
+                    </ng-template>
+                  </app-table>
+                </div>
+                <div class="tab-pane fade" id="nav-inProress" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <app-table [columns]="receptionInProgressColumns" [template]="receptionInProgress" [headerHide]="true"
+                    [data]="schedulingList" (delete)="delete($event)">
+                    <ng-template #receptionInProgressColumns>
+                      <th width="10px"></th>
+                      <th width="10px"></th>
+                      <th>{{ "scheduling.visitor" | translate }}</th>
+                      <th>{{ "scheduling.start_date" | translate }}</th>
+                      <th width="50px"></th>
+                    </ng-template>
+                    <ng-template #receptionInProgress let-scheduling>
+                      <td title="visitor.checking">
+                        <app-checkin [visitor]="scheduling?.visitors[0]" (updateScheduling)="getSchedulings()"
+                          [checkin]="scheduling?.visitors[0]?.checkin"></app-checkin>
+                      </td>
+                      <td>
+                        <button class="btn btn-link btn-no-padding" (click)="finalizeScheduling(scheduling.id)">
+                          {{'scheduling.action.finish' | translate}}
+                        </button>
+                      </td>
+                      <td>
+                        <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
+                      </td>
+                      <td>{{scheduling.start_date}}</td>
+                      <td>
+                        <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
+                      </td>
+                    </ng-template>
+                  </app-table>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <app-table [columns]="receptionFinishColumns" [template]="templateFinishReception" [headerHide]="true"
+                      [data]="schedulingList" [hasDelete]="false">
+                      <ng-template #receptionFinishColumns>
+                        <th width="10px"></th>
+                        <th>{{ "scheduling.responsible" | translate }}</th>
+                        <th>{{ "scheduling.visitor" | translate }}</th>
+                        <th>{{ "scheduling.start_date" | translate }}</th>
+                        <th width="50px"></th>
+                      </ng-template>
+                      <ng-template #templateFinishReception let-scheduling>
+                        <td nowrap>
+                          <button class="btn btn-link btn-no-padding" (click)="unFinish(scheduling.id)">
+                            {{'scheduling.action.unfinish' | translate}}
+                          </button>
+                        </td>
+                        <td>
+                          <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
+                        </td>
+                        <td>
+                            <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
+                        </td>
+                        <td>{{scheduling.start_date}}</td>
+                        <td>
+                          <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
+                        </td>
+                      </ng-template>
+                    </app-table>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <app-table [columns]="columnsReception" [template]="templateReception" [headerHide]="true"
+                      [data]="schedulingList" [hasDelete]="false">
+                      <ng-template #columnsReception>
+                        <th>{{ "scheduling.responsible" | translate }}</th>
+                        <th>{{ "scheduling.visitor" | translate }}</th>
+                        <th>{{ "scheduling.start_date" | translate }}</th>
+                        <th width="50px"></th>
+                      </ng-template>
+                      <ng-template #templateReception let-scheduling>
+                        <td>
+                          <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
+                        </td>
+                        <td>
+                            <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
+                        </td>
+                        <td>{{scheduling.start_date}}</td>
+                        <td>
+                          <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
+                        </td>
+                      </ng-template>
+                    </app-table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

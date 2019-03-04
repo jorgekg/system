@@ -3,10 +3,12 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-include __DIR__.'/../../controllers/procedures/ProceduresController.php';
-include __DIR__.'/../../models/procedures/ProceduresModel.php';
+include_once __DIR__.'/../../controllers/procedures/ProceduresController.php';
+include_once __DIR__.'/../../controllers/scheduling/VisitorCheckinController.php';
+include_once __DIR__.'/../../models/procedures/ProceduresModel.php';
+include_once __DIR__.'/../../models/scheduling/VisitorCheckinModel.php';
 
-$app->get('/procedures',
+$app->get('/api/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
 		$procedures->sessionIsRequired($request);
@@ -14,7 +16,7 @@ $app->get('/procedures',
 		return $response;
 });
 
-$app->post('/procedures',
+$app->post('/api/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
 		$procedures->sessionIsRequired($request);
@@ -23,7 +25,7 @@ $app->post('/procedures',
 		return $response;
 });
 
-$app->put('/procedures',
+$app->put('/api/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
 		$procedures->sessionIsRequired($request);
@@ -32,7 +34,7 @@ $app->put('/procedures',
 		return $response;
 });
 
-$app->delete('/procedures',
+$app->delete('/api/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
 		$procedures->sessionIsRequired($request);

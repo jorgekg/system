@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { AppStorageService } from './../../../core/app-storage/app-storage.service';
-import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from 'src/app/core/entities/person/person.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -16,23 +17,33 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class SchedulerVisitorComponent implements ControlValueAccessor {
+export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
 
   @Input() isNew: boolean;
+  @Output() updateScheduling = new EventEmitter();
 
   public visitorList = [];
   public personList = [];
   public person;
+  public disabled = false;
 
   public personAdd;
+  public isReception = false;
 
   private onChange = (_: any) => {};
   private onTouched = () => {};
 
   constructor(
     private translateService: TranslateService,
-    private personService: PersonService
+    private personService: PersonService,
+    private router: Router
   ) { }
+
+  ngOnInit() {
+    if (this.router.url.includes('reception')) {
+      this.isReception = true;
+    }
+  }
 
   public registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
@@ -44,6 +55,14 @@ export class SchedulerVisitorComponent implements ControlValueAccessor {
 
   public writeValue(value: any) {
     this.visitorList = value && value.length > 0 ? value : null;
+  }
+
+  public setDisabledState(status) {
+    this.disabled = status;
+  }
+
+  public update() {
+    this.updateScheduling.emit();
   }
 
   public async onSeach(term) {

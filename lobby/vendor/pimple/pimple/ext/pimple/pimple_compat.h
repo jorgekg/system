@@ -11,7 +11,7 @@
  * copies of the Software, and to permit persons to whom the Software is furnished
  * to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
+ * The above copyright notice and this permission notice shall be include_onced in all
  * copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -26,7 +26,7 @@
 #ifndef PIMPLE_COMPAT_H_
 #define PIMPLE_COMPAT_H_
 
-#include "Zend/zend_extensions.h" /* for ZEND_EXTENSION_API_NO */
+#include_once "Zend/zend_extensions.h" /* for ZEND_EXTENSION_API_NO */
 
 #define PHP_5_0_X_API_NO		220040412
 #define PHP_5_1_X_API_NO		220051025

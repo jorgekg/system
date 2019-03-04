@@ -236,13 +236,13 @@ class Route extends Routable implements RouteInterface
      *
      * @param string $name
      * @param string $value
-     * @param bool $includeInSavedArguments
+     * @param bool $include_onceInSavedArguments
      *
      * @return self
      */
-    public function setArgument($name, $value, $includeInSavedArguments = true)
+    public function setArgument($name, $value, $include_onceInSavedArguments = true)
     {
-        if ($includeInSavedArguments) {
+        if ($include_onceInSavedArguments) {
             $this->savedArguments[$name] = $value;
         }
         $this->arguments[$name] = $value;
@@ -253,13 +253,13 @@ class Route extends Routable implements RouteInterface
      * Replace route arguments
      *
      * @param array $arguments
-     * @param bool $includeInSavedArguments
+     * @param bool $include_onceInSavedArguments
      *
      * @return self
      */
-    public function setArguments(array $arguments, $includeInSavedArguments = true)
+    public function setArguments(array $arguments, $include_onceInSavedArguments = true)
     {
-        if ($includeInSavedArguments) {
+        if ($include_onceInSavedArguments) {
             $this->savedArguments = $arguments;
         }
         $this->arguments = $arguments;

@@ -20,6 +20,7 @@ import { PersistComponent as PersistProceduresComponent } from './procedures/per
 import { LobbyPersistResolve } from './lobby/persist/lobby-persist.resolve';
 import { RequirementPersistResolve } from './requirement/persist/requirement-persist.resolve';
 import { SchedulingComponent } from './scheduling/scheduling.component';
+import { ReceptionComponent } from './reception/reception.component';
 
 const routes: Routes = [
   {
@@ -81,7 +82,18 @@ const routes: Routes = [
     component: SchedulingComponent,
   },
   {
+    path: 'reception',
+    component: ReceptionComponent,
+  },
+  {
     path: 'scheduling/:id',
+    component: SchedulingPersistComponent,
+    resolve: {
+      scheduling: SchedulingPersistResolve
+    }
+  },
+  {
+    path: 'reception/:id',
     component: SchedulingPersistComponent,
     resolve: {
       scheduling: SchedulingPersistResolve

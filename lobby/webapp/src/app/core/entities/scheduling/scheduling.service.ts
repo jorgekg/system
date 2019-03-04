@@ -24,6 +24,10 @@ export class SchedulingService {
     });
   }
 
+  public updateScheduling(scheduling: Scheduling) {
+    return this.http.put(`${environment.url}/scheduling`, scheduling);
+  }
+
   public getSchedulingById(schedulingId: number) {
     return this.http.get<Scheduling[]>(`${environment.url}/schedulingid`, {
       params: {
@@ -40,22 +44,24 @@ export class SchedulingService {
 }
 
 export enum SchedulingSituation {
-  PENDING = 1,
-  FINISH = 2,
-  CANCELED = 3
+  PENDING = '1',
+  FINISH = '2',
+  CANCELED = '3',
+  IN_PROGRESS = '4'
 }
 
 export interface Scheduling {
-  id: number;
-  company_id: number;
-  name: string;
-  lobby_id: number;
-  start_date: Date;
-  end_date: Date;
-  active: string;
-  schedulingProcedures: SchedulingProcedures[];
-  schedulingResponsibles: SchedulingResponsible[];
-  schedulingVisitors: SchedulingVisitor[];
+  id?: number;
+  company_id?: number;
+  name?: string;
+  lobby_id?: number;
+  start_date?: Date;
+  end_date?: Date;
+  situation?: SchedulingSituation;
+  active?: string;
+  schedulingProcedures?: SchedulingProcedures[];
+  schedulingResponsibles?: SchedulingResponsible[];
+  schedulingVisitors?: SchedulingVisitor[];
 }
 
 export interface SchedulingProcedures {

@@ -3,10 +3,10 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-include __DIR__.'/../../controllers/procedures_requirement/ProcedureRequirementController.php';
-include __DIR__.'/../../models/procedures_requirement/ProcedureRequirementModel.php';
+include_once __DIR__.'/../../controllers/procedures_requirement/ProcedureRequirementController.php';
+include_once __DIR__.'/../../models/procedures_requirement/ProcedureRequirementModel.php';
 
-$app->get('/procedures_requirement',
+$app->get('/api/procedures_requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$reason = new ProcedureRequirementController($database);
 		$reason->sessionIsRequired($request);
@@ -14,7 +14,7 @@ $app->get('/procedures_requirement',
 		return $response;
 });
 
-$app->post('/procedures_requirement',
+$app->post('/api/procedures_requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$reason = new ProcedureRequirementController($database);
 		$reason->sessionIsRequired($request);
@@ -23,7 +23,7 @@ $app->post('/procedures_requirement',
 		return $response;
 });
 
-$app->delete('/procedures_requirement',
+$app->delete('/api/procedures_requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new ProcedureRequirementController($database);
 		$requirement->sessionIsRequired($request);

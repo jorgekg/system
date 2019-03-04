@@ -3,7 +3,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$app->post('/token',
+$app->post('/api/token',
 	function (Request $request, Response $response, array $args) use($database) {
 		$token = new TokenController($database);
 		$params = $request->getParsedBody();

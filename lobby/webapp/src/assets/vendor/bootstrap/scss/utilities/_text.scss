@@ -11,12 +11,12 @@
 .text-justify  { text-align: justify !important; }
 .text-wrap     { white-space: normal !important; }
 .text-nowrap   { white-space: nowrap !important; }
-.text-truncate { @include text-truncate; }
+.text-truncate { @include_once text-truncate; }
 
 // Responsive alignment
 
 @each $breakpoint in map-keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
+  @include_once media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
     .text#{$infix}-left   { text-align: left !important; }
@@ -45,7 +45,7 @@
 .text-white { color: $white !important; }
 
 @each $color, $value in $theme-colors {
-  @include text-emphasis-variant(".text-#{$color}", $value);
+  @include_once text-emphasis-variant(".text-#{$color}", $value);
 }
 
 .text-body { color: $body-color !important; }
@@ -57,7 +57,7 @@
 // Misc
 
 .text-hide {
-  @include text-hide($ignore-warning: true);
+  @include_once text-hide($ignore-warning: true);
 }
 
 .text-decoration-none { text-decoration: none !important; }

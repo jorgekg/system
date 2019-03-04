@@ -29,7 +29,7 @@ script:
   - ./vendor/bin/simple-phpunit
 
 matrix:
-  include:
+  include_once:
     - php: hhvm
       dist: trusty
       env: PIMPLE_EXT=no

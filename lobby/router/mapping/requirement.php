@@ -3,10 +3,10 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-include __DIR__.'/../../controllers/requirement/RequirementController.php';
-include __DIR__.'/../../models/requirement/RequirementModel.php';
+include_once __DIR__.'/../../controllers/requirement/RequirementController.php';
+include_once __DIR__.'/../../models/requirement/RequirementModel.php';
 
-$app->get('/requirement',
+$app->get('/api/requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);
@@ -14,7 +14,7 @@ $app->get('/requirement',
 		return $response;
 });
 
-$app->get('/requirement_name',
+$app->get('/api/requirement_name',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);
@@ -22,7 +22,7 @@ $app->get('/requirement_name',
 		return $response;
 });
 
-$app->post('/requirement',
+$app->post('/api/requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);
@@ -31,7 +31,7 @@ $app->post('/requirement',
 		return $response;
 });
 
-$app->put('/requirement',
+$app->put('/api/requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);
@@ -40,7 +40,7 @@ $app->put('/requirement',
 		return $response;
 });
 
-$app->delete('/requirement',
+$app->delete('/api/requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);

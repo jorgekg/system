@@ -38,4 +38,8 @@ export class DeleteComponent implements OnInit {
     modal(this.classModal);
   }
 
+  public close() {
+    hide(this.classModal);
+  }
+
 }

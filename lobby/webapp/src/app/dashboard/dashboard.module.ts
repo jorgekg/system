@@ -16,6 +16,7 @@ import { ProceduresComponent } from './procedures/procedures.component';
 import { PersistComponent as  PersistProceduresComponent} from './procedures/persist/persist.component';
 import { SchedulingComponent } from './scheduling/scheduling.component';
 import { SchedulingPersistComponent } from './scheduling-persist/scheduling-persist.component';
+import { ReceptionComponent } from './reception/reception.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SchedulingPersistComponent } from './scheduling-persist/scheduling-pers
     ProceduresComponent,
     PersistProceduresComponent,
     SchedulingComponent,
-    SchedulingPersistComponent
+    SchedulingPersistComponent,
+    ReceptionComponent
   ],
   imports: [CommonModule, DashboardRoutingModule, SharedModule, CoreModule]
 })

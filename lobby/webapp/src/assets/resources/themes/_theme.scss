@@ -216,7 +216,7 @@
 .ui-button:enabled:hover,
 .ui-fileupload-choose:not(.ui-state-disabled):hover {
     outline: 0 none;
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-button:enabled:active,
@@ -227,11 +227,11 @@
 }
 
 .ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-radiobutton-box:not(.ui-state-disabled):not(.ui-state-active):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-dropdown .ui-dropdown-clear-icon {
@@ -239,11 +239,11 @@
 }
 
 .ui-dropdown:not(.ui-state-disabled):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-listbox {
@@ -257,7 +257,7 @@
 
     &:not(.ui-state-disabled) {
         .ui-listbox-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
-            @include hover-element();
+            @include_once hover-element();
         }
 
         .ui-listbox-item.ui-state-disabled .ui-chkbox-box:hover {
@@ -276,11 +276,11 @@
 }
 
 .ui-multiselect:not(.ui-state-disabled):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-multiselect-panel .ui-multiselect-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-multiselect-panel .ui-multiselect-item.ui-state-disabled:hover .ui-chkbox-box {
@@ -297,7 +297,7 @@
 }
 
 .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:active {
@@ -307,15 +307,15 @@
 }
 
 .ui-selectbutton .ui-button:not(.ui-state-disabled):not(.ui-state-active):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-togglebutton:not(.ui-state-disabled):not(.ui-state-active):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-paginator a:not(.ui-state-disabled):not(.ui-state-active):hover {
-    @include hover-element();
+    @include_once hover-element();
 }
 
 .ui-paginator a {
@@ -347,13 +347,13 @@
 
 .ui-orderlist {
     .ui-orderlist-item:not(.ui-state-highlight):hover {
-        @include hover-element();
+        @include_once hover-element();
     }
 }
 
 .ui-picklist {
     .ui-picklist-item:not(.ui-state-disabled):not(.ui-state-highlight):hover {
-        @include hover-element();
+        @include_once hover-element();
     }
 
     .ui-picklist-droppoint-highlight {
@@ -384,7 +384,7 @@
     .ui-treenode-content {
         &.ui-treenode-selectable {
             .ui-treenode-label:not(.ui-state-highlight):hover {
-                @include hover-element();
+                @include_once hover-element();
             }
         }
 
@@ -402,7 +402,7 @@
             }
 
             &:not(.ui-state-highlight):hover {
-                @include hover-element();
+                @include_once hover-element();
             }
         }
     }
@@ -411,21 +411,21 @@
 .ui-organizationchart {
     .ui-organizationchart-node-content {
         &.ui-organizationchart-selectable-node:not(.ui-state-highlight):hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
 
 .ui-accordion {
     .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover {
-        @include hover-element();
+        @include_once hover-element();
     }
 }
 
 .ui-fieldset {
     &.ui-fieldset-toggleable {
         .ui-fieldset-legend:hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
@@ -433,7 +433,7 @@
 .ui-panel {
     .ui-panel-titlebar {
         .ui-panel-titlebar-icon:hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
@@ -442,7 +442,7 @@
     .ui-tabview-nav {
         li {
             &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                @include hover-element();
+                @include_once hover-element();
             }
         }
     }
@@ -453,7 +453,7 @@
         color: $headerTextColor;
 
         &:hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
@@ -463,20 +463,20 @@
         color: $headerTextColor;
 
         &:hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
 
 .ui-overlaypanel {
     .ui-overlaypanel-close:hover {
-        @include hover-element();
+        @include_once hover-element();
     }
 }
 
 .ui-inplace {
     .ui-inplace-display:hover {
-        @include hover-element();
+        @include_once hover-element();
     }
 }
 
@@ -491,14 +491,14 @@
         color: $contentTextColor;
 
         &:hover {
-            @include hover-element();
+            @include_once hover-element();
             border-color: transparent;
         }
     }
 
     &.ui-menuitem-active {
         > .ui-menuitem-link {
-            @include hover-element();
+            @include_once hover-element();
             border-color: transparent;
         }
     }
@@ -507,21 +507,21 @@
 .ui-tabmenu {
     .ui-tabmenu-nav {
         li:not(.ui-state-active):hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
 
 .ui-steps {
     .ui-steps-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
-        @include hover-element();
+        @include_once hover-element();
     }
 }
 
 .ui-panelmenu {
     .ui-panelmenu-header {
         &:not(.ui-state-active):hover {
-            @include hover-element();
+            @include_once hover-element();
             border-color: $stateDefaultBorderColor;
 
             a {
@@ -541,7 +541,7 @@
             color: $contentTextColor;
 
             &:hover {
-                @include hover-element();
+                @include_once hover-element();
                 border-color: transparent;
             }
         }
@@ -554,7 +554,7 @@
             color: $headerTextColor;
 
             &:hover {
-                @include hover-element();
+                @include_once hover-element();
             }
         }
     }
@@ -562,14 +562,14 @@
     .ui-datepicker-calendar {
         td:not(.ui-state-disabled) {
             a:hover {
-                @include hover-element();
+                @include_once hover-element();
             }
         }
     }
 
     .ui-monthpicker {
         .ui-monthpicker-month:hover {
-            @include hover-element();
+            @include_once hover-element();
         }
     }
 }
@@ -579,14 +579,14 @@
         .fc-prev-button {
             .ui-icon-circle-triangle-w {
                 margin-top: .3em;
-                @include icon_override("\e900");
+                @include_once icon_override("\e900");
             }
         }
 
         .fc-next-button {
             .ui-icon-circle-triangle-e {
                 margin-top: .3em;
-                @include icon_override("\e901");
+                @include_once icon_override("\e901");
             }
         }
     }

@@ -3,14 +3,14 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-include __DIR__.'/../../controllers/person/PersonController.php';
-include __DIR__.'/../../models/person/PersonModel.php';
-include __DIR__.'/../../controllers/person/PersonDocumentController.php';
-include __DIR__.'/../../models/person/PersonDocumentModel.php';
-include __DIR__.'/../../controllers/person/PersonContactController.php';
-include __DIR__.'/../../models/person/PersonContactModel.php';
+include_once __DIR__.'/../../controllers/person/PersonController.php';
+include_once __DIR__.'/../../models/person/PersonModel.php';
+include_once __DIR__.'/../../controllers/person/PersonDocumentController.php';
+include_once __DIR__.'/../../models/person/PersonDocumentModel.php';
+include_once __DIR__.'/../../controllers/person/PersonContactController.php';
+include_once __DIR__.'/../../models/person/PersonContactModel.php';
 
-$app->get('/person',
+$app->get('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		//$person->sessionIsRequired($request);
@@ -18,7 +18,7 @@ $app->get('/person',
 		return $response;
 });
 
-$app->get('/person/all',
+$app->get('/api/person/all',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$response->getBody()->write($person->getPerson(
@@ -27,7 +27,7 @@ $app->get('/person/all',
 		return $response;
 });
 
-$app->get('/person/byname',
+$app->get('/api/person/byname',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$response->getBody()->write($person->getPersonByName(
@@ -38,7 +38,7 @@ $app->get('/person/byname',
 		return $response;
 });
 
-$app->post('/person',
+$app->post('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
@@ -47,7 +47,7 @@ $app->post('/person',
 		return $response;
 });
 
-$app->post('/create_person',
+$app->post('/api/create_person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
@@ -56,7 +56,7 @@ $app->post('/create_person',
 		return $response;
 });
 
-$app->put('/person',
+$app->put('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
@@ -65,7 +65,7 @@ $app->put('/person',
 		return $response;
 });
 
-$app->delete('/person',
+$app->delete('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
@@ -73,7 +73,7 @@ $app->delete('/person',
 		return $response;
 });
 
-$app->get('/person_document',
+$app->get('/api/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
@@ -81,7 +81,7 @@ $app->get('/person_document',
 		return $response;
 });
 
-$app->post('/person_document',
+$app->post('/api/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
@@ -90,7 +90,7 @@ $app->post('/person_document',
 		return $response;
 });
 
-$app->put('/person_document',
+$app->put('/api/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
@@ -99,7 +99,7 @@ $app->put('/person_document',
 		return $response;
 });
 
-$app->delete('/person_document',
+$app->delete('/api/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
@@ -107,7 +107,7 @@ $app->delete('/person_document',
 		return $response;
 });
 
-$app->get('/person_contact',
+$app->get('/api/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);
@@ -115,7 +115,7 @@ $app->get('/person_contact',
 		return $response;
 });
 
-$app->post('/person_contact',
+$app->post('/api/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);
@@ -124,7 +124,7 @@ $app->post('/person_contact',
 		return $response;
 });
 
-$app->put('/person_contact',
+$app->put('/api/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);
@@ -133,7 +133,7 @@ $app->put('/person_contact',
 		return $response;
 });
 
-$app->delete('/person_contact',
+$app->delete('/api/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);

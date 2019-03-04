@@ -48,11 +48,11 @@ class ComposerAutoloaderInita6a9d63db8f8f94412ef47f8fbf51416
         $loader->register(true);
 
         if ($useStaticLoader) {
-            $includeFiles = Composer\Autoload\ComposerStaticInita6a9d63db8f8f94412ef47f8fbf51416::$files;
+            $include_onceFiles = Composer\Autoload\ComposerStaticInita6a9d63db8f8f94412ef47f8fbf51416::$files;
         } else {
-            $includeFiles = require __DIR__ . '/autoload_files.php';
+            $include_onceFiles = require __DIR__ . '/autoload_files.php';
         }
-        foreach ($includeFiles as $fileIdentifier => $file) {
+        foreach ($include_onceFiles as $fileIdentifier => $file) {
             composerRequirea6a9d63db8f8f94412ef47f8fbf51416($fileIdentifier, $file);
         }
 

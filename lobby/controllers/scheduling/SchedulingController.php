@@ -32,6 +32,9 @@ class SchedulingController extends Controller {
 					"scheduling.start_date",
 					"scheduling.end_date"
 				],
+				"ORDER" => [
+					"scheduling.start_date" => "ASC"
+				],
 				'LIMIT' => [$page, 10],
 			]
 		);
@@ -40,6 +43,47 @@ class SchedulingController extends Controller {
 			$this->data[$i]["visitors"] = $this->getVisitor($this->data[$i]["id"]);
 			$this->data[$i]["procedures"] = $this->getProcedures($this->data[$i]["id"]);
 
+		}
+		return $this;
+	}
+
+	public function getReceptions($name, $company, $situation = 1, $page = 0) {
+		$this->data = $this->database->select(
+			$this->table,[
+				"[><]scheduling_visitor" => ["scheduling.id" => "scheduling_id"],
+				"[><]lobby" => ["scheduling.lobby_id" => "id"]
+			], [
+				"lobby.name(lobby_name)",
+				"scheduling_visitor.id(visitor_id)",
+				"scheduling_visitor.person_id(visitor_person_id)",
+				"scheduling.id",
+				"scheduling.name",
+				"scheduling.company_id",
+				"scheduling.lobby_id",
+				"scheduling.start_date",
+				"scheduling.end_date",
+			], [
+				"scheduling.company_id" => $company,
+				"scheduling.situation" => $situation,
+				"scheduling.active" => "S",
+				"ORDER" => [
+					"scheduling.start_date" => "ASC"
+				],
+				'LIMIT' => [$page, 10],
+			]
+		);
+		$this->hasError();
+		$person = new PersonController($this->database);
+		$checkin = new VisitorCheckinController($this->database);
+		for($i = 0; $i < count($this->data); $i++){
+			$this->data[$i]["responsibles"] = $this->getResponsible($this->data[$i]["id"]);
+			$this->data[$i]["procedures"] = $this->getProcedures($this->data[$i]["id"]);
+			$this->data[$i]["visitors"][0]["id"] = $this->data[$i]["visitor_id"];
+			$this->data[$i]["visitors"][0]["checkin"] = $checkin->getCheckinByVisitor(
+				$this->data[$i]["visitor_id"],
+				$this->data[$i]["company_id"]
+			)->asObject();
+			$this->data[$i]["visitors"][0]["person"] = ($person->getPerson($this->data[$i]["visitor_person_id"]))->asObject()[0];
 		}
 		return $this;
 	}
@@ -84,10 +128,18 @@ class SchedulingController extends Controller {
 			"scheduling_id" => $id
 		]);
 		$person = new PersonController($this->database);
+		$checkin = new VisitorCheckinController($this->database);
 		for($i = 0; $i < count($visitor->data); $i++){
 			$personData = ($person->getPerson($visitor->data[$i]["person_id"]))->asObject();
 			if (!empty($personData)) {
 				$visitor->data[$i]["person"] = $personData[0];
+			}
+			$checkinData = $checkin->getCheckinByVisitor(
+				$visitor->data[$i]["id"],
+				$visitor->data[$i]["company_id"]
+			)->asObject();
+			if (!empty($checkinData)) {
+				$visitor->data[$i]["checkin"] = $checkinData;
 			}
 		}
 		return $visitor->asObject();
@@ -103,6 +155,7 @@ class SchedulingController extends Controller {
 				"scheduling.id",
 				"scheduling.abs_id",
 				"scheduling.name",
+				"scheduling.situation",
 				"scheduling.lobby_id",
 				"scheduling.start_date",
 				"scheduling.end_date"
@@ -119,7 +172,15 @@ class SchedulingController extends Controller {
 		return $this;
 	}
 
+	private function isSchedulinPending($scheudling) {
+		if (!empty($scheduling["situation"]) && $scheduling["situation"] != 1) {
+			echo json_encode(["code" => 400, "message" => "schedulig.not.edit"]);
+			exit;
+		}
+	}
+
 	public function createScheduling($scheduling) {
+		$this->isSchedulinPending($scheduling);
 		$id = null;
 		$this->database->action(function($database) use ($scheduling, &$id) {
 			if (!empty(!$scheduling->id)) {
@@ -210,5 +271,28 @@ class SchedulingController extends Controller {
 			http_response_code(400);
 			exit;
 		}
+	}
+
+	public function unFinish($scheduling) {
+		$this->database->action(function($database) use ($scheduling, &$id) {
+			$visitors = $this->getVisitor($scheduling["id"]);
+			$isPending = true;
+			$visitorCheckin = new VisitorCheckinController($database);
+			foreach($visitors as $visitor) {
+				$visitorCheckin->getCheckinByVisitor($visitor["id"], $scheduling["company_id"]);
+				if (!empty($visitorCheckin->asObject())) {
+					$isPending = false;
+				}
+			}
+			$schedulingController = new SchedulingController($database);
+			$schedulingController->update([
+				"id" => $scheduling["id"],
+				"company_id" => $scheduling["company_id"],
+				"situation" => $isPending ? 1 : 4
+			]);
+			return true;
+		});
+		$this->data = [];
+		return $this;
 	}
 }

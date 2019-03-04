@@ -26,7 +26,7 @@
       @extend %grid-column;
     }
 
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
+    @include_once media-breakpoint-up($breakpoint, $breakpoints) {
       // Provide basic `.col-{bp}` classes for equal-width flexbox columns
       .col#{$infix} {
         flex-basis: 0;
@@ -41,7 +41,7 @@
 
       @for $i from 1 through $columns {
         .col#{$infix}-#{$i} {
-          @include make-col($i, $columns);
+          @include_once make-col($i, $columns);
         }
       }
 
@@ -57,7 +57,7 @@
       @for $i from 0 through ($columns - 1) {
         @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
           .offset#{$infix}-#{$i} {
-            @include make-col-offset($i, $columns);
+            @include_once make-col-offset($i, $columns);
           }
         }
       }

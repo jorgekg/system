@@ -6,12 +6,12 @@
     <p-autoComplete [suggestions]="personList" [forceSelection]="true" [(ngModel)]="person"
       field="label" (completeMethod)="onSeach($event)" (onSelect)="selectPerson($event)"
       [immutable]=false [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-      [placeholder]="'responsible.search' | translate"></p-autoComplete>
+      [placeholder]="'responsible.search' | translate" [disabled]="disabled"></p-autoComplete>
   </div>
 </div>
 <br>
 <app-table [columns]="columns" [template]="template" [data]="responsibleList"
-  [headerHide]=true (delete)="onDelete($event)">
+  [headerHide]=true (delete)="onDelete($event)" [hasDelete]="!disabled">
   <ng-template #columns>
     <th>{{'responsible.name' | translate}}</th>
     <th>{{'responsible.email' | translate}}</th>

@@ -3,7 +3,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{'delete.title' | translate}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="close()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -11,14 +12,14 @@
         <p align="center">{{'delete.message' | translate}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-link" data-dismiss="modal">{{'close' | translate}}</button>
+        <button type="button" (click)="close()" class="btn btn-link" data-dismiss="modal">{{'close' | translate}}</button>
         <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
           (click)="onDelete()">{{'delete' | translate}}</button>
       </div>
     </div>
   </div>
 </div>
-<button class="btn btn-link btn-no-padding" style="color: red"
+<button class="btn btn-link btn-no-padding delete" style="color: red"
 (click)="modaDelete()">
   <i class="fas fa-trash"></i>
 </button>

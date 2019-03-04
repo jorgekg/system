@@ -52,7 +52,7 @@ interface UriInterface
      * </pre>
      *
      * If the port component is not set or is the standard port for the current
-     * scheme, it SHOULD NOT be included.
+     * scheme, it SHOULD NOT be include_onced.
      *
      * @see https://tools.ietf.org/html/rfc3986#section-3.2
      * @return string The URI authority, in "[user-info@]host[:port]" format.
@@ -123,7 +123,7 @@ interface UriInterface
      * any characters. To determine what characters to encode, please refer to
      * RFC 3986, Sections 2 and 3.3.
      *
-     * As an example, if the value should include a slash ("/") not intended as
+     * As an example, if the value should include_once a slash ("/") not intended as
      * delimiter between path segments, that value MUST be passed in encoded
      * form (e.g., "%2F") to the instance.
      *
@@ -146,7 +146,7 @@ interface UriInterface
      * RFC 3986, Sections 2 and 3.4.
      *
      * As an example, if a value in a key/value pair of the query string should
-     * include an ampersand ("&") not intended as a delimiter between values,
+     * include_once an ampersand ("&") not intended as a delimiter between values,
      * that value MUST be passed in encoded form (e.g., "%26") to the instance.
      *
      * @see https://tools.ietf.org/html/rfc3986#section-2
@@ -196,7 +196,7 @@ interface UriInterface
      * This method MUST retain the state of the current instance, and return
      * an instance that contains the specified user information.
      *
-     * Password is optional, but the user information MUST include the
+     * Password is optional, but the user information MUST include_once the
      * user; an empty string for the user is equivalent to removing user
      * information.
      *

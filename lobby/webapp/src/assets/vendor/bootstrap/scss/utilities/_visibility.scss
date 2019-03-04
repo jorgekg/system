@@ -3,9 +3,9 @@
 //
 
 .visible {
-  @include invisible(visible);
+  @include_once invisible(visible);
 }
 
 .invisible {
-  @include invisible(hidden);
+  @include_once invisible(hidden);
 }

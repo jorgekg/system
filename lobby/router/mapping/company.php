@@ -3,19 +3,19 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-include __DIR__.'/../../controllers/company/CompanyController.php';
-include __DIR__.'/../../controllers/company/CompanyUserController.php';
-include __DIR__.'/../../models/company/CompanyModel.php';
-include __DIR__.'/../../models/company/CompanyUserModel.php';
+include_once __DIR__.'/../../controllers/company/CompanyController.php';
+include_once __DIR__.'/../../controllers/company/CompanyUserController.php';
+include_once __DIR__.'/../../models/company/CompanyModel.php';
+include_once __DIR__.'/../../models/company/CompanyUserModel.php';
 
-$app->get('/company',
+$app->get('/api/company',
 	function (Request $request, Response $response, array $args) use($database) {
 		$company = new CompanyController($database);
 		$response->getBody()->write($company->get($request)->asJson());
 		return $response;
 });
 
-$app->get('/company_user',
+$app->get('/api/company_user',
 	function (Request $request, Response $response, array $args) use($database) {
 		$company_user = new CompanyUserController($database);
 		$company_user->sessionIsRequired($request);
@@ -23,7 +23,7 @@ $app->get('/company_user',
 		return $response;
 });
 
-$app->post('/company_user',
+$app->post('/api/company_user',
 	function (Request $request, Response $response, array $args) use($database) {
 		$company_user = new CompanyUserController($database);
 		$params = $request->getParsedBody();
@@ -32,7 +32,7 @@ $app->post('/company_user',
 		return $response;
 });
 
-$app->put('/company_user',
+$app->put('/api/company_user',
 	function (Request $request, Response $response, array $args) use($database) {
 		$company_user = new CompanyUserController($database);
 		$company_user->sessionIsRequired($request);

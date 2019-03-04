@@ -27,8 +27,8 @@
   &:checked ~ .custom-control-label::before {
     color: $custom-control-indicator-checked-color;
     border-color: $custom-control-indicator-checked-border-color;
-    @include gradient-bg($custom-control-indicator-checked-bg);
-    @include box-shadow($custom-control-indicator-checked-box-shadow);
+    @include_once gradient-bg($custom-control-indicator-checked-bg);
+    @include_once box-shadow($custom-control-indicator-checked-box-shadow);
   }
 
   &:focus ~ .custom-control-label::before {
@@ -48,7 +48,7 @@
     color: $custom-control-indicator-active-color;
     background-color: $custom-control-indicator-active-bg;
     border-color: $custom-control-indicator-active-border-color;
-    @include box-shadow($custom-control-indicator-active-box-shadow);
+    @include_once box-shadow($custom-control-indicator-active-box-shadow);
   }
 
   &:disabled {
@@ -83,7 +83,7 @@
     content: "";
     background-color: $custom-control-indicator-bg;
     border: $custom-control-indicator-border-color solid $custom-control-indicator-border-width;
-    @include box-shadow($custom-control-indicator-box-shadow);
+    @include_once box-shadow($custom-control-indicator-box-shadow);
   }
 
   // Foreground (icon)
@@ -108,7 +108,7 @@
 
 .custom-checkbox {
   .custom-control-label::before {
-    @include border-radius($custom-checkbox-indicator-border-radius);
+    @include_once border-radius($custom-checkbox-indicator-border-radius);
   }
 
   .custom-control-input:checked ~ .custom-control-label {
@@ -120,8 +120,8 @@
   .custom-control-input:indeterminate ~ .custom-control-label {
     &::before {
       border-color: $custom-checkbox-indicator-indeterminate-border-color;
-      @include gradient-bg($custom-checkbox-indicator-indeterminate-bg);
-      @include box-shadow($custom-checkbox-indicator-indeterminate-box-shadow);
+      @include_once gradient-bg($custom-checkbox-indicator-indeterminate-bg);
+      @include_once box-shadow($custom-checkbox-indicator-indeterminate-box-shadow);
     }
     &::after {
       background-image: $custom-checkbox-indicator-icon-indeterminate;
@@ -183,7 +183,7 @@
       height: $custom-switch-indicator-size;
       background-color: $custom-control-indicator-border-color;
       border-radius: $custom-switch-indicator-border-radius;
-      @include transition(transform .15s ease-in-out, $custom-forms-transition);
+      @include_once transition(transform .15s ease-in-out, $custom-forms-transition);
     }
   }
 
@@ -225,7 +225,7 @@
   } @else {
     border-radius: 0;
   }
-  @include box-shadow($custom-select-box-shadow);
+  @include_once box-shadow($custom-select-box-shadow);
   appearance: none;
 
   &:focus {
@@ -336,8 +336,8 @@
   color: $custom-file-color;
   background-color: $custom-file-bg;
   border: $custom-file-border-width solid $custom-file-border-color;
-  @include border-radius($custom-file-border-radius);
-  @include box-shadow($custom-file-box-shadow);
+  @include_once border-radius($custom-file-border-radius);
+  @include_once box-shadow($custom-file-box-shadow);
 
   &::after {
     position: absolute;
@@ -351,9 +351,9 @@
     line-height: $custom-file-line-height;
     color: $custom-file-button-color;
     content: "Browse";
-    @include gradient-bg($custom-file-button-bg);
+    @include_once gradient-bg($custom-file-button-bg);
     border-left: inherit;
-    @include border-radius(0 $custom-file-border-radius $custom-file-border-radius 0);
+    @include_once border-radius(0 $custom-file-border-radius $custom-file-border-radius 0);
   }
 }
 
@@ -388,15 +388,15 @@
     width: $custom-range-thumb-width;
     height: $custom-range-thumb-height;
     margin-top: ($custom-range-track-height - $custom-range-thumb-height) / 2; // Webkit specific
-    @include gradient-bg($custom-range-thumb-bg);
+    @include_once gradient-bg($custom-range-thumb-bg);
     border: $custom-range-thumb-border;
-    @include border-radius($custom-range-thumb-border-radius);
-    @include box-shadow($custom-range-thumb-box-shadow);
-    @include transition($custom-forms-transition);
+    @include_once border-radius($custom-range-thumb-border-radius);
+    @include_once box-shadow($custom-range-thumb-box-shadow);
+    @include_once transition($custom-forms-transition);
     appearance: none;
 
     &:active {
-      @include gradient-bg($custom-range-thumb-active-bg);
+      @include_once gradient-bg($custom-range-thumb-active-bg);
     }
   }
 
@@ -407,22 +407,22 @@
     cursor: $custom-range-track-cursor;
     background-color: $custom-range-track-bg;
     border-color: transparent;
-    @include border-radius($custom-range-track-border-radius);
-    @include box-shadow($custom-range-track-box-shadow);
+    @include_once border-radius($custom-range-track-border-radius);
+    @include_once box-shadow($custom-range-track-box-shadow);
   }
 
   &::-moz-range-thumb {
     width: $custom-range-thumb-width;
     height: $custom-range-thumb-height;
-    @include gradient-bg($custom-range-thumb-bg);
+    @include_once gradient-bg($custom-range-thumb-bg);
     border: $custom-range-thumb-border;
-    @include border-radius($custom-range-thumb-border-radius);
-    @include box-shadow($custom-range-thumb-box-shadow);
-    @include transition($custom-forms-transition);
+    @include_once border-radius($custom-range-thumb-border-radius);
+    @include_once box-shadow($custom-range-thumb-box-shadow);
+    @include_once transition($custom-forms-transition);
     appearance: none;
 
     &:active {
-      @include gradient-bg($custom-range-thumb-active-bg);
+      @include_once gradient-bg($custom-range-thumb-active-bg);
     }
   }
 
@@ -433,8 +433,8 @@
     cursor: $custom-range-track-cursor;
     background-color: $custom-range-track-bg;
     border-color: transparent; // Firefox specific?
-    @include border-radius($custom-range-track-border-radius);
-    @include box-shadow($custom-range-track-box-shadow);
+    @include_once border-radius($custom-range-track-border-radius);
+    @include_once box-shadow($custom-range-track-box-shadow);
   }
 
   &::-ms-thumb {
@@ -443,15 +443,15 @@
     margin-top: 0; // Edge specific
     margin-right: $custom-range-thumb-focus-box-shadow-width; // Workaround that overflowed box-shadow is hidden.
     margin-left: $custom-range-thumb-focus-box-shadow-width;  // Workaround that overflowed box-shadow is hidden.
-    @include gradient-bg($custom-range-thumb-bg);
+    @include_once gradient-bg($custom-range-thumb-bg);
     border: $custom-range-thumb-border;
-    @include border-radius($custom-range-thumb-border-radius);
-    @include box-shadow($custom-range-thumb-box-shadow);
-    @include transition($custom-forms-transition);
+    @include_once border-radius($custom-range-thumb-border-radius);
+    @include_once box-shadow($custom-range-thumb-box-shadow);
+    @include_once transition($custom-forms-transition);
     appearance: none;
 
     &:active {
-      @include gradient-bg($custom-range-thumb-active-bg);
+      @include_once gradient-bg($custom-range-thumb-active-bg);
     }
   }
 
@@ -463,18 +463,18 @@
     background-color: transparent;
     border-color: transparent;
     border-width: $custom-range-thumb-height / 2;
-    @include box-shadow($custom-range-track-box-shadow);
+    @include_once box-shadow($custom-range-track-box-shadow);
   }
 
   &::-ms-fill-lower {
     background-color: $custom-range-track-bg;
-    @include border-radius($custom-range-track-border-radius);
+    @include_once border-radius($custom-range-track-border-radius);
   }
 
   &::-ms-fill-upper {
     margin-right: 15px; // arbitrary?
     background-color: $custom-range-track-bg;
-    @include border-radius($custom-range-track-border-radius);
+    @include_once border-radius($custom-range-track-border-radius);
   }
 
   &:disabled {
@@ -503,5 +503,5 @@
 .custom-control-label::before,
 .custom-file-label,
 .custom-select {
-  @include transition($custom-forms-transition);
+  @include_once transition($custom-forms-transition);
 }

@@ -4,8 +4,8 @@
 
 @if $enable-grid-classes {
   .container {
-    @include make-container();
-    @include make-container-max-widths();
+    @include_once make-container();
+    @include_once make-container-max-widths();
   }
 }
 
@@ -16,7 +16,7 @@
 
 @if $enable-grid-classes {
   .container-fluid {
-    @include make-container();
+    @include_once make-container();
   }
 }
 
@@ -26,7 +26,7 @@
 
 @if $enable-grid-classes {
   .row {
-    @include make-row();
+    @include_once make-row();
   }
 
   // Remove the negative margin from default .row, then the horizontal padding
@@ -48,5 +48,5 @@
 // Common styles for small and large grid columns
 
 @if $enable-grid-classes {
-  @include make-grid-columns();
+  @include_once make-grid-columns();
 }
