@@ -39,7 +39,7 @@ $app->get('/api/schedulings',
 			$request->getQueryParam('name'),
 			$request->getQueryParam('company_id'),
 			$request->getQueryParam('situation'),
-			$request->getQueryParam('page')
+			$request->getQueryParam('offset')
 		)->asJson());
 		return $response;
 });
@@ -51,7 +51,8 @@ $app->get('/api/reception',
 			$request->getQueryParam('name'),
 			$request->getQueryParam('company_id'),
 			$request->getQueryParam('situation'),
-			$request->getQueryParam('page')
+			$request->getQueryParam('date'),
+			$request->getQueryParam('offset')
 		)->asJson());
 		return $response;
 });
@@ -66,7 +67,7 @@ $app->get('/api/schedulingid',
 		return $response;
 });
 
-$app->put('/api/scheduling',
+$app->post('/api/put/scheduling',
 	function (Request $request, Response $response, array $args) use($database) {
 		$scheduling = new SchedulingController($database);
 		$scheduling->sessionIsRequired($request);
@@ -75,7 +76,7 @@ $app->put('/api/scheduling',
 		return $response;
 });
 
-$app->put('/api/unFinish',
+$app->post('/api/put/unFinish',
 	function (Request $request, Response $response, array $args) use($database) {
 		$scheduling = new SchedulingController($database);
 		$scheduling->sessionIsRequired($request);

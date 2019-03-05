@@ -55,7 +55,7 @@ export class SchedulerResponsibleComponent implements ControlValueAccessor {
       const peoples = await this.personService.getByName(
         term.query, 'S', this.appStorageService.getToken().company_id
       ).toPromise();
-      this.personList = peoples.map((person: any) => {
+      this.personList = peoples.contents.map((person: any) => {
         return {
           ...person,
           label: `${person.name} (${person.document})`
@@ -74,7 +74,8 @@ export class SchedulerResponsibleComponent implements ControlValueAccessor {
   public async selectPerson(person) {
     if (person) {
       if (person.id) {
-        const [people] = await this.personService.getAll(person.id).toPromise();
+        const peopleContents = await this.personService.getAll(person.id).toPromise();
+        const [people] = peopleContents.contents;
         const reponsible = {
           id: this.responsibleList ? this.responsibleList.length : 0,
           person: people

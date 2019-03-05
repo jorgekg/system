@@ -23,7 +23,7 @@ $app->post('/api/lobby',
 		return $response;
 });
 
-$app->put('/api/lobby',
+$app->post('/api/put/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);
 		$lobby->sessionIsRequired($request);
@@ -32,7 +32,7 @@ $app->put('/api/lobby',
 		return $response;
 });
 
-$app->delete('/api/lobby',
+$app->get('/api/delete/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);
 		$lobby->sessionIsRequired($request);

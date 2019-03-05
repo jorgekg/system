@@ -13,12 +13,16 @@ export class RequirementService {
     private http: HttpClient
   ) { }
 
-  public get() {
-    return this.http.get<Requirement[]>(this.endpoint);
+  public get(page = 0) {
+    return this.http.get<Requirements>(this.endpoint, {
+      params: {
+        offset: page.toString()
+      }
+    });
   }
 
   public getById(id: number) {
-    return this.http.get<Requirement[]>(this.endpoint, {
+    return this.http.get<Requirements>(this.endpoint, {
       params: {
         id: id.toString()
       }
@@ -26,7 +30,7 @@ export class RequirementService {
   }
 
   public getByName(name: string) {
-    return this.http.get<Requirement[]>(`${this.endpoint}_name`, {
+    return this.http.get<Requirements>(`${this.endpoint}_name`, {
       params: {
         name: name
       }
@@ -38,16 +42,21 @@ export class RequirementService {
   }
 
   public update(requirement) {
-    return this.http.put<Requirement[]>(this.endpoint, requirement);
+    return this.http.post<Requirement[]>(`${environment.url}/put/requirement`, requirement);
   }
 
   public delete(id: number) {
-    return this.http.delete<Requirement>(this.endpoint, {
+    return this.http.get<Requirement>(`${environment.url}/delete/requirement`, {
       params: {
         id: id.toString()
       }
     });
   }
+}
+
+export interface Requirements {
+  contents: Requirement[];
+  totalElements: number;
 }
 
 export interface Requirement {

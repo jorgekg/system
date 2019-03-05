@@ -10,6 +10,7 @@
 	"update": "Atualizar",
 	"cancel": "Cancelar",
 	"success": "Sucesso",
+	"not.fount": "Nenhum registro encontrado!",
 	"error.delete.fk": "Não é possível apagar, pois o mesmo já possui vinculos!",
 	"dashboard": "Ir para o dashboard",
 	"company.invalid": "Usuário ou senha inválidos",

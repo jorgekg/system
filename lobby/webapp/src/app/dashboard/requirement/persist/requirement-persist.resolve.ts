@@ -21,8 +21,8 @@ export class RequirementPersistResolve implements Resolve<any> {
           resolve();
         } else {
           const requirements = await this.requirementService.getById(params.id).toPromise();
-          if (requirements && requirements.length > 0) {
-            const [requirement] = requirements;
+          if (requirements && requirements.contents.length > 0) {
+            const [requirement] = requirements.contents;
             resolve(requirement);
           } else {
             resolve(null);

@@ -10,7 +10,8 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import {DpDatePickerModule} from 'ng2-date-picker';
+import { DpDatePickerModule } from 'ng2-date-picker';
+import { TableModule } from 'primeng/table';
 
 import { RequiredDirective } from './diretive/required.directive';
 import { NavbarTopComponent } from './components/navbar-top/navbar-top.component';
@@ -25,6 +26,7 @@ import { SchedulerVisitorComponent } from './components/scheduler-visitor/schedu
 import { WarningComponent } from './components/warning/warning.component';
 import { PersonOnListComponent } from './components/person-on-list/person-on-list.component';
 import { CheckinComponent } from './components/checkin/checkin.component';
+import { NextDayComponent } from './components/next-day/next-day.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { CheckinComponent } from './components/checkin/checkin.component';
     SchedulerVisitorComponent,
     WarningComponent,
     PersonOnListComponent,
-    CheckinComponent
+    CheckinComponent,
+    NextDayComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +58,8 @@ import { CheckinComponent } from './components/checkin/checkin.component';
     NgMultiSelectDropDownModule.forRoot(),
     DpDatePickerModule,
     PhoneMaskModule,
-    ToastModule
+    ToastModule,
+    TableModule
   ],
   exports: [
     TranslateModule,
@@ -81,7 +85,9 @@ import { CheckinComponent } from './components/checkin/checkin.component';
     WarningComponent,
     ToastModule,
     PersonOnListComponent,
-    CheckinComponent
+    CheckinComponent,
+    TableModule,
+    NextDayComponent
   ]
 })
 export class SharedModule {}

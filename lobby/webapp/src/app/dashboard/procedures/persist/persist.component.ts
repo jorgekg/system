@@ -27,7 +27,7 @@ export class PersistComponent implements OnInit {
   public requirementList = [];
   public procedureRequirementList = [] as ProcedureRequirement[];
   public requirement;
-  public isSubmit = false;
+  public validator = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,7 +61,8 @@ export class PersistComponent implements OnInit {
   }
 
   public async onSearch(value) {
-    this.requirementList = await this.requirementService.getByName(value.query).toPromise();
+    const requirements = await this.requirementService.getByName(value.query).toPromise();
+    this.requirementList = requirements.contents;
   }
 
   public async onSelect(value) {
@@ -77,10 +78,11 @@ export class PersistComponent implements OnInit {
   }
 
   public async getProcedureRequired() {
-    this.procedureRequirementList =
+    const procedureRequirementList =
       await this.proceduresRequirementService.getByProcedure(
         this.activatedRoute.snapshot.params.id
       ).toPromise();
+    this.procedureRequirementList = procedureRequirementList.contents;
   }
 
   public isNew() {
@@ -94,7 +96,7 @@ export class PersistComponent implements OnInit {
   }
 
   public async save() {
-    this.isSubmit = true;
+    this.validator = true;
     if (this.form.valid) {
       (this.button.nativeElement as HTMLInputElement).innerHTML =
         this.translateService.instant('await');
@@ -105,10 +107,10 @@ export class PersistComponent implements OnInit {
         procedures.time = `${procedures.time}00`;
         if (this.isNew()) {
           const proceduress = await this.proceduresService.insert(procedures).toPromise();
-          if (proceduress && proceduress.length > 0) {
-            const [proceduresData] = proceduress;
-            this.translateService.instant('update');
+          if (proceduress && proceduress.contents.length > 0) {
+            const [proceduresData] = proceduress.contents;
             this.router.navigate(['dashboard/procedures', proceduresData.id]);
+            this.translateService.instant('update');
           }
         } else {
           procedures.id = this.activatedRoute.snapshot.params.id;

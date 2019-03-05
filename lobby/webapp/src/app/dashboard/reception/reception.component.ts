@@ -1,6 +1,6 @@
 import { AppToastService } from './../../core/app-toast/app-toast.service';
 import { AppStorageService } from './../../core/app-storage/app-storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Scheduling, SchedulingSituation, SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
 import { ReceptionService } from 'src/app/core/entities/reception/reception.service';
 
@@ -10,9 +10,16 @@ import { ReceptionService } from 'src/app/core/entities/reception/reception.serv
   styleUrls: ['./reception.component.css']
 })
 export class ReceptionComponent implements OnInit {
+  @ViewChild(`inProgress`) inProgress: ElementRef;
+  @ViewChild(`finish`) finish: ElementRef;
 
   public schedulingList = [] as Scheduling[];
   public situation = SchedulingSituation.PENDING;
+  public totalElements = 0;
+
+  public first = 0;
+
+  private receptionDate = new Date();
 
   constructor(
     private appStorageService: AppStorageService,
@@ -24,10 +31,34 @@ export class ReceptionComponent implements OnInit {
     this.getSchedulings();
   }
 
-  public async getSchedulings() {
-    this.schedulingList = await this.receptionService.getReception(
-      ``, this.situation, 0
+  public async getSchedulings(page = 0) {
+    const schedulingList = await this.receptionService.getReception(
+      ``, this.situation, this.receptionDate.toString(), page
     ).toPromise();
+    this.schedulingList = schedulingList.contents;
+    this.totalElements = schedulingList.totalElements;
+  }
+
+  public onChangeDate(date) {
+    this.receptionDate = date;
+    this.first = 0;
+    this.getSchedulings();
+  }
+
+  public async onPage(page) {
+    this.first = page.first;
+    const schedulings = await
+    this.receptionService.getReception(
+      ``, this.situation, page.first
+      ).toPromise();
+    for (let i = 0; i < schedulings.contents.length; i++) {
+      this.schedulingList[page.first + i] = schedulings.contents[i];
+    }
+    this.totalElements = schedulings.totalElements;
+  }
+
+  public onCheckin() {
+    (this.inProgress.nativeElement as HTMLInputElement).click();
   }
 
   public async finalizeScheduling(schedulingId: number) {
@@ -38,6 +69,7 @@ export class ReceptionComponent implements OnInit {
     }).toPromise();
     this.appToastService.success('success', 'scheduling.finish.success');
     this.getSchedulings();
+    this.first = 0;
   }
 
   public async unFinish(schedulingId: number) {
@@ -47,6 +79,7 @@ export class ReceptionComponent implements OnInit {
     }).toPromise();
     this.appToastService.success('success', 'scheduling.unfinish.success');
     this.getSchedulings();
+    this.first = 0;
   }
 
   public async delete(schedulingId: number) {
@@ -60,21 +93,25 @@ export class ReceptionComponent implements OnInit {
   }
 
   public async setPending() {
+    this.first = 0;
     this.situation = SchedulingSituation.PENDING;
     await this.getSchedulings();
   }
 
   public async setInProgress() {
+    this.first = 0;
     this.situation = SchedulingSituation.IN_PROGRESS;
     await this.getSchedulings();
   }
 
   public async setFinish() {
+    this.first = 0;
     this.situation = SchedulingSituation.FINISH;
     await this.getSchedulings();
   }
 
   public async setCanceled() {
+    this.first = 0;
     this.situation = SchedulingSituation.CANCELED;
     await this.getSchedulings();
   }

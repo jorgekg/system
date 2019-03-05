@@ -33,16 +33,19 @@
               </nav>
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                  <app-table [columns]="columns" [template]="template" [headerHide]="true"
-                    [data]="schedulingList">
-                    <ng-template #columns>
-                      <th>{{ "scheduling.lobby" | translate }}</th>
-                      <th>{{ "scheduling.responsible" | translate }}</th>
-                      <th>{{ "scheduling.visitor" | translate }}</th>
-                      <th>{{ "scheduling.start_date" | translate }}</th>
-                      <th width="50px"></th>
+                  <p-table styleClass="table" [value]="schedulingList" [paginator]="true" 
+                    [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th width="20%">{{ "scheduling.lobby" | translate }}</th>
+                        <th width="18%">{{ "scheduling.responsible" | translate }}</th>
+                        <th width="18%">{{ "scheduling.visitor" | translate }}</th>
+                        <th width="15%">{{ "scheduling.start_date" | translate }}</th>
+                        <th width="50px"></th>
+                      </tr>
                     </ng-template>
-                    <ng-template #template let-scheduling>
+                    <ng-template pTemplate="body" let-scheduling>
+                      <tr>
                         <td>{{scheduling.lobby_name}}</td>
                         <td>
                           <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
@@ -54,21 +57,32 @@
                         <td>
                           <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
                         </td>
+                      </tr>
                     </ng-template>
-                  </app-table>
+                    <ng-template pTemplate="emptymessage" let-columns>
+                      <tr>
+                        <td [attr.colspan]="5" align=center>
+                          {{'not.fount' | translate}}
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <app-table [columns]="columns" [template]="template" [headerHide]="true"
-                      [data]="schedulingList" [hasDelete]="false">
-                      <ng-template #columns>
-                        <th>{{ "scheduling.lobby" | translate }}</th>
-                        <th>{{ "scheduling.responsible" | translate }}</th>
-                        <th>{{ "scheduling.visitor" | translate }}</th>
-                        <th>{{ "scheduling.start_date" | translate }}</th>
-                        <th width="50px"></th>
+                      <p-table styleClass="table" [value]="schedulingList" [paginator]="true" 
+                      [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th width="20%">{{ "scheduling.lobby" | translate }}</th>
+                          <th width="18%">{{ "scheduling.responsible" | translate }}</th>
+                          <th width="18%">{{ "scheduling.visitor" | translate }}</th>
+                          <th width="15%">{{ "scheduling.start_date" | translate }}</th>
+                          <th width="50px"></th>
+                        </tr>
                       </ng-template>
-                      <ng-template #template let-scheduling>
+                      <ng-template pTemplate="body" let-scheduling>
+                        <tr>
                           <td>{{scheduling.lobby_name}}</td>
                           <td>
                             <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
@@ -80,22 +94,33 @@
                           <td>
                             <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
                           </td>
+                        </tr>
                       </ng-template>
-                    </app-table>
+                      <ng-template pTemplate="emptymessage" let-columns>
+                        <tr>
+                          <td [attr.colspan]="5" align=center>
+                            {{'not.fount' | translate}}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <app-table [columns]="columns" [template]="template" [headerHide]="true"
-                      [data]="schedulingList" [hasDelete]="false">
-                      <ng-template #columns>
-                        <th>{{ "scheduling.lobby" | translate }}</th>
-                        <th>{{ "scheduling.responsible" | translate }}</th>
-                        <th>{{ "scheduling.visitor" | translate }}</th>
-                        <th>{{ "scheduling.start_date" | translate }}</th>
-                        <th width="50px"></th>
+                      <p-table styleClass="table" [value]="schedulingList" [paginator]="true" 
+                      [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th width="20%">{{ "scheduling.lobby" | translate }}</th>
+                          <th width="18%">{{ "scheduling.responsible" | translate }}</th>
+                          <th width="18%">{{ "scheduling.visitor" | translate }}</th>
+                          <th width="15%">{{ "scheduling.start_date" | translate }}</th>
+                          <th width="50px"></th>
+                        </tr>
                       </ng-template>
-                      <ng-template #template let-scheduling>
+                      <ng-template pTemplate="body" let-scheduling>
+                        <tr>
                           <td>{{scheduling.lobby_name}}</td>
                           <td>
                             <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
@@ -107,8 +132,16 @@
                           <td>
                             <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
                           </td>
+                        </tr>
                       </ng-template>
-                    </app-table>
+                      <ng-template pTemplate="emptymessage" let-columns>
+                        <tr>
+                          <td [attr.colspan]="5" align=center>
+                            {{'not.fount' | translate}}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
                   </div>
                 </div>
               </div>

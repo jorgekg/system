@@ -102,3 +102,29 @@ html, body {
 	background: red;
 	color: white
 }
+
+body .ui-widget-header {
+	border-color: transparent;
+}
+
+.ui-paginator .ui-paginator-page {
+	height: 40px;
+}
+
+.ui-table .ui-table-thead > tr > th {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.ui-table .ui-table-tbody > tr > td {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.ui-paginator {
+	text-align: right ! important
+	}

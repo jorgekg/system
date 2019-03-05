@@ -21,8 +21,8 @@ export class ProceduresPersistResolve implements Resolve<any> {
           resolve();
         } else {
           const procedures = await this.proceduresService.getById(params.id).toPromise();
-          if (procedures && procedures.length > 0) {
-            const [procedure] = procedures;
+          if (procedures && procedures.contents.length > 0) {
+            const [procedure] = procedures.contents;
             resolve(procedure);
           } else {
             resolve(null);

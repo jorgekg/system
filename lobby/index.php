@@ -8,6 +8,8 @@ header('Access-Control-Max-Age: 86400');
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+date_default_timezone_set('America/Sao_Paulo');
+
 require 'vendor/autoload.php';
 
 include_once './config/DatabaseConfig.php';

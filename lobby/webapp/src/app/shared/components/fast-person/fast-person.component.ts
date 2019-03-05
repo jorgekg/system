@@ -120,8 +120,8 @@ export class FastPersonComponent implements OnInit {
         }
       ];
       const people = await this.personService.createPerson(person).toPromise();
-      const [ps] = people;
-      this.selectPerson.emit(ps);
+      const [peopleContents] = people.contents;
+      this.selectPerson.emit(peopleContents);
       hide(this.classModal);
       this.form.reset();
     }

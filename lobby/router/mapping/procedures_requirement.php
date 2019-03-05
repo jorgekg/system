@@ -23,7 +23,7 @@ $app->post('/api/procedures_requirement',
 		return $response;
 });
 
-$app->delete('/api/procedures_requirement',
+$app->get('/api/delete/procedures_requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new ProcedureRequirementController($database);
 		$requirement->sessionIsRequired($request);

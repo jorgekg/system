@@ -10,6 +10,11 @@ class SchedulingController extends Controller {
 	}
 
 	public function getSchedulings($name, $company, $situation = 1, $page = 0) {
+		$this->totalElements = $this->database->count($this->table, [
+			"company_id" => $company,
+			"situation" => $situation,
+			"active" => "S"
+		]);
 		$this->data = $this->database->select(
 			$this->table,[
 				"[><]lobby" => ["lobby_id" => "id"]
@@ -47,7 +52,39 @@ class SchedulingController extends Controller {
 		return $this;
 	}
 
-	public function getReceptions($name, $company, $situation = 1, $page = 0) {
+	private function getDate($date) {
+		$startDate = null;
+		try {
+			$startDate = new DateTime($data);
+		} catch(Exception $e) {
+			$startDate = new DateTime();
+		}
+		$startDate->setTime(0,0,0);
+		$endDate = clone $startDate;
+		$endDate->add(new DateInterval("P1D"));
+		return [$startDate, $endDate];
+	}
+
+	public function getReceptions($name, $company, $situation = 1, $date = "", $page = 0) {
+		$date = $this->getDate($date);
+		$this->totalElements = count(
+			$this->database->select(
+				$this->table,[
+					"[><]scheduling_visitor" => ["scheduling.id" => "scheduling_id"],
+					"[><]lobby" => ["scheduling.lobby_id" => "id"]
+				], [
+					"lobby.name(lobby_name)",
+					"scheduling_visitor.id(visitor_id)",
+					"scheduling.id",
+				], [
+					"scheduling.company_id" => $company,
+					"scheduling.situation" => $situation,
+					"scheduling.active" => "S",
+					"scheduling.start_date[>]" => $date[0]->format('Y-m-d H:i:s'),
+					"scheduling.start_date[<]" => $date[1]->format('Y-m-d H:i:s')
+				]
+			)
+		);
 		$this->data = $this->database->select(
 			$this->table,[
 				"[><]scheduling_visitor" => ["scheduling.id" => "scheduling_id"],
@@ -66,6 +103,8 @@ class SchedulingController extends Controller {
 				"scheduling.company_id" => $company,
 				"scheduling.situation" => $situation,
 				"scheduling.active" => "S",
+				"scheduling.start_date[>]" => $date[0]->format('Y-m-d H:i:s'),
+				"scheduling.start_date[<]" => $date[1]->format('Y-m-d H:i:s'),
 				"ORDER" => [
 					"scheduling.start_date" => "ASC"
 				],
@@ -189,7 +228,7 @@ class SchedulingController extends Controller {
 		$this->isSchedulinPending($scheduling);
 		$id = null;
 		$this->database->action(function($database) use ($scheduling, &$id) {
-			if (!empty($scheduling->id)) {
+			if (!empty($scheduling["abs_id"])) {
 				$schedulingController = new SchedulingController($database);
 				$schedulingController->select([
 					"abs_id" => $scheduling["abs_id"],

@@ -64,7 +64,7 @@
                 <hr>
                 <div class=row>
                   <div class="col-sm-2 {{isNew() || showCancel() ? (isProgress() ? 'offset-sm-4' : 'offset-sm-7'): 'offset-sm-10'}}">
-                    <button type="button" class="btn btn-link btn-block" [routerLink]="['/dashboard/scheduling']">
+                    <button type="button" class="btn btn-link btn-block" (click)="routerBack()">
                       {{(isNew() ? 'cancel' : 'close') | translate}}
                     </button>
                   </div>

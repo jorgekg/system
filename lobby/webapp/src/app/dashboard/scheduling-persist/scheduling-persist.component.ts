@@ -131,8 +131,8 @@ export class SchedulingPersistComponent implements OnInit {
   public async update() {
     const schedulings = await
       this.schedulingService.getSchedulingById(this.schedulingData.data.id).toPromise() as any;
-    if (schedulings && schedulings.length) {
-      const [scheduling] = schedulings;
+    if (schedulings && schedulings.contents.length) {
+      const [scheduling] = schedulings.contents;
       this.schedulingData.data = scheduling;
       this.updateStatus = true;
       this.onChangeSchedulingSubscription.unsubscribe();
@@ -219,7 +219,7 @@ export class SchedulingPersistComponent implements OnInit {
     this.routerBack();
   }
 
-  private routerBack() {
+  public routerBack() {
     if (this.router.url.includes('reception')) {
       this.router.navigate(['dashboard/reception']);
     } else {
@@ -262,7 +262,7 @@ export class SchedulingPersistComponent implements OnInit {
       if (!navigateById && !this.router.url.includes('reception')) {
         this.router.navigate(['dashboard/scheduling']);
       } else {
-        const [scheduling] = schedulings;
+        const [scheduling] = schedulings.contents;
         this.router.navigate(['dashboard/scheduling', scheduling.id]);
       }
       this.appToastService.success(

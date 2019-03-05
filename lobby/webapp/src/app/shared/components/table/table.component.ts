@@ -12,6 +12,7 @@ export class TableComponent implements OnInit {
     this.manipuledData = data;
     this.defaultData = data;
   }
+  @Input() totalElements = 0;
   @Input() columns;
   @Input() template;
   @Input() field;
@@ -21,8 +22,6 @@ export class TableComponent implements OnInit {
 
   @Output() add = new EventEmitter();
   @Output() delete = new EventEmitter();
-
-  public totalElements;
   public defaultData;
   public manipuledData;
   public page = 10;
@@ -31,7 +30,6 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.totalElements = this.getPages();
   }
 
   public addItem() {
@@ -39,7 +37,7 @@ export class TableComponent implements OnInit {
   }
 
   public getPages() {
-    return this.manipuledData.length < this.page ? [1] : this.qtd();
+    return 
   }
 
   public search() {

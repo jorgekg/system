@@ -68,7 +68,7 @@ export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
   public async onSeach(term) {
     if (term.query) {
       const peoples = await this.personService.getByName(term.query, 'S').toPromise();
-      this.personList = peoples.map((person: any) => {
+      this.personList = peoples.contents.map((person: any) => {
         return {
           ...person,
           label: `${person.name} (${person.document})`
@@ -87,7 +87,8 @@ export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
   public async selectPerson(person) {
     if (person) {
       if (person.id) {
-        const [people] = await this.personService.getAll(person.id).toPromise();
+        const peopleContents = await this.personService.getAll(person.id).toPromise();
+        const [people] = peopleContents.contents;
         const reponsible = {
           id: this.visitorList ? this.visitorList.length : 0,
           person: people

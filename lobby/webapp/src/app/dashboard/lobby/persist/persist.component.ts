@@ -14,8 +14,9 @@ import { LobbyService } from './../../../core/entities/lobby/lobby.service';
 export class PersistComponent implements OnInit {
   @ViewChild('button') button: ElementRef;
 
-  public isSubmit = false;
   public form: FormGroup;
+
+  public validator = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,7 +49,7 @@ export class PersistComponent implements OnInit {
   }
 
   public async save() {
-    this.isSubmit = true;
+    this.validator = true;
     if (this.form.valid) {
       (this.button.nativeElement as HTMLInputElement).innerHTML =
         this.translateService.instant('await');

@@ -20,18 +20,18 @@ export class PersonService {
   }
 
   public getAll(personId: number) {
-    return this.http.get<Person[]>(`${this.endpoint}/all?id=${personId}`);
+    return this.http.get<People>(`${this.endpoint}/all?id=${personId}`);
   }
 
   public getByName(name: string, responsible: string, companyId?: number) {
-    return this.http.get<Person[]>(
+    return this.http.get<People>(
       `${this.endpoint}/byname?name=${name}&responsible=${responsible}${
         companyId ? `&company_id=${companyId}` : `` }`
     );
   }
 
   public createPerson(person) {
-    return this.http.post<Person[]>(`${environment.url}/create_person`, person);
+    return this.http.post<People>(`${environment.url}/create_person`, person);
   }
 
   public update(person) {
@@ -41,6 +41,10 @@ export class PersonService {
   public forget(email) {
     return this.http.post(`${this.endpoint}/forget`, email);
   }
+}
+
+export interface People {
+  contents: Person[]
 }
 
 export interface Person {

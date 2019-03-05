@@ -10,6 +10,7 @@ export class SchedulingComponent implements OnInit {
 
   public schedulingList = [] as Scheduling[];
   public situation = SchedulingSituation.PENDING;
+  public totalElements = 0;
 
   constructor(
     private schedulingService: SchedulingService
@@ -19,10 +20,16 @@ export class SchedulingComponent implements OnInit {
     this.getSchedulings();
   }
 
-  public async getSchedulings() {
-    this.schedulingList = await this.schedulingService.getScheduling(
-      ``, this.situation, 0
+  public async getSchedulings(page = 0) {
+    const schedulingList = await this.schedulingService.getScheduling(
+      ``, this.situation, page
     ).toPromise();
+    this.schedulingList = schedulingList.contents;
+    this.totalElements = schedulingList.totalElements;
+  }
+
+  public onPage(page) {
+    this.getSchedulings(page.first);
   }
 
   public async setPending() {

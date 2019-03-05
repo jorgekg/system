@@ -31,7 +31,7 @@ $app->post('/api/requirement',
 		return $response;
 });
 
-$app->put('/api/requirement',
+$app->post('/api/put/requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);
@@ -40,7 +40,7 @@ $app->put('/api/requirement',
 		return $response;
 });
 
-$app->delete('/api/requirement',
+$app->get('/api/delete/requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$requirement = new RequirementController($database);
 		$requirement->sessionIsRequired($request);

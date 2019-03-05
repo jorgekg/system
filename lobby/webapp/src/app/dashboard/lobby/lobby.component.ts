@@ -13,6 +13,7 @@ export class LobbyComponent implements OnInit {
 
   public lobbyList = [] as Lobby[];
   public totalPages = 0;
+  private atualPage = 0;
   constructor(
     private activedRoute: ActivatedRoute,
     private router: Router,
@@ -24,8 +25,18 @@ export class LobbyComponent implements OnInit {
   }
 
   private async getLobby() {
-    this.lobbyList = this.activedRoute.snapshot.data.lobbies;
-    this.totalPages = this.lobbyList.length;
+    this.lobbyList = this.activedRoute.snapshot.data.lobbies.contents;
+    this.totalPages = this.activedRoute.snapshot.data.lobbies.totalElements;
+  }
+
+  public async onPage(page) {
+    this.atualPage = page.first;
+    const lobbies = await
+    this.lobbyService.get(page.first).toPromise();
+    for (let i = 0; i < lobbies.contents.length; i++) {
+      this.lobbyList[page.first + i] = lobbies.contents[i];
+    }
+    this.totalPages = lobbies.totalElements;
   }
 
   public add() {
@@ -36,6 +47,10 @@ export class LobbyComponent implements OnInit {
     await this.lobbyService.delete(id).toPromise();
     const indexId = this.lobbyList.findIndex(lobby => lobby.id === id);
     this.lobbyList.splice(indexId, 1);
+    this.onPage({
+      first: this.atualPage,
+      page: 10
+    });
   }
 
 }

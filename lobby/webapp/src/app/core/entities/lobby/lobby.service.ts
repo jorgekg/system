@@ -10,12 +10,17 @@ export class LobbyService {
 
   constructor(public http: HttpClient) {}
 
-  public get() {
-    return this.http.get<Lobby[]>(this.endpont);
+  public get(page = 0, size = 10) {
+    return this.http.get<Lobbies>(this.endpont, {
+      params: {
+        offset: page.toString(),
+        size: size.toString()
+      }
+    });
   }
 
   public getById(id: number) {
-    return this.http.get<Lobby[]>(this.endpont, {
+    return this.http.get<Lobbies>(this.endpont, {
       params: { id: id.toString() }
     });
   }
@@ -25,16 +30,21 @@ export class LobbyService {
   }
 
   public update(lobby: Lobby) {
-    return this.http.put<Lobby[]>(this.endpont, lobby);
+    return this.http.post<Lobby[]>(`${environment.url}/put/lobby`, lobby);
   }
 
   public delete(id: number) {
-    return this.http.delete<Lobby>(this.endpont, {
+    return this.http.get<Lobby>(`${environment.url}/delete/lobby`, {
       params: {
         id: id.toString()
       }
     });
   }
+}
+
+export interface Lobbies {
+  contents: Lobby[];
+  totalElements: number;
 }
 
 export interface Lobby {

@@ -8,6 +8,7 @@ Class Controller {
 	protected $model;
 
 	protected $data;
+	protected $totalElements;
 	protected $filter;
 
 	public function sessionIsRequired($request) {
@@ -25,6 +26,7 @@ Class Controller {
 
 	public function get(Request $params) {
 		$this->getFilters($params);
+		$this->getTotalRows();
 		$this->data = $this->database->select(
 			$this->table,
 			'*',
@@ -44,8 +46,16 @@ Class Controller {
 		return $this;
 	}
 
+	public function getTotalRows() {
+		$filter = $this->filter;
+		unset($filter["LIMIT"]);
+		$this->totalElements = $this->database->count($this->table, $filter);
+		$this->hasError();
+	}
+
 	public function delete(Request $params) {
 		$this->getFilters($params);
+		unset($this->filter["LIMIT"]);
 		$this->database->delete($this->table, [
 			"AND" => $this->filter
 		]);
@@ -112,13 +122,13 @@ Class Controller {
 	}
 
 	protected function getPagination($params = null) {
-		$filter = [];
-		if (!empty($params)) {
 			$offset = $params->getQueryParam('offset');
 			$size = $params->getQueryParam('size');
-			$filter['LIMIT'] = 0;
-		}
-		return $filter;
+			$this->filter['LIMIT'] = [
+				!empty($offset) ? $offset : 0,
+				!empty($size) ? $size : 10,
+			];
+
 	}
 
 	protected function getFilters($params = null) {
@@ -131,6 +141,7 @@ Class Controller {
 				}
 			}
 		}
+		$this->getPagination($params);
 	}
 
 	public function asObject() {
@@ -141,6 +152,8 @@ Class Controller {
 		if (empty($this->data)) {
 			$this->data = [];
 		}
-		return json_encode($this->data);
+		return json_encode(
+			["totalElements" => $this->totalElements, "contents" => $this->data]
+		);
 	}
 }

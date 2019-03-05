@@ -14,7 +14,7 @@ export class SchedulingService {
   ) { }
 
   public getScheduling(personName, schedulingSituation, page = 0) {
-    return this.http.get<Scheduling[]>(`${environment.url}/schedulings`, {
+    return this.http.get<Schedulings>(`${environment.url}/schedulings`, {
       params: {
         name: personName,
         situation: schedulingSituation,
@@ -25,11 +25,11 @@ export class SchedulingService {
   }
 
   public updateScheduling(scheduling: Scheduling) {
-    return this.http.put(`${environment.url}/scheduling`, scheduling);
+    return this.http.post(`${environment.url}/put/scheduling`, scheduling);
   }
 
   public getSchedulingById(schedulingId: number) {
-    return this.http.get<Scheduling[]>(`${environment.url}/schedulingid`, {
+    return this.http.get<Schedulings>(`${environment.url}/schedulingid`, {
       params: {
         id: schedulingId.toString(),
         company_id: this.appStorageSerice.getToken().company_id.toString()
@@ -38,7 +38,7 @@ export class SchedulingService {
   }
 
   public create(scheduling: Scheduling) {
-    return this.http.post<Scheduling[]>(`${environment.url}/create_scheduling`, scheduling);
+    return this.http.post<Schedulings>(`${environment.url}/create_scheduling`, scheduling);
   }
 
 }
@@ -48,6 +48,11 @@ export enum SchedulingSituation {
   FINISH = '2',
   CANCELED = '3',
   IN_PROGRESS = '4'
+}
+
+export interface Schedulings {
+  contents: Scheduling[];
+  totalElements: number;
 }
 
 export interface Scheduling {

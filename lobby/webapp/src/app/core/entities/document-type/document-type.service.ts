@@ -14,8 +14,12 @@ export class DocumentTypeService {
   ) { }
 
   public get() {
-    return this.http.get<DocumentType[]>(this.endpoint);
+    return this.http.get<DocumentTypes>(this.endpoint);
   }
+}
+
+export interface DocumentTypes {
+  contents: DocumentType[];
 }
 
 export interface DocumentType {

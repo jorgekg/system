@@ -18,7 +18,7 @@ export class ProcedureRequirementService {
   }
 
   public getByProcedure(procedureId: number) {
-    return this.http.get<ProcedureRequirement[]>(this.endpoint, {
+    return this.http.get<ProcedureRequirements>(this.endpoint, {
       params: {
         procedure_id: procedureId.toString()
       }
@@ -26,12 +26,16 @@ export class ProcedureRequirementService {
   }
 
   public delete(id: number) {
-    return this.http.delete<ProcedureRequirement>(this.endpoint, {
+    return this.http.get<ProcedureRequirement>(`${environment.url}/delete/procedures_requirement`, {
       params: {
         id: id.toString()
       }
     });
   }
+}
+
+export interface ProcedureRequirements {
+  contents: ProcedureRequirement[];
 }
 
 export interface ProcedureRequirement {

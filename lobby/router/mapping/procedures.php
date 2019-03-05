@@ -25,7 +25,7 @@ $app->post('/api/procedures',
 		return $response;
 });
 
-$app->put('/api/procedures',
+$app->post('/api/put/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
 		$procedures->sessionIsRequired($request);
@@ -34,7 +34,7 @@ $app->put('/api/procedures',
 		return $response;
 });
 
-$app->delete('/api/procedures',
+$app->get('/api/delete/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
 		$procedures->sessionIsRequired($request);

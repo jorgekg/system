@@ -21,21 +21,21 @@ export class SchedulingPersistResolve implements Resolve<any> {
   private async getRequirement(params) {
     return await new Promise(async resolve => {
       try {
-        const procedure = await this.proceduresService.get().toPromise();
-        const lobby = await this.lobbyService.get().toPromise();
+        const procedure = await this.proceduresService.get(0, 999).toPromise();
+        const lobby = await this.lobbyService.get(0, 999).toPromise();
         const documentType = await this.documentTypeService.get().toPromise();
         let schedulingData = null;
         if (params.id !== `new`) {
           const schedulings = await this.schedulingService.getSchedulingById(params.id).toPromise();
-          if (schedulings && schedulings.length > 0) {
-            schedulingData = schedulings[0];
+          if (schedulings && schedulings.contents.length > 0) {
+            schedulingData = schedulings.contents[0];
           }
         }
         const scheduling = {
           data: schedulingData,
-          procedures: procedure,
-          lobbies: lobby,
-          documentTypes: documentType
+          procedures: procedure.contents,
+          lobbies: lobby.contents,
+          documentTypes: documentType.contents
         };
         resolve(scheduling);
       } catch (err) {

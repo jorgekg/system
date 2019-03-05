@@ -12,6 +12,9 @@ import { ProcedureRequirement, ProcedureRequirementService } from 'src/app/core/
 export class ProceduresComponent implements OnInit {
 
   public proceduresList = [];
+  public totalElements = 0;
+
+  private atualPage = 0;
 
   constructor(
     private proceduresService: ProceduresService,
@@ -21,17 +24,22 @@ export class ProceduresComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getProceduress();
+    this.getProcedures();
   }
 
-  private async getProceduress() {
-    this.proceduresList = this.activedRoute.snapshot.data.procedures;
-    this.proceduresList.forEach((procedure, index) =>
-      this.proceduresRequirementService.getByProcedure(procedure.id)
-        .subscribe(requirements =>
-          this.proceduresList[index].requirements = requirements.length
-        )
-    );
+  public async onPage(page) {
+    this.atualPage = page.first;
+    const proceduresList = await
+    this.proceduresService.get(page.first).toPromise();
+    for (let i = 0; i < proceduresList.contents.length; i++) {
+      this.proceduresList[page.first + i] = proceduresList.contents[i];
+    }
+    this.totalElements = proceduresList.totalElements;
+  }
+
+  private async getProcedures() {
+    this.proceduresList = this.activedRoute.snapshot.data.procedures.contents;
+    this.totalElements = this.activedRoute.snapshot.data.procedures.totalElements;
   }
 
   public async onDelete(id) {

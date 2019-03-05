@@ -13,12 +13,17 @@ export class ProceduresService {
     private http: HttpClient
   ) { }
 
-  public get() {
-    return this.http.get<Procedures[]>(this.endpont);
+  public get(page = 0, size = 0) {
+    return this.http.get<ProceduresList>(this.endpont, {
+      params: {
+        offset: page.toString(),
+        size: size.toString()
+      }
+    });
   }
 
   public getById(id: number) {
-    return this.http.get<Procedures[]>(this.endpont, {
+    return this.http.get<ProceduresList>(this.endpont, {
       params: {
         id: id.toString()
       }
@@ -26,20 +31,25 @@ export class ProceduresService {
   }
 
   public insert(procedures) {
-    return this.http.post<Procedures[]>(this.endpont, procedures);
+    return this.http.post<ProceduresList>(this.endpont, procedures);
   }
 
   public update(procedures) {
-    return this.http.put<Procedures[]>(this.endpont, procedures);
+    return this.http.post<Procedures[]>(`${environment.url}/put/procedures`, procedures);
   }
 
   public delete(id: number) {
-    return this.http.delete<Procedures>(this.endpont, {
+    return this.http.get<Procedures>(`${environment.url}/delete/procedures`, {
       params: {
         id: id.toString()
       }
     });
   }
+}
+
+export interface ProceduresList {
+  contents: Procedures[];
+  totalElements: number;
 }
 
 export interface Procedures {

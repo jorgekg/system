@@ -21,8 +21,8 @@ export class LobbyPersistResolve implements Resolve<any> {
           resolve();
         } else {
           const lobbies = await this.lobbyService.getById(params.id).toPromise();
-          if (lobbies && lobbies.length > 0) {
-            const [lobby] = lobbies;
+          if (lobbies && lobbies.contents.length > 0) {
+            const [lobby] = lobbies.contents;
             resolve(lobby);
           } else {
             resolve(null);

@@ -1,3 +1,4 @@
+import { Schedulings } from './../scheduling/scheduling.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -15,22 +16,23 @@ export class ReceptionService {
     private appStorageSerice: AppStorageService
   ) { }
 
-  public getReception(personName, schedulingSituation, page = 0) {
-    return this.http.get<Scheduling[]>(`${environment.url}/reception`, {
+  public getReception(personName, schedulingSituation, receptionDate = '', page = 0) {
+    return this.http.get<Schedulings>(`${environment.url}/reception`, {
       params: {
         name: personName,
         situation: schedulingSituation,
-        page: page.toString(),
+        date: receptionDate,
+        offset: page.toString(),
         company_id: this.appStorageSerice.getToken().company_id.toString()
       }
     });
   }
 
   public updateReception(reception: Scheduling) {
-    return this.http.put<Scheduling[]>(`${environment.url}/scheduling`, reception);
+    return this.http.post<Schedulings>(`${environment.url}/put/scheduling`, reception);
   }
 
   public unFinish(reception: Scheduling) {
-    return this.http.put<Scheduling[]>(`${environment.url}/unFinish`, reception);
+    return this.http.post<Schedulings>(`${environment.url}/put/unFinish`, reception);
   }
 }
