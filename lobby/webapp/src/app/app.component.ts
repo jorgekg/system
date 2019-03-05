@@ -20,6 +20,8 @@ export class AppComponent {
   public err;
   public loaderCount = 0;
 
+  public load = 0;
+
   constructor(
     private translate: TranslateService,
     private appRequestService: AppRequestService,
@@ -33,7 +35,16 @@ export class AppComponent {
       show();
     });
     this.appRequestService.getLoader().subscribe(loaderCount => {
-      this.loaderCount = loaderCount;
+      try {
+        this.load = loaderCount;
+        setTimeout(() => {
+          if (this.load > 0) {
+            this.loaderCount = loaderCount;
+          } else {
+            this.loaderCount = 0;
+          }
+        }, 600);
+      } catch (err) {}
     }
     );
   }

@@ -16,7 +16,7 @@ export class CheckinService {
   }
 
   public unCreate(checkin: Checkin) {
-    return this.http.put<Checkin[]>(`${environment.url}/checkin`, checkin);
+    return this.http.post<Checkin[]>(`${environment.url}/put/checkin`, checkin);
   }
 }
 

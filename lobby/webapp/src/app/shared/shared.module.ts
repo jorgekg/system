@@ -27,6 +27,7 @@ import { WarningComponent } from './components/warning/warning.component';
 import { PersonOnListComponent } from './components/person-on-list/person-on-list.component';
 import { CheckinComponent } from './components/checkin/checkin.component';
 import { NextDayComponent } from './components/next-day/next-day.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NextDayComponent } from './components/next-day/next-day.component';
     WarningComponent,
     PersonOnListComponent,
     CheckinComponent,
-    NextDayComponent
+    NextDayComponent,
+    BreadcrumbComponent
   ],
   imports: [
     CommonModule,
@@ -87,7 +89,8 @@ import { NextDayComponent } from './components/next-day/next-day.component';
     PersonOnListComponent,
     CheckinComponent,
     TableModule,
-    NextDayComponent
+    NextDayComponent,
+    BreadcrumbComponent
   ]
 })
 export class SharedModule {}

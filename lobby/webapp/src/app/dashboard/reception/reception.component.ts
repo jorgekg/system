@@ -49,8 +49,8 @@ export class ReceptionComponent implements OnInit {
     this.first = page.first;
     const schedulings = await
     this.receptionService.getReception(
-      ``, this.situation, page.first
-      ).toPromise();
+      ``, this.situation, this.receptionDate, page.first
+    ).toPromise();
     for (let i = 0; i < schedulings.contents.length; i++) {
       this.schedulingList[page.first + i] = schedulings.contents[i];
     }

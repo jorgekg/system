@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit {
   private async createToken() {
     const tokens =
       await this.tokenService.createToken(this.form.getRawValue()).toPromise();
-    if (tokens && tokens.length > 0) {
-      const [token] = tokens;
+    if (tokens && tokens.contents.length > 0) {
+      const [token] = tokens.contents;
       return token;
     }
     throw {code: 500};

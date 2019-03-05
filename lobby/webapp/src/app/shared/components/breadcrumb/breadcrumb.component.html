@@ -1,0 +1,8 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/dashboard']"><i class="fas fa-home"></i></a></li>
+    <li *ngFor="let bread of breadcrumb" class="breadcrumb-item" aria-current="page">
+      {{(bread.name) | translate}}
+    </li>
+  </ol>
+</nav>

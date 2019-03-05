@@ -5,8 +5,8 @@
       <div id="content">
         <app-navbar-top [title]="'lobby' | translate"></app-navbar-top>
         <div class="container">
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
+          <div class="d-sm-flex align-items-center justify-content-between">
+            <app-breadcrumb [breadcrumb]="[{name: 'lobby'}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
           </div>
           <div class="card shadow mb-4">
             <div class="card-body">
@@ -34,12 +34,12 @@
                 </div>
                 <hr>
                 <div class=row>
-                  <div class="col-sm-2 offset-sm-7">
+                  <div class="col-sm-2 offset-sm-7 col-4">
                     <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/lobby']">
                       {{'cancel' | translate}}
                     </button>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-3 col-8">
                     <button #button type="submit" class="btn btn-primary btn-user  btn-sm btn-block">
                       {{(isNew() ? 'add' : 'update') | translate}}
                     </button>

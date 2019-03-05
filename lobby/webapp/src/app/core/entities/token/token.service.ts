@@ -12,8 +12,12 @@ export class TokenService {
   constructor(private http: HttpClient) { }
 
   public createToken(company) {
-    return this.http.post<Token[]>(this.endpoint, company);
+    return this.http.post<Tokens>(this.endpoint, company);
   }
+}
+
+export interface Tokens {
+  contents: Token[];
 }
 
 export interface Token {

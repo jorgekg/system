@@ -17,14 +17,17 @@ include_once './controllers/Controller.php';
 include_once './controllers/token/TokenController.php';
 include_once './models/token/token.php';
 
-
-$app = new \Slim\App;
-$app->add(function ($req, $res, $next) {
-	$response = $next($req, $res);
-	return $response
-		->withHeader('Access-Control-Allow-Origin', '*')
-		->withHeader('Access-Control-Allow-Headers', '*')
-		->withHeader('Access-Control-Allow-Methods', '*');
-});
-include_once 'router/router.php';
-$app->run();
+try {
+	$app = new \Slim\App;
+	$app->add(function ($req, $res, $next) {
+		$response = $next($req, $res);
+		return $response
+			->withHeader('Access-Control-Allow-Origin', '*')
+			->withHeader('Access-Control-Allow-Headers', '*')
+			->withHeader('Access-Control-Allow-Methods', '*');
+	});
+	include_once 'router/router.php';
+	$app->run();
+} catch (Exception $e) {
+	var_dump($e);
+}

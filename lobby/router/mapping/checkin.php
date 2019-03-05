@@ -23,7 +23,7 @@ $app->post('/api/checkin',
 		return $response;
 });
 
-$app->put('/api/checkin',
+$app->post('/api/put/checkin',
 	function (Request $request, Response $response, array $args) use($database) {
 		$checkin = new VisitorCheckinController($database);
 		$checkin->sessionIsRequired($request);

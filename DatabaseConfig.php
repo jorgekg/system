@@ -4,19 +4,13 @@
 use Medoo\Medoo;
  
 $database = new Medoo([
-	
+	// required
 	'database_type' => 'mysql',
 	'database_name' => 'lobby',
 	'server' => 'localhost',
 	'username' => 'root',
 	'password' => 'faccao12',
-	/*
- 'database_type' => 'MariaDB',
-	'database_name' => 'id3944331_lobby',
-	'server' => 'localhost',
-	'username' => 'id3944331_lobby',
-	'password' => 'faccao12',
-	*/
+ 
 	// [optional]
 	'charset' => 'utf8mb4',
 	'collation' => 'utf8mb4_general_ci',

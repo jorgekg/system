@@ -5,49 +5,51 @@
       <div id="content">
         <app-navbar-top [title]="'lobby' | translate"></app-navbar-top>
         <div class="container">
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h4 class="h5 mb-0 text-gray-800">{{'breadcrumb' | translate}}</h4>
+          <div class="d-sm-flex align-items-center justify-content-between">
+            <app-breadcrumb [breadcrumb]="[{name: 'lobby'}]"></app-breadcrumb>
           </div>
           <div class="card shadow mb-4">
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-8 mb-4">
-                  <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                  <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
                     style="color: white" (click)="add()">
                     {{'add' | translate}}
                   </a>
                 </div>
               </div>
-              <p-table styleClass="table" [value]="lobbyList" [paginator]="true" 
-                [rows]="10" [totalRecords]="totalPages" (onPage)="onPage($event)">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th width="20px"></th>
-                    <th width="30%">{{ "lobby.list.name" | translate }}</th>
-                    <th width="20%">{{ "lobby.startDate" | translate }}</th>
-                    <th width="20%">{{ "lobby.endDate" | translate }}</th>
-                    <th width="50px"></th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-lobby>
-                  <tr>
-                    <td><app-delete [classModal]="'lobby_modal'+lobby.id" [id]="lobby.id" (delete)=onDelete($event)></app-delete></td>
-                    <td>{{lobby.name}}</td>
-                    <td>{{lobby.start_date}}</td>
-                    <td>{{lobby.end_date}}</td>
-                    <td>
-                      <button class="btn btn-link  btn-sm btn-no-padding" [routerLink]="['/dashboard/lobby', lobby.id]">Detalhes</button>
-                    </td>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage" let-columns>
-                  <tr>
-                    <td [attr.colspan]="5">
-                      {{'not.fount' | translate}}
-                    </td>
-                  </tr>
-                </ng-template>
-              </p-table>
+              <div class="table-responsive">
+                <p-table styleClass="table min-table-width" [value]="lobbyList" [paginator]="true" 
+                  [rows]="10" [totalRecords]="totalPages" (onPage)="onPage($event)">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th width="20px"></th>
+                      <th width="30%">{{ "lobby.list.name" | translate }}</th>
+                      <th width="20%">{{ "lobby.startDate" | translate }}</th>
+                      <th width="20%">{{ "lobby.endDate" | translate }}</th>
+                      <th width="50px"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-lobby>
+                    <tr>
+                      <td><app-delete [classModal]="'lobby_modal'+lobby.id" [id]="lobby.id" (delete)=onDelete($event)></app-delete></td>
+                      <td>{{lobby.name}}</td>
+                      <td>{{lobby.start_date}}</td>
+                      <td>{{lobby.end_date}}</td>
+                      <td>
+                        <button class="btn btn-link  btn-sm btn-no-padding" [routerLink]="['/dashboard/lobby', lobby.id]">Detalhes</button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                      <td [attr.colspan]="5">
+                        {{'not.fount' | translate}}
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
             </div>
           </div>
         </div>

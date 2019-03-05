@@ -6,7 +6,8 @@ import {
   HttpHandler,
   HttpRequest,
   HttpEvent,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -40,7 +41,9 @@ export class AppInterceptor implements HttpInterceptor {
     return next.handle(newReq).pipe(
       tap(
         evt => {
-          this.appRequestService.removeRequest();
+          if (evt instanceof HttpResponse) {
+            this.appRequestService.removeRequest();
+          }
         },
         err => {
           this.appRequestService.removeRequest();
