@@ -78,12 +78,18 @@ class SchedulingController extends Controller {
 		for($i = 0; $i < count($this->data); $i++){
 			$this->data[$i]["responsibles"] = $this->getResponsible($this->data[$i]["id"]);
 			$this->data[$i]["procedures"] = $this->getProcedures($this->data[$i]["id"]);
+			if (empty($this->data[$i]["visitors"])) {
+				$this->data[$i]["visitors"] = [];
+			}
 			$this->data[$i]["visitors"][0]["id"] = $this->data[$i]["visitor_id"];
 			$this->data[$i]["visitors"][0]["checkin"] = $checkin->getCheckinByVisitor(
 				$this->data[$i]["visitor_id"],
 				$this->data[$i]["company_id"]
 			)->asObject();
-			$this->data[$i]["visitors"][0]["person"] = ($person->getPerson($this->data[$i]["visitor_person_id"]))->asObject()[0];
+			$personData = ($person->getPerson($this->data[$i]["visitor_person_id"]))->asObject();
+			if (!empty($personData)) {
+				$this->data[$i]["visitors"][0]["person"] = $personData[0];
+			}
 		}
 		return $this;
 	}
@@ -183,7 +189,7 @@ class SchedulingController extends Controller {
 		$this->isSchedulinPending($scheduling);
 		$id = null;
 		$this->database->action(function($database) use ($scheduling, &$id) {
-			if (!empty(!$scheduling->id)) {
+			if (!empty($scheduling->id)) {
 				$schedulingController = new SchedulingController($database);
 				$schedulingController->select([
 					"abs_id" => $scheduling["abs_id"],

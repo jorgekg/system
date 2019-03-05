@@ -58,6 +58,7 @@ class PersonController extends Controller {
 				"id" => $id
 			]
 		);
+		$personController->hasError();
 		if (!empty($personData)) {
 			$documentController = new PersonDocumentController($this->database);
 			$personData[0]["documents"] = $documentController->database->select(
@@ -65,6 +66,7 @@ class PersonController extends Controller {
 					"person_id" => $id
 				]
 			);
+			$documentController->hasError();
 			$emailContactController = new PersonContactController($this->database);
 			$personData[0]["emails"] = $emailContactController->database->select(
 				$emailContactController->table, "*", [
@@ -72,6 +74,7 @@ class PersonController extends Controller {
 					"contact_type_id" => 1
 				]
 			);
+			$emailContactController->hasError();
 			$phoneContactController = new PersonContactController($this->database);
 			$personData[0]["phones"] = $phoneContactController->database->select(
 				$phoneContactController->table, "*", [
@@ -79,6 +82,7 @@ class PersonController extends Controller {
 					"contact_type_id" => 2
 				]
 			);
+			$phoneContactController->hasError();
 		}
 		$this->hasError();
 		$this->data = $personData;

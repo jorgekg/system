@@ -178,7 +178,10 @@ export class SchedulingPersistComponent implements OnInit {
     this.schedulingData.data.end_date =
       moment(this.schedulingData.data.end_date);
     this.form.patchValue(this.schedulingData.data);
-    if (this.schedulingData.data.situation !== SchedulingSituation.PENDING) {
+    if (
+      this.schedulingData.data &&
+      this.schedulingData.data.situation !== SchedulingSituation.PENDING
+    ) {
       this.form.disable();
     } else {
       this.form.enable();
@@ -195,13 +198,15 @@ export class SchedulingPersistComponent implements OnInit {
   public showCancel() {
     return !this.isNew() &&
       (
+        this.schedulingData.data &&
         this.schedulingData.data.situation === SchedulingSituation.PENDING ||
         this.isProgress()
       );
   }
 
   public isProgress() {
-    return this.schedulingData.data.situation === SchedulingSituation.IN_PROGRESS;
+    return this.schedulingData.data &&
+      this.schedulingData.data.situation === SchedulingSituation.IN_PROGRESS;
   }
 
   public async finalizeScheduling() {

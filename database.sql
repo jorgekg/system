@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `name` varchar(255) NOT NULL,
   `active` varchar(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2;
 
 -- Copiando dados para a tabela lobby.company: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `company_user` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `company_user_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 
 -- Copiando dados para a tabela lobby.company_user: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `company_user` DISABLE KEYS */;
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   KEY `contact_type_id` (`contact_type_id`),
   CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `contact_ibfk_2` FOREIGN KEY (`contact_type_id`) REFERENCES `contact_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56;
 
 -- Copiando dados para a tabela lobby.contact: ~24 rows (aproximadamente)
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `contact_type` (
   `type` varchar(100) NOT NULL,
   `label` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 
 -- Copiando dados para a tabela lobby.contact_type: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `contact_type` DISABLE KEYS */;
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `document` (
   KEY `document_type_id` (`document_type_id`),
   CONSTRAINT `document_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `document_ibfk_2` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33;
 
 -- Copiando dados para a tabela lobby.document: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   `label` varchar(100) NOT NULL,
   `mask` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3;
 
 -- Copiando dados para a tabela lobby.document_type: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
@@ -150,7 +150,7 @@ INSERT INTO `document_type` (`id`, `type`, `label`, `mask`) VALUES
 -- Copiando estrutura para tabela lobby.hibernate_sequence
 CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM;
 
 -- Copiando dados para a tabela lobby.hibernate_sequence: 1 rows
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `lobby` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `lobby_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4;
 
 -- Copiando dados para a tabela lobby.lobby: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `lobby` DISABLE KEYS */;
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `responsible` varchar(2) DEFAULT NULL,
   `company_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46;
 
 -- Copiando dados para a tabela lobby.person: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `procedures` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `procedures_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7;
 
 -- Copiando dados para a tabela lobby.procedures: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `procedures` DISABLE KEYS */;
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `procedures_requirement` (
   CONSTRAINT `procedures_requirement` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `procedures_requirement_ibfk_2` FOREIGN KEY (`requirement_id`) REFERENCES `requirement` (`id`),
   CONSTRAINT `procedures_requirement_ibfk_3` FOREIGN KEY (`procedure_id`) REFERENCES `procedures` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11;
 
 -- Copiando dados para a tabela lobby.procedures_requirement: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `procedures_requirement` DISABLE KEYS */;
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `requirement` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `requirement_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13;
 
 -- Copiando dados para a tabela lobby.requirement: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `requirement` DISABLE KEYS */;
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `scheduling` (
   KEY `company_id` (`company_id`),
   CONSTRAINT `scheduling_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_ibfk_2` FOREIGN KEY (`lobby_id`) REFERENCES `lobby` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110;
 
 -- Copiando dados para a tabela lobby.scheduling: ~91 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling` DISABLE KEYS */;
@@ -404,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `scheduling_procedures` (
   CONSTRAINT `scheduling_procedures_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_procedures_ibfk_2` FOREIGN KEY (`scheduling_id`) REFERENCES `scheduling` (`id`),
   CONSTRAINT `scheduling_procedures_ibfk_3` FOREIGN KEY (`procedure_id`) REFERENCES `procedures` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=146;
 
 -- Copiando dados para a tabela lobby.scheduling_procedures: ~128 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling_procedures` DISABLE KEYS */;
@@ -553,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `scheduling_responsible` (
   CONSTRAINT `scheduling_responsible_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_responsible_ibfk_2` FOREIGN KEY (`scheduling_id`) REFERENCES `scheduling` (`id`),
   CONSTRAINT `scheduling_responsible_ibfk_3` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=115;
 
 -- Copiando dados para a tabela lobby.scheduling_responsible: ~99 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling_responsible` DISABLE KEYS */;
@@ -673,7 +673,7 @@ CREATE TABLE IF NOT EXISTS `scheduling_visitor` (
   CONSTRAINT `scheduling_visitor_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_visitor_ibfk_2` FOREIGN KEY (`scheduling_id`) REFERENCES `scheduling` (`id`),
   CONSTRAINT `scheduling_visitor_ibfk_3` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=161;
 
 -- Copiando dados para a tabela lobby.scheduling_visitor: ~145 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling_visitor` DISABLE KEYS */;
@@ -835,7 +835,7 @@ CREATE TABLE IF NOT EXISTS `token` (
   UNIQUE KEY `id` (`token`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `token_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8;
 
 -- Copiando dados para a tabela lobby.token: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
@@ -859,7 +859,7 @@ CREATE TABLE IF NOT EXISTS `visitor_checkin` (
   PRIMARY KEY (`id`),
   KEY `visitor_id` (`visitor_id`),
   CONSTRAINT `visitor_checkin_ibfk_1` FOREIGN KEY (`visitor_id`) REFERENCES `scheduling_visitor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48;
 
 -- Copiando dados para a tabela lobby.visitor_checkin: ~40 rows (aproximadamente)
 /*!40000 ALTER TABLE `visitor_checkin` DISABLE KEYS */;

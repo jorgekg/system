@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'http://localhost/api'
+  url: 'https://kohn.000webhostapp.com/backend/index.php/api'
 };
