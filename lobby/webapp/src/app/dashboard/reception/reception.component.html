@@ -61,7 +61,7 @@
                         <tr>
                           <td><app-delete [classModal]="'scheduling_modal'+scheduling.id" [id]="scheduling.id" (delete)=delete($event)></app-delete></td>
                           <td title="visitor.checking">
-                            <app-checkin [visitor]="scheduling?.visitors[0]" (updateScheduling)="onCheckin()"
+                            <app-checkin [schedulingId]="scheduling?.id" [visitor]="scheduling?.visitors[0]" (updateScheduling)="onCheckin()"
                               [checkin]="scheduling?.visitors[0]?.checkin"></app-checkin>
                           </td>
                           <td>
@@ -104,7 +104,7 @@
                         <tr>
                           <td><app-delete [classModal]="'scheduling_modal'+scheduling.id" [id]="scheduling.id" (delete)=delete($event)></app-delete></td>
                           <td title="visitor.checking">
-                            <app-checkin [visitor]="scheduling?.visitors[0]" (updateScheduling)="getSchedulings()"
+                            <app-checkin [schedulingId]="scheduling?.id" [visitor]="scheduling?.visitors[0]" (updateScheduling)="getSchedulings()"
                               [checkin]="scheduling?.visitors[0]?.checkin"></app-checkin>
                           </td>
                           <td>
@@ -184,7 +184,7 @@
                           <tr>
                             <th width="25%">{{ "scheduling.responsible" | translate }}</th>
                             <th width="25%">{{ "scheduling.visitor" | translate }}</th>
-                            <th width="25%">{{ "scheduling.start_date" | translate }}</th>
+                            <th width="20%">{{ "scheduling.start_date" | translate }}</th>
                             <th width="50px"></th>
                           </tr>
                         </ng-template>

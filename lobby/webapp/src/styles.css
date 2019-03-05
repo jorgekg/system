@@ -136,3 +136,7 @@ body .ui-widget-header {
   width: 100%;
   min-width: 700px !important;
 }
+
+.ui-paginator .ui-paginator-element {
+  height: 40px;
+}

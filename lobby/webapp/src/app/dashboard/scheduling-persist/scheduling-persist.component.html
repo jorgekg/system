@@ -63,17 +63,22 @@
                 </div>
                 <hr>
                 <div class=row>
-                  <div class="col-sm-2 col-3 {{isNew() || showCancel() ? (isProgress() ? 'offset-sm-4' : 'offset-sm-7'): 'offset-sm-10'}}">
+                  <div class="col-sm-2 col-3 offset-sm-4">
                     <button type="button" class="btn btn-link btn-block" (click)="routerBack()">
                       {{(isNew() ? 'cancel' : 'close') | translate}}
                     </button>
                   </div>
-                  <div class="col-sm-3 {{!isProgress() ? 'col-9' : 'col-5'}}">
+                  <div class="col-sm-3">
                     <button #button *ngIf="isNew()" style="width: 100%" type="submit" (click)="save()" class="btn btn-sm btn-primary">
                       {{'scheduling.add' | translate}}
                     </button>
                     <button #button *ngIf="showCancel()" style="width: 100%" type="submit" (click)="cancel()" class="btn btn-sm btn-danger">
                       {{'scheduling.cancel' | translate}}
+                    </button>
+                  </div>
+                  <div class="col-sm-3 col-4" *ngIf="!isNew() && !isProgress()">
+                    <button #button style="width: 100%" type="submit" (click)="save(true)" class="btn btn-sm btn-primary">
+                      {{'scheduling.update' | translate}}
                     </button>
                   </div>
                   <div class="col-sm-3 col-4">

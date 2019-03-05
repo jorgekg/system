@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 const show = () => {
   const wd = window as any;
@@ -18,13 +19,20 @@ export class NavbarTopComponent implements OnInit {
 
   @Input() title: string;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   public menuLeft() {
     show();
+  }
+
+  public logoff() {
+    localStorage.clear();
+    this.router.navigate([`dashboard/login`]);
   }
 
 }

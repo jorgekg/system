@@ -87,12 +87,9 @@ export class SchedulingPersistComponent implements OnInit {
   };
 
   private schedulingData;
-  private schedulingChange;
   public validator = false;
 
   private id;
-  private onChangeSchedulingSubscription: Subscription;
-  private updateStatus = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -123,9 +120,6 @@ export class SchedulingPersistComponent implements OnInit {
     if (!this.isNew()) {
       this.setScheduling();
     }
-    if (this.router.url.includes('reception')) {
-      (this.visitor.nativeElement as HTMLInputElement).click();
-    }
   }
 
   public async update() {
@@ -134,32 +128,8 @@ export class SchedulingPersistComponent implements OnInit {
     if (schedulings && schedulings.contents.length) {
       const [scheduling] = schedulings.contents;
       this.schedulingData.data = scheduling;
-      this.updateStatus = true;
-      this.onChangeSchedulingSubscription.unsubscribe();
       this.setScheduling();
     }
-  }
-
-  private onChangeScheduling() {
-    this.onChangeSchedulingSubscription =
-    this.form.valueChanges.subscribe(value => {
-        this.schedulingChange = value;
-        if (!this.updateStatus) {
-          setTimeout(async () => {
-            if (this.schedulingChange === value) {
-              try {
-                await this.save(true);
-              } catch (err) {
-                this.onChangeSchedulingSubscription.unsubscribe();
-                this.setScheduling();
-                this.onChangeScheduling();
-              }
-            }
-          }, 500);
-        } else {
-          this.updateStatus = false;
-        }
-    });
   }
 
   private setScheduling() {
@@ -186,9 +156,6 @@ export class SchedulingPersistComponent implements OnInit {
     } else {
       this.form.enable();
     }
-    setTimeout(() => {
-      this.onChangeScheduling();
-    });
   }
 
   public isNew() {
@@ -255,8 +222,8 @@ export class SchedulingPersistComponent implements OnInit {
       const [lobby] = form.lobby;
       form.lobby_id = lobby.id;
       form.company_id = this.appStorageService.getToken().company_id;
-      form.start_date = moment(form.start_date, 'DD/MM/YYYY HH:mm');
-      form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm');
+      form.start_date = moment(form.start_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');
+      form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');
       form.active = form.active || `S`;
       const schedulings = await this.schedulingService.create(form).toPromise();
       if (!navigateById && !this.router.url.includes('reception')) {

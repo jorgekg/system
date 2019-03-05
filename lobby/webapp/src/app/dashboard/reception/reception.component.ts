@@ -94,24 +94,28 @@ export class ReceptionComponent implements OnInit {
 
   public async setPending() {
     this.first = 0;
+    this.schedulingList = [];
     this.situation = SchedulingSituation.PENDING;
     await this.getSchedulings();
   }
 
   public async setInProgress() {
     this.first = 0;
+    this.schedulingList = [];
     this.situation = SchedulingSituation.IN_PROGRESS;
     await this.getSchedulings();
   }
 
   public async setFinish() {
     this.first = 0;
+    this.schedulingList = [];
     this.situation = SchedulingSituation.FINISH;
     await this.getSchedulings();
   }
 
   public async setCanceled() {
     this.first = 0;
+    this.schedulingList = [];
     this.situation = SchedulingSituation.CANCELED;
     await this.getSchedulings();
   }

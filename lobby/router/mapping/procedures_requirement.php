@@ -14,6 +14,17 @@ $app->get('/api/procedures_requirement',
 		return $response;
 });
 
+$app->get('/api/requirement_list_procedures',
+	function (Request $request, Response $response, array $args) use($database) {
+		$reason = new ProcedureRequirementController($database);
+		$reason->sessionIsRequired($request);
+		$response->getBody()->write($reason->getByListProcedures(
+			$request->getQueryParam('procedures'),
+			$request->getQueryParam('company_id')
+		)->asJson());
+		return $response;
+});
+
 $app->post('/api/procedures_requirement',
 	function (Request $request, Response $response, array $args) use($database) {
 		$reason = new ProcedureRequirementController($database);

@@ -23,13 +23,11 @@ export class AppRequestService {
 
   public addRequest() {
     this.loaderCount++;
-    console.log(this.loaderCount);
     this.loader.emit(this.loaderCount);
   }
 
   public removeRequest() {
     this.loaderCount = 0;
-    console.log(this.loaderCount);
     this.loader.emit(this.loaderCount);
   }
 
