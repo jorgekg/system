@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { AppStorageService } from './../../app-storage/app-storage.service';
 import { environment } from 'src/environments/environment';
 import { Scheduling } from '../scheduling/scheduling.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,12 @@ export class ReceptionService {
     private appStorageSerice: AppStorageService
   ) { }
 
-  public getReception(personName, schedulingSituation, receptionDate = '', page = 0) {
+  public getReception(personName, schedulingSituation, receptionDate = new Date(), page = 0) {
     return this.http.get<Schedulings>(`${environment.url}/reception`, {
       params: {
         name: personName,
         situation: schedulingSituation,
-        date: receptionDate,
+        date: moment(receptionDate).format('YYYY-MM-DD'),
         offset: page.toString(),
         company_id: this.appStorageSerice.getToken().company_id.toString()
       }

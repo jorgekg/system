@@ -33,7 +33,7 @@ export class ReceptionComponent implements OnInit {
 
   public async getSchedulings(page = 0) {
     const schedulingList = await this.receptionService.getReception(
-      ``, this.situation, this.receptionDate.toString(), page
+      ``, this.situation, this.receptionDate, page
     ).toPromise();
     this.schedulingList = schedulingList.contents;
     this.totalElements = schedulingList.totalElements;

@@ -55,7 +55,7 @@ class SchedulingController extends Controller {
 	private function getDate($date) {
 		$startDate = null;
 		try {
-			$startDate = new DateTime($data);
+			$startDate = DateTime::createFromFormat('Y-m-d', $date);
 		} catch(Exception $e) {
 			$startDate = new DateTime();
 		}
