@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Token } from './../entities/token/token.service';
 import { Property } from '../entities/property/property.service';
+import { Lobby } from '../entities/lobby/lobby.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,9 @@ export class AppStorageService {
     token: `${this.key}.token`,
     remeber: `${this.key}.remeber`,
     properties: `${this.key}.properties`,
-    activeProperties: `${this.key}.activeProperties`
+    activeProperties: `${this.key}.activeProperties`,
+    lobbies: `${this.key}.lobbies`,
+    activeLobby: `${this.key}.activeLobby`
   };
 
   constructor() { }
@@ -26,6 +29,30 @@ export class AppStorageService {
     const property = localStorage.getItem(this.storageKey.activeProperties);
     if (property) {
       return JSON.parse(property);
+    }
+    return null;
+  }
+
+  public setLobbies(lobbies: Lobby[]) {
+    this.setStorage(this.storageKey.lobbies, lobbies);
+  }
+
+  public getLobbies(): Lobby[] {
+    const Lobbies = localStorage.getItem(this.storageKey.lobbies);
+    if (Lobbies) {
+      return JSON.parse(Lobbies);
+    }
+    return [];
+  }
+
+  public setactiveLobby(activeLobby: Lobby) {
+    this.setStorage(this.storageKey.activeLobby, activeLobby);
+  }
+
+  public getactiveLobby(): Lobby {
+    const activeLobby = localStorage.getItem(this.storageKey.activeLobby);
+    if (activeLobby) {
+      return JSON.parse(activeLobby);
     }
     return null;
   }

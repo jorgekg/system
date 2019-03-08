@@ -28,6 +28,8 @@ import { PersonOnListComponent } from './components/person-on-list/person-on-lis
 import { CheckinComponent } from './components/checkin/checkin.component';
 import { NextDayComponent } from './components/next-day/next-day.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { SelectLobbyComponent } from './components/select-lobby/select-lobby.component';
+import { DatetimePipe } from './pipe/datetime/datetime.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     PersonOnListComponent,
     CheckinComponent,
     NextDayComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    SelectLobbyComponent,
+    DatetimePipe
   ],
   imports: [
     CommonModule,
@@ -90,7 +94,9 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     CheckinComponent,
     TableModule,
     NextDayComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    SelectLobbyComponent,
+    DatetimePipe
   ]
 })
 export class SharedModule {}

@@ -1,3 +1,4 @@
+import { AppStorageService } from './../../app-storage/app-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -10,7 +11,8 @@ export class ProcedureRequirementService {
   private endpoint = `${environment.url}/procedures_requirement`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private appStorageService: AppStorageService
   ) { }
 
   public insert(proceduresRequirement) {
@@ -21,6 +23,14 @@ export class ProcedureRequirementService {
     return this.http.get<ProcedureRequirements>(this.endpoint, {
       params: {
         procedure_id: procedureId.toString()
+      }
+    });
+  }
+
+  public getByProcedureList(procedureList: number[]) {
+    return this.http.get<ProcedureRequirements>(`${environment.url}/requirement_list_procedures`, {
+      params: {
+        procedures: procedureList.join(`,`)
       }
     });
   }

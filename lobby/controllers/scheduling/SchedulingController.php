@@ -65,7 +65,7 @@ class SchedulingController extends Controller {
 		return [$startDate, $endDate];
 	}
 
-	public function getReceptions($name, $company, $situation = 1, $date = "", $page = 0) {
+	public function getReceptions($name, $company, $situation = 1, $lobby_id = 0, $date = "", $page = 0) {
 		$date = $this->getDate($date);
 		$this->totalElements = count(
 			$this->database->select(
@@ -77,6 +77,7 @@ class SchedulingController extends Controller {
 					"scheduling_visitor.id(visitor_id)",
 					"scheduling.id",
 				], [
+					"lobby.id" => $lobby_id,
 					"scheduling.company_id" => $company,
 					"scheduling.situation" => $situation,
 					"scheduling.active" => "S",
@@ -100,6 +101,7 @@ class SchedulingController extends Controller {
 				"scheduling.start_date",
 				"scheduling.end_date",
 			], [
+				"lobby.id" => $lobby_id,
 				"scheduling.company_id" => $company,
 				"scheduling.situation" => $situation,
 				"scheduling.active" => "S",
@@ -237,6 +239,19 @@ class SchedulingController extends Controller {
 				]);
 				$this->removeOldVersioon($schedulingController);
 				$schedulingController->hasError();
+			} else {
+				$dt1 = DateTime::createFromFormat('Y-m-d H:i', $scheduling["start_date"]);
+				$dt2 = DateTime::createFromFormat('Y-m-d H:i', $scheduling["end_date"]);
+				if ($dt1 < new DateTime()) {
+					echo json_encode(["code" => 400, "message" => "start_date.minor.today"]);
+					http_response_code(400);
+					exit;
+				}
+				if ($dt1 >= $dt2) {
+					echo json_encode(["code" => 400, "message" => "start_date.minor.end_date"]);
+					http_response_code(400);
+					exit;
+				}
 			}
 			return $this->insertScheduling($database, $scheduling, $id);
 		});

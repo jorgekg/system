@@ -54,7 +54,7 @@
                           <td>
                               <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                           </td>
-                          <td>{{scheduling.start_date}}</td>
+                          <td>{{scheduling?.start_date | datetime}}</td>
                           <td>
                             <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
                           </td>
@@ -93,7 +93,7 @@
                             <td>
                                 <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                             </td>
-                            <td>{{scheduling.start_date}}</td>
+                            <td>{{scheduling.start_date | datetime}}</td>
                             <td>
                               <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
                             </td>
@@ -133,7 +133,7 @@
                             <td>
                                 <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                             </td>
-                            <td>{{scheduling.start_date}}</td>
+                            <td>{{scheduling.start_date | datetime}}</td>
                             <td>
                               <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/scheduling', scheduling.id]">Detalhes</button>
                             </td>

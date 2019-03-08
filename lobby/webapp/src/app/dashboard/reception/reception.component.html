@@ -3,21 +3,26 @@
     <app-navbar-left></app-navbar-left>
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
-        <app-navbar-top [title]="'scheduling' | translate"></app-navbar-top>
+        <app-navbar-top [title]="'reception' | translate"></app-navbar-top>
         <div class="container">
           <div class="d-sm-flex align-items-center justify-content-between">
-            <app-breadcrumb [breadcrumb]="[{name: 'scheduling'}]"></app-breadcrumb>
+            <app-breadcrumb [breadcrumb]="[{name: 'reception'}]"></app-breadcrumb>
+            <div class="col-sm-4 col-xs-12" style="margin-top: -10px; background: white">
+                <ng-multiselect-dropdown [placeholder]="'scheduling.lobby.input' | translate"
+                  [data]="lobbyList" [(ngModel)]="lobbySelect" [settings]="lobbySettings" (onSelect)="onChangeLobby()">
+                </ng-multiselect-dropdown>
+              </div>
           </div>
           <div class="card shadow mb-4">
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-3 col-xs-12">
                   <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
                     [routerLink]="['/dashboard/reception/new']">
                     {{'add' | translate}}
                   </button>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 offset-sm-6 col-xs-12">
                   <app-next-day (date)="onChangeDate($event)"></app-next-day>
                 </div>
               </div>
@@ -45,7 +50,7 @@
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                   <div class="table-responsive">
-                    <p-table styleClass="table min-table-width" [value]="schedulingList" [paginator]="true" [first]="first"
+                    <p-table styleClass="table min-table-width table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                       [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                       <ng-template pTemplate="header">
                         <tr>
@@ -59,9 +64,9 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-scheduling>
                         <tr>
-                          <td><app-delete [classModal]="'scheduling_modal'+scheduling.id" [id]="scheduling.id" (delete)=delete($event)></app-delete></td>
+                          <td><app-delete [classModal]="'scheduling_modal_pending'+scheduling.id" [id]="scheduling.id" (delete)=delete($event)></app-delete></td>
                           <td title="visitor.checking">
-                            <app-checkin [schedulingId]="scheduling?.id" [visitor]="scheduling?.visitors[0]" (updateScheduling)="onCheckin()"
+                            <app-checkin [schedulingId]="scheduling?.id" [visitor]="scheduling?.visitors[0]" (updateScheduling)="onCheckin($event)"
                               [checkin]="scheduling?.visitors[0]?.checkin"></app-checkin>
                           </td>
                           <td>
@@ -70,7 +75,7 @@
                           <td>
                               <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                           </td>
-                          <td>{{scheduling.start_date}}</td>
+                          <td>{{scheduling?.start_date | datetime}}</td>
                           <td>
                             <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
                           </td>
@@ -78,7 +83,7 @@
                       </ng-template>
                       <ng-template pTemplate="emptymessage" let-columns>
                         <tr>
-                          <td [attr.colspan]="5" align=center>
+                          <td [attr.colspan]="6" align=center>
                             {{'not.fount' | translate}}
                           </td>
                         </tr>
@@ -88,7 +93,7 @@
                 </div>
                 <div class="tab-pane fade" id="nav-inProress" role="tabpanel" aria-labelledby="nav-profile-tab">
                   <div class="table-responsive">
-                    <p-table styleClass="table min-table-width" [value]="schedulingList" [paginator]="true" [first]="first"
+                    <p-table styleClass="table min-table-width table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                       [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                       <ng-template pTemplate="header">
                         <tr>
@@ -102,7 +107,7 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-scheduling>
                         <tr>
-                          <td><app-delete [classModal]="'scheduling_modal'+scheduling.id" [id]="scheduling.id" (delete)=delete($event)></app-delete></td>
+                          <td><app-delete [classModal]="'scheduling_modal_inprogress'+scheduling.id" [id]="scheduling.id" (delete)=delete($event)></app-delete></td>
                           <td title="visitor.checking">
                             <app-checkin [schedulingId]="scheduling?.id" [visitor]="scheduling?.visitors[0]" (updateScheduling)="getSchedulings()"
                               [checkin]="scheduling?.visitors[0]?.checkin"></app-checkin>
@@ -115,7 +120,7 @@
                             <td>
                               <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                             </td>
-                            <td>{{scheduling.start_date}}</td>
+                            <td>{{scheduling?.start_date | datetime}}</td>
                             <td>
                               <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
                             </td>
@@ -123,7 +128,7 @@
                       </ng-template>
                       <ng-template pTemplate="emptymessage" let-columns>
                         <tr>
-                          <td [attr.colspan]="5" align=center>
+                          <td [attr.colspan]="6" align=center>
                             {{'not.fount' | translate}}
                           </td>
                         </tr>
@@ -134,7 +139,7 @@
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive">
-                      <p-table styleClass="table min-table-width" [value]="schedulingList" [paginator]="true" [first]="first"
+                      <p-table styleClass="table min-table-width table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                         [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                         <ng-template pTemplate="header">
                           <tr>
@@ -158,7 +163,7 @@
                             <td>
                                 <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                             </td>
-                            <td>{{scheduling.start_date}}</td>
+                            <td>{{scheduling?.start_date | datetime}}</td>
                             <td>
                               <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
                             </td>
@@ -178,7 +183,7 @@
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive">
-                      <p-table styleClass="table min-table-width" [value]="schedulingList" [paginator]="true" [first]="first"
+                      <p-table styleClass="table min-table-width table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                         [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                         <ng-template pTemplate="header">
                           <tr>
@@ -196,7 +201,7 @@
                             <td>
                                 <app-person-on-list [list]="scheduling?.visitors"></app-person-on-list>
                             </td>
-                            <td>{{scheduling.start_date}}</td>
+                            <td>{{scheduling?.start_date| datetime}}</td>
                             <td>
                               <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/reception', scheduling.id]">Detalhes</button>
                             </td>
@@ -217,6 +222,28 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="reception-requirement" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'requirement.modal.title' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let requirement of requirements">
+          <i class="fas fa-check requirement-item"></i>
+          <span>{{requirement?.name}}</span>
+          <hr>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'ok' | translate}}</button>
       </div>
     </div>
   </div>

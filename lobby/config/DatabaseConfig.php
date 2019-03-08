@@ -11,7 +11,7 @@ $database = new Medoo([
 	'username' => 'root',
 	'password' => 'faccao12',
 	/*
- 'database_type' => 'MariaDB',
+  'database_type' => 'MariaDB',
 	'database_name' => 'id3944331_lobby',
 	'server' => 'localhost',
 	'username' => 'id3944331_lobby',

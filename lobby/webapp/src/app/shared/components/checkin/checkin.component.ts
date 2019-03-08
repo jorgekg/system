@@ -1,11 +1,10 @@
-import { ProcedureRequirementService } from 'src/app/core/entities/procedure_requirement/procedure-requirement.service';
-import { ProcedureRequirement } from './../../../core/entities/procedure_requirement/procedure-requirement.service';
 import { AppStorageService } from './../../../core/app-storage/app-storage.service';
 import { AppToastService } from './../../../core/app-toast/app-toast.service';
 import { CheckinService } from './../../../core/entities/checkin/checkin.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { SchedulingVisitor, SchedulingService } from './../../../core/entities/scheduling/scheduling.service';
+
 
 @Component({
   selector: 'app-checkin',
@@ -21,41 +20,30 @@ export class CheckinComponent implements OnInit {
     this.hasCheckin = checkin && checkin.length > 0;
   }
   @Input() showText = false;
+  @Input() classModal = ``;
 
   @Output() updateScheduling = new EventEmitter();
 
   public checkinDetails = [];
   public hasCheckin = false;
+  public requirements;
 
   constructor(
     private checkinService: CheckinService,
     private appToastService: AppToastService,
-    private appStorageService: AppStorageService,
-    private schedulingService: SchedulingService,
-    private procedureRequirementService: ProcedureRequirementService
+    private appStorageService: AppStorageService
   ) { }
 
   ngOnInit() {
   }
 
   public async process() {
-    this.showNotification();
     if (this.hasCheckin) {
       await this.unCheckin();
+      this.updateScheduling.emit();
     } else {
       await this.checkinExec();
-    }
-    this.updateScheduling.emit();
-  }
-
-  private async showNotification() {
-    const schedulings = await this.schedulingService.getSchedulingById(
-      this.schedulingId
-    ).toPromise();
-    if (schedulings && schedulings.contents.length > 0) {
-      const [scheduling] = schedulings.contents;
-      const procedureListId =
-      scheduling.schedulingProcedures.map(procedure => procedure.procedure_id);
+      this.updateScheduling.emit(this.schedulingId);
     }
   }
 

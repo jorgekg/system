@@ -2,12 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 const modal = classModal => {
   const wd = window as any;
-  wd.jQuery(`.${classModal}`).modal('show');
+  wd.jQuery(`#${classModal}`).modal('show');
 };
 
 const hide = classModal => {
   const wd = window as any;
-  wd.jQuery(`.${classModal}`).modal('hide');
+  wd.jQuery(`#${classModal}`).modal('hide');
 };
 
 let itemDelete = null;

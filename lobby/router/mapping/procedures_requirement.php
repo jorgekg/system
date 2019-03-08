@@ -20,7 +20,7 @@ $app->get('/api/requirement_list_procedures',
 		$reason->sessionIsRequired($request);
 		$response->getBody()->write($reason->getByListProcedures(
 			$request->getQueryParam('procedures'),
-			$request->getQueryParam('company_id')
+			$reason->filter[$reason->table . ".company_id"]
 		)->asJson());
 		return $response;
 });

@@ -27,8 +27,30 @@
       <span *ngIf="!isNew && !isReception">-</span>
       <span *ngIf="!isNew && isReception">
         <app-checkin [showText]="true" [visitor]="visitor" [checkin]="visitor?.checkin"
-          (updateScheduling)="update()"></app-checkin>
+          (updateScheduling)="update($event)" [schedulingId]="schedulingId"></app-checkin>
       </span>
     </th>
   </ng-template>
 </app-table>
+<div class="modal fade" id="reception-requirement" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'requirement.modal.title' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let requirement of requirements">
+          <i class="fas fa-check requirement-item"></i>
+          <span>{{requirement?.name}}</span>
+          <hr>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'ok' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

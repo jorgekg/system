@@ -64,6 +64,7 @@ export interface Scheduling {
   end_date?: Date;
   situation?: SchedulingSituation;
   active?: string;
+  procedures?: SchedulingProcedures[];
   schedulingProcedures?: SchedulingProcedures[];
   schedulingResponsibles?: SchedulingResponsible[];
   schedulingVisitors?: SchedulingVisitor[];

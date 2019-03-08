@@ -51,6 +51,7 @@ $app->get('/api/reception',
 			$request->getQueryParam('name'),
 			$request->getQueryParam('company_id'),
 			$request->getQueryParam('situation'),
+			$request->getQueryParam('lobby_id'),
 			$request->getQueryParam('date'),
 			$request->getQueryParam('offset')
 		)->asJson());

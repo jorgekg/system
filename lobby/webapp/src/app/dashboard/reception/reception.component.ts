@@ -1,8 +1,18 @@
+import { TranslateService } from '@ngx-translate/core';
+import { Lobby } from './../../core/entities/lobby/lobby.service';
+import { ActivatedRoute } from '@angular/router';
+import { Requirement } from './../../core/entities/requirement/requirement.service';
 import { AppToastService } from './../../core/app-toast/app-toast.service';
 import { AppStorageService } from './../../core/app-storage/app-storage.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Scheduling, SchedulingSituation, SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
 import { ReceptionService } from 'src/app/core/entities/reception/reception.service';
+import { ProcedureRequirementService } from 'src/app/core/entities/procedure_requirement/procedure-requirement.service';
+
+const showModalRequirement = () => {
+  const wd = window as any;
+  wd.jQuery(`#reception-requirement`).modal(`show`);
+};
 
 @Component({
   selector: 'app-reception',
@@ -16,6 +26,19 @@ export class ReceptionComponent implements OnInit {
   public schedulingList = [] as Scheduling[];
   public situation = SchedulingSituation.PENDING;
   public totalElements = 0;
+  public requirements = [] as any[];
+  public lobbyList = this.appStorageService.getLobbies();
+  public lobbySelect: Lobby[];
+  public lobbySettings = {
+    singleSelection: true,
+    idField: 'id',
+    textField: 'name',
+    enableCheckAll: false,
+    itemsShowLimit: 5,
+    allowSearchFilter: false,
+    placeholder: this.translateService.instant('scheduling.lobby.search'),
+    searchPlaceholderText: this.translateService.instant('search')
+  };
 
   public first = 0;
 
@@ -24,19 +47,31 @@ export class ReceptionComponent implements OnInit {
   constructor(
     private appStorageService: AppStorageService,
     private appToastService: AppToastService,
-    private receptionService: ReceptionService
+    private receptionService: ReceptionService,
+    private schedulingService: SchedulingService,
+    private procedureRequirementService: ProcedureRequirementService,
+    private activedRoute: ActivatedRoute,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
-    this.getSchedulings();
+    this.schedulingList = this.activedRoute.snapshot.data.schedulingData.list.contents;
+    this.totalElements = this.activedRoute.snapshot.data.schedulingData.list.totalElements;
+    this.lobbySelect = [this.appStorageService.getactiveLobby()];
   }
 
   public async getSchedulings(page = 0) {
     const schedulingList = await this.receptionService.getReception(
-      ``, this.situation, this.receptionDate, page
+      ``, this.situation, this.appStorageService.getactiveLobby().id,
+      this.receptionDate, page
     ).toPromise();
     this.schedulingList = schedulingList.contents;
     this.totalElements = schedulingList.totalElements;
+  }
+
+  public onChangeLobby() {
+    this.appStorageService.setactiveLobby(this.lobbySelect[0]);
+    this.getSchedulings();
   }
 
   public onChangeDate(date) {
@@ -57,8 +92,24 @@ export class ReceptionComponent implements OnInit {
     this.totalElements = schedulings.totalElements;
   }
 
-  public onCheckin() {
+  public onCheckin(id) {
     (this.inProgress.nativeElement as HTMLInputElement).click();
+    this.showNotification(id);
+  }
+
+  private async showNotification(schedulingId) {
+    const schedulings = await this.schedulingService.getSchedulingById(
+      schedulingId
+    ).toPromise();
+    if (schedulings && schedulings.contents.length > 0) {
+      const [scheduling] = schedulings.contents;
+      const procedureListId =
+      scheduling.procedures.map(procedure => procedure.procedure_id);
+      const requirements =  await
+        this.procedureRequirementService.getByProcedureList(procedureListId).toPromise();
+      this.requirements = requirements.contents;
+      showModalRequirement();
+    }
   }
 
   public async finalizeScheduling(schedulingId: number) {

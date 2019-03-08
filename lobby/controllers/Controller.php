@@ -3,13 +3,13 @@
 use Slim\Http\Request;
 
 Class Controller {
-	protected $table;	
+	public $table;	
 	protected $database;
 	protected $model;
 
 	protected $data;
 	protected $totalElements;
-	protected $filter;
+	public $filter;
 
 	public function sessionIsRequired($request) {
 		$auth = $request->getHeader("Authorization");

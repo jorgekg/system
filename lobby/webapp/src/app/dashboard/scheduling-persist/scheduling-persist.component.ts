@@ -176,6 +176,12 @@ export class SchedulingPersistComponent implements OnInit {
       this.schedulingData.data.situation === SchedulingSituation.IN_PROGRESS;
   }
 
+  public isCanceled() {
+    return this.schedulingData.data &&
+      this.schedulingData.data.situation === SchedulingSituation.CANCELED;
+  }
+
+
   public async finalizeScheduling() {
     await this.receptionService.updateReception({
       id: this.form.get('id').value,
@@ -184,6 +190,10 @@ export class SchedulingPersistComponent implements OnInit {
     }).toPromise();
     this.appToastService.success('scheduling.success', 'scheduling.finish.success');
     this.routerBack();
+  }
+
+  public isReception() {
+    return this.router.url.includes('reception');
   }
 
   public routerBack() {
@@ -201,8 +211,15 @@ export class SchedulingPersistComponent implements OnInit {
   private loadLobby() {
     this.lobbyList = this.schedulingData.lobbies;
     if (this.lobbyList && this.lobbyList.length > 0) {
-      const [lobby] = this.lobbyList;
-      this.lobbySelect = [lobby];
+      let lobby = null;
+      if (this.appStorageService.getactiveLobby()) {
+        lobby = this.lobbyList.filter(lb => this.appStorageService.getactiveLobby().id === lb.id);
+      } else {
+        [lobby] = this.lobbyList;
+        lobby = [lobby];
+      }
+      this.lobbySelect = lobby;
+      this.form.get('lobby').patchValue(this.lobbySelect);
     }
   }
 
@@ -230,7 +247,11 @@ export class SchedulingPersistComponent implements OnInit {
         this.router.navigate(['dashboard/scheduling']);
       } else {
         const [scheduling] = schedulings.contents;
-        this.router.navigate(['dashboard/scheduling', scheduling.id]);
+        if (this.isReception()) {
+          this.router.navigate(['dashboard/reception', scheduling.id]);
+        } else {
+          this.router.navigate(['dashboard/scheduling', scheduling.id]);
+        }
       }
       this.appToastService.success(
         'success',

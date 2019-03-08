@@ -12,6 +12,8 @@
 	"update": "Atualizar",
 	"cancel": "Cancelar",
 	"success": "Sucesso",
+	"select": "Selecione",
+	"error": "Falhou :(",
 	"not.fount": "Nenhum registro encontrado!",
 	"error.delete.fk": "Não é possível apagar, pois o mesmo já possui vinculos!",
 	"dashboard": "Ir para o dashboard",
@@ -34,6 +36,7 @@
 	"lobby.startDate.input": "Digite o horário de abertura...",
 	"lobby.endDate": "Horário de fechamento",
 	"lobby.endDate.input": "Digite o horário de fechamento...",
+	"select.lobby.title": "Selecione a portaria deste local!",
 	"list.data.empty": "Nenhum registro encontrado",
 	"procedure": "Procedimento",
 	"procedures.list": "Procedimentos cadastrados",
@@ -58,6 +61,7 @@
 	"requirement.name": "Exigência",
 	"requirement.name.input": "Digite da exigência...",
 	"requirement.price": "Valor",
+	"requirement.modal.title": "Confirme se as exigência foram cumpridas!",
 	"requirement.price.input": "Digite o valor...",
 	"delete.title": "Remover um registro!",
 	"delete.message": "Ao remover um registro, não será possível desfazer!",
@@ -108,6 +112,7 @@
 	"responsible.email": "E-mail",
 	"responsible.phone": "Telefone",
 	"responsible.search": "Pesquise ou adicione responsáveis",
+	"reception": "Recepção",
 	"visitor.search": "Pequise ou adicione visitantes",
 	"visitor.name": "Nome",
 	"visitor.email": "E-mail",
@@ -117,5 +122,7 @@
 	"visitor.not.status": "Check-in não disponível, agendamento ainda não adicionado!",
 	"checkin.success": "Sucesso",
 	"checkin.success.message": "Check-in realizado!",
-	"uncheckin.success.message": "Check-in desfeito com sucesso!"
+	"uncheckin.success.message": "Check-in desfeito com sucesso!",
+	"start_date.minor.end_date": "Data inicial menor que data final",
+	"start_date.minor.today": "Data inicial menor que data atual"
 }

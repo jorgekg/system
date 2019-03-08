@@ -16,12 +16,13 @@ class ProcedureRequirementController extends Controller {
 				"[><]requirement" => ["requirement_id" => "id"]
 			],
 			[
-				"requirement.name",
-				"procedures_requirement.id",
-				"procedures_requirement.update_at"
+				"requirement.name"
 			], [
 				"procedures_requirement.company_id" => $company,
-				"procedures_requirement.procedure_id" => $listProcedures
+				"procedures_requirement.procedure_id" => explode(",", $listProcedures),
+				"GROUP" => [
+					"requirement.name"
+				],
 			]
 		);
 		$this->hasError();

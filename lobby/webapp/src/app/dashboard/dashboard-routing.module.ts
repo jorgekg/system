@@ -21,6 +21,8 @@ import { LobbyPersistResolve } from './lobby/persist/lobby-persist.resolve';
 import { RequirementPersistResolve } from './requirement/persist/requirement-persist.resolve';
 import { SchedulingComponent } from './scheduling/scheduling.component';
 import { ReceptionComponent } from './reception/reception.component';
+import { resolve } from 'url';
+import { ReceptionResolve } from './reception/reception.resolve';
 
 const routes: Routes = [
   {
@@ -84,6 +86,9 @@ const routes: Routes = [
   {
     path: 'reception',
     component: ReceptionComponent,
+    resolve: {
+      schedulingData: ReceptionResolve
+    }
   },
   {
     path: 'scheduling/:id',
@@ -115,7 +120,8 @@ const routes: Routes = [
     RequirementPersistResolve,
     ProceduresResolve,
     ProceduresPersistResolve,
-    SchedulingPersistResolve
+    SchedulingPersistResolve,
+    ReceptionResolve
   ]
 })
 export class DashboardRoutingModule { }

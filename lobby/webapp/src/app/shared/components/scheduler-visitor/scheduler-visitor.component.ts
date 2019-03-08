@@ -4,6 +4,13 @@ import { Component, OnInit, forwardRef, Input, Output, EventEmitter } from '@ang
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from 'src/app/core/entities/person/person.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
+import { ProcedureRequirementService } from 'src/app/core/entities/procedure_requirement/procedure-requirement.service';
+
+const showModalRequirement = () => {
+  const wd = window as any;
+  wd.jQuery(`#reception-requirement`).modal(`show`);
+};
 
 @Component({
   selector: 'app-scheduler-visitor',
@@ -20,12 +27,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
 
   @Input() isNew: boolean;
+  @Input() schedulingId: number;
   @Output() updateScheduling = new EventEmitter();
 
   public visitorList = [];
   public personList = [];
   public person;
   public disabled = false;
+  public requirements = [] as any[];
 
   public personAdd;
   public isReception = false;
@@ -36,7 +45,9 @@ export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
   constructor(
     private translateService: TranslateService,
     private personService: PersonService,
-    private router: Router
+    private router: Router,
+    private schedulingService: SchedulingService,
+    private procedureRequirementService: ProcedureRequirementService
   ) { }
 
   ngOnInit() {
@@ -61,8 +72,26 @@ export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
     this.disabled = status;
   }
 
-  public update() {
+  public update(id) {
     this.updateScheduling.emit();
+    if (id) {
+      this.showNotification(id);
+    }
+  }
+
+  private async showNotification(schedulingId) {
+    const schedulings = await this.schedulingService.getSchedulingById(
+      schedulingId
+    ).toPromise();
+    if (schedulings && schedulings.contents.length > 0) {
+      const [scheduling] = schedulings.contents;
+      const procedureListId =
+      scheduling.procedures.map(procedure => procedure.procedure_id);
+      const requirements =  await
+        this.procedureRequirementService.getByProcedureList(procedureListId).toPromise();
+      this.requirements = requirements.contents;
+      showModalRequirement();
+    }
   }
 
   public async onSeach(term) {
