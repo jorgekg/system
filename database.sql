@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS `company` (
   `name` varchar(255) NOT NULL,
   `active` varchar(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2;
+) ENGINE=InnoDB;
 
--- Copiando dados para a tabela lobby.company: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.company: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
 INSERT INTO `company` (`id`, `name`, `active`) VALUES
 	(1, 'Jorge Company', 'S');
@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS `company_user` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `company_user_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.company_user: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.company_user: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `company_user` DISABLE KEYS */;
 INSERT INTO `company_user` (`id`, `company_id`, `email`, `password`, `active`) VALUES
 	(1, 1, 'jorgekg3@gmail.com', '8cb2237d0679ca88db6464eac60da96345513964', 'S');
@@ -55,9 +55,9 @@ CREATE TABLE IF NOT EXISTS `contact` (
   KEY `contact_type_id` (`contact_type_id`),
   CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `contact_ibfk_2` FOREIGN KEY (`contact_type_id`) REFERENCES `contact_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.contact: ~24 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.contact: ~19 rows (aproximadamente)
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
 INSERT INTO `contact` (`id`, `person_id`, `contact_type_id`, `contact`, `update_at`) VALUES
 	(32, 34, 1, 'jorgekg3@gmail.com', '2019-02-23 16:50:21'),
@@ -83,7 +83,9 @@ INSERT INTO `contact` (`id`, `person_id`, `contact_type_id`, `contact`, `update_
 	(52, 44, 1, 'nelita@mullher.com', '2019-02-25 22:35:03'),
 	(53, 44, 2, '23742749827', '2019-02-25 22:35:03'),
 	(54, 45, 1, 'adriner@adrine', '2019-02-27 21:59:24'),
-	(55, 45, 2, '20394290923', '2019-02-27 21:59:24');
+	(55, 45, 2, '20394290923', '2019-02-27 21:59:24'),
+	(56, 46, 1, 'melita@melita.com', '2019-03-05 12:55:01'),
+	(57, 46, 2, '34389894899', '2019-03-05 12:55:01');
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.contact_type
@@ -92,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `contact_type` (
   `type` varchar(100) NOT NULL,
   `label` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB ;
 
 -- Copiando dados para a tabela lobby.contact_type: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `contact_type` DISABLE KEYS */;
@@ -113,9 +115,9 @@ CREATE TABLE IF NOT EXISTS `document` (
   KEY `document_type_id` (`document_type_id`),
   CONSTRAINT `document_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `document_ibfk_2` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.document: ~12 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.document: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
 INSERT INTO `document` (`id`, `person_id`, `document_type_id`, `document`, `update_at`) VALUES
 	(21, 34, 2, '087.668.259-03', '2019-02-23 16:50:21'),
@@ -129,7 +131,8 @@ INSERT INTO `document` (`id`, `person_id`, `document_type_id`, `document`, `upda
 	(29, 42, 2, '239.042.930-42', '2019-02-24 15:02:36'),
 	(30, 43, 2, '340.289.048-20', '2019-02-24 15:04:45'),
 	(31, 44, 2, '098.028.049-23', '2019-02-25 22:35:03'),
-	(32, 45, 2, '840.834.839-08', '2019-02-27 21:59:24');
+	(32, 45, 2, '840.834.839-08', '2019-02-27 21:59:24'),
+	(33, 46, 2, '948.293.898-49', '2019-03-05 12:55:01');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.document_type
@@ -139,24 +142,14 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   `label` varchar(100) NOT NULL,
   `mask` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.document_type: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.document_type: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
 INSERT INTO `document_type` (`id`, `type`, `label`, `mask`) VALUES
 	(2, 'CPF', 'CPF', '000.000.000-00');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 
--- Copiando estrutura para tabela lobby.hibernate_sequence
-CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
-  `next_val` bigint(20) DEFAULT NULL
-) ENGINE=MyISAM;
-
--- Copiando dados para a tabela lobby.hibernate_sequence: 1 rows
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-	(7);
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.lobby
 CREATE TABLE IF NOT EXISTS `lobby` (
@@ -171,13 +164,14 @@ CREATE TABLE IF NOT EXISTS `lobby` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `lobby_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.lobby: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.lobby: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `lobby` DISABLE KEYS */;
 INSERT INTO `lobby` (`id`, `company_id`, `name`, `start_date`, `end_date`, `company_user`, `create_at`, `update_at`) VALUES
-	(1, 1, 'Portaria Jessica', '08:00:00', '18:48:00', NULL, NULL, '2019-02-18 23:05:55'),
-	(2, 1, 'Portaria Jorge', '08:00:00', '18:30:00', NULL, NULL, '2019-02-18 23:04:56');
+	(1, 1, 'Portaria recepção nova', '08:00:00', '18:48:00', NULL, NULL, '2019-03-05 11:02:13'),
+	(2, 1, 'Portaria carga e descarga', '08:00:00', '18:30:00', NULL, NULL, '2019-03-05 11:02:23'),
+	(7, 1, 'Portaria acesso externo', '12:31:21', '12:12:31', NULL, NULL, '2019-03-05 11:02:38');
 /*!40000 ALTER TABLE `lobby` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.person
@@ -189,9 +183,9 @@ CREATE TABLE IF NOT EXISTS `person` (
   `responsible` varchar(2) DEFAULT NULL,
   `company_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.person: ~12 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.person: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
 INSERT INTO `person` (`id`, `name`, `active`, `update_at`, `responsible`, `company_id`) VALUES
 	(34, 'Jorge Guilherme Kohn', 'S', '2019-02-23 16:50:21', 'S', 1),
@@ -205,7 +199,8 @@ INSERT INTO `person` (`id`, `name`, `active`, `update_at`, `responsible`, `compa
 	(42, 'Andriele Mara Kohn', 'S', '2019-02-24 15:02:36', 'S', 1),
 	(43, 'Aline Luiza Kohn', 'S', '2019-02-24 15:04:45', 'N', 1),
 	(44, 'Nelita Mullher', 'S', '2019-02-25 22:35:03', 'S', 1),
-	(45, 'Adriner Andrade', 'S', '2019-02-27 21:59:24', 'N', 1);
+	(45, 'Adriner Andrade', 'S', '2019-02-27 21:59:24', 'N', 1),
+	(46, 'Melita Muller Kohn', 'S', '2019-03-05 12:55:01', 'N', 1);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.procedures
@@ -221,14 +216,14 @@ CREATE TABLE IF NOT EXISTS `procedures` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `procedures_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.procedures: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.procedures: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `procedures` DISABLE KEYS */;
 INSERT INTO `procedures` (`id`, `company_id`, `name`, `price`, `detail`, `active`, `update_at`, `time`) VALUES
-	(3, 1, 'Manutenção do aparelho ortodontico', 90, '', NULL, '2019-02-18 22:37:15', '00:30:00'),
-	(5, 1, 'Limpeza de pele', 35.99, NULL, NULL, '2019-02-18 22:45:09', '00:25:00'),
-	(6, 1, 'Remoção de carie', 70, NULL, NULL, '2019-02-20 21:20:48', '00:20:00');
+	(3, 1, 'Manutenção do aparelho ortodontico', 90, 'teste novao\\\n', NULL, '2019-03-05 12:03:01', '00:30:00'),
+	(5, 1, 'Limpeza de pele', 35.99, NULL, NULL, '2019-03-07 20:40:41', '00:25:00'),
+	(6, 1, 'Remoção de carie', 70, NULL, NULL, '2019-03-05 12:07:31', '00:20:00');
 /*!40000 ALTER TABLE `procedures` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.procedures_requirement
@@ -245,14 +240,15 @@ CREATE TABLE IF NOT EXISTS `procedures_requirement` (
   CONSTRAINT `procedures_requirement` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `procedures_requirement_ibfk_2` FOREIGN KEY (`requirement_id`) REFERENCES `requirement` (`id`),
   CONSTRAINT `procedures_requirement_ibfk_3` FOREIGN KEY (`procedure_id`) REFERENCES `procedures` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11;
+) ENGINE=InnoDB ;
 
 -- Copiando dados para a tabela lobby.procedures_requirement: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `procedures_requirement` DISABLE KEYS */;
 INSERT INTO `procedures_requirement` (`id`, `company_id`, `procedure_id`, `requirement_id`, `update_at`) VALUES
 	(5, 1, 3, 9, '2019-02-18 19:54:06'),
 	(7, 1, 3, 12, '2019-02-18 21:08:14'),
-	(10, 1, 5, 9, '2019-02-18 22:39:44');
+	(10, 1, 5, 9, '2019-02-18 22:39:44'),
+	(24, 1, 5, 10, '2019-03-07 20:40:38');
 /*!40000 ALTER TABLE `procedures_requirement` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.requirement
@@ -267,14 +263,14 @@ CREATE TABLE IF NOT EXISTS `requirement` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `requirement_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.requirement: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.requirement: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `requirement` DISABLE KEYS */;
 INSERT INTO `requirement` (`id`, `company_id`, `name`, `price`, `has_cost`, `active`, `update_at`) VALUES
 	(9, 1, 'Maior de 18 anos ou declaração do responsável.', 0, NULL, NULL, '2019-02-18 15:05:22'),
 	(10, 1, 'Anestesistas', 359.99, NULL, NULL, '2019-02-18 20:41:01'),
-	(12, 1, 'Estar em jejum', 0, NULL, NULL, '2019-02-18 20:47:37');
+	(12, 1, 'Estar em jejum', 0, NULL, NULL, '2019-03-05 11:33:32');
 /*!40000 ALTER TABLE `requirement` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.scheduling
@@ -293,9 +289,9 @@ CREATE TABLE IF NOT EXISTS `scheduling` (
   KEY `company_id` (`company_id`),
   CONSTRAINT `scheduling_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_ibfk_2` FOREIGN KEY (`lobby_id`) REFERENCES `lobby` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.scheduling: ~91 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.scheduling: ~149 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling` DISABLE KEYS */;
 INSERT INTO `scheduling` (`id`, `company_id`, `name`, `lobby_id`, `start_date`, `end_date`, `active`, `situation`, `abs_id`) VALUES
 	(19, 1, 'Agendamento', 2, '2019-02-28 21:00:00', '2019-02-28 21:30:00', 'N', 1, NULL),
@@ -388,8 +384,84 @@ INSERT INTO `scheduling` (`id`, `company_id`, `name`, `lobby_id`, `start_date`, 
 	(106, 1, 'Agendamento', 2, '2019-03-05 08:33:00', '2019-03-05 11:30:00', 'S', 3, '5c7c397e1fc2a'),
 	(107, 1, 'Agendamento', 2, '2019-03-04 18:30:00', '2019-03-04 19:00:00', 'S', 3, '5c7d627563b1f'),
 	(108, 1, 'Agendamento', 1, '2019-03-04 19:30:00', '2019-03-04 20:00:00', 'S', 3, '5c7d7a2521d8b'),
-	(109, 1, 'Agendamento', 2, '2019-03-04 20:00:00', '2019-03-04 21:00:00', 'S', 4, '5c7d82a03de78');
+	(109, 1, 'Agendamento', 2, '2019-03-04 20:00:00', '2019-03-04 21:00:00', 'S', 3, '5c7d82a03de78'),
+	(110, 1, 'Agendamento', 2, '2019-03-05 13:00:00', '2019-03-05 14:00:00', 'S', 3, '5c7e722540d8f'),
+	(111, 1, 'Agendamento', 2, '2019-03-05 16:00:00', '2019-03-05 17:05:00', 'S', 3, '5c7e722540d8f'),
+	(112, 1, 'Agendamento', 2, '2019-03-05 16:00:00', '2019-03-05 17:05:00', 'S', 3, '5c7e722540d8f'),
+	(113, 1, 'Agendamento', 1, '2019-03-05 13:05:00', '2019-03-05 14:05:00', 'S', 3, '5c7e740e7e642'),
+	(114, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:06:00', 'S', 3, '5c7e740e7e642'),
+	(115, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:06:00', 'S', 3, '5c7e740e7e642'),
+	(116, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:07:00', 'S', 3, '5c7e740e7e642'),
+	(117, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:08:00', 'S', 3, '5c7e740e7e642'),
+	(118, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:09:00', 'S', 3, '5c7e740e7e642'),
+	(119, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:10:00', 'S', 3, '5c7e740e7e642'),
+	(120, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:11:00', 'S', 3, '5c7e740e7e642'),
+	(121, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:12:00', 'S', 3, '5c7e740e7e642'),
+	(122, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:13:00', 'S', 3, '5c7e740e7e642'),
+	(123, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:14:00', 'S', 3, '5c7e740e7e642'),
+	(124, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:15:00', 'S', 3, '5c7e740e7e642'),
+	(125, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:16:00', 'S', 3, '5c7e740e7e642'),
+	(126, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:17:00', 'S', 3, '5c7e740e7e642'),
+	(127, 1, 'Agendamento', 1, '2019-03-05 16:05:00', '2019-03-05 17:18:00', 'S', 3, '5c7e740e7e642'),
+	(128, 1, 'Agendamento', 1, '2019-03-05 19:05:00', '2019-03-05 20:19:00', 'S', 3, '5c7e740e7e642'),
+	(129, 1, 'Agendamento', 1, '2019-03-05 14:30:00', '2019-03-05 15:00:00', 'N', 1, '5c7e86fd9f913'),
+	(130, 1, 'Agendamento', 1, '2019-03-05 17:31:00', '2019-03-05 18:00:00', 'N', 3, '5c7e86fd9f913'),
+	(131, 1, 'Agendamento', 1, '2019-03-05 20:31:00', '2019-03-05 21:00:00', 'N', 3, '5c7e86fd9f913'),
+	(132, 1, 'Agendamento', 1, '2019-03-05 17:30:00', '2019-03-05 18:01:00', 'N', 1, '5c7e86fd9f913'),
+	(133, 1, 'Agendamento', 1, '2019-03-05 20:31:00', '2019-03-05 21:01:00', 'S', 3, '5c7e86fd9f913'),
+	(134, 1, 'Agendamento', 1, '2019-03-06 15:00:00', '2019-03-06 16:00:00', 'N', 1, '5c7e8dbeb664f'),
+	(135, 1, 'Agendamento', 1, '2019-03-05 17:10:00', '2019-03-05 19:07:00', 'N', 1, '5c7eacfb4f135'),
+	(136, 1, 'Agendamento', 2, '2019-03-05 20:10:00', '2019-03-05 22:07:00', 'N', 1, '5c7eacfb4f135'),
+	(137, 1, 'Agendamento', 2, '2019-03-05 23:20:00', '2019-03-06 01:07:00', 'N', 1, '5c7eacfb4f135'),
+	(138, 1, 'Agendamento', 2, '2019-03-06 02:20:00', '2019-03-06 04:07:00', 'N', 1, '5c7eacfb4f135'),
+	(139, 1, 'Agendamento', 2, '2019-03-06 02:20:00', '2019-03-06 04:07:00', 'N', 1, '5c7eacfb4f135'),
+	(140, 1, 'Agendamento', 1, '2019-03-05 22:00:00', '2019-03-05 23:00:00', 'N', 1, '5c7ef1661a216'),
+	(141, 1, 'Agendamento', 1, '2019-03-06 00:00:00', '2019-03-06 02:00:00', 'S', 1, '5c7ef1661a216'),
+	(142, 1, 'Agendamento', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'N', 1, '5c7eacfb4f135'),
+	(143, 1, 'Agendamento', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'N', 1, '5c7eacfb4f135'),
+	(144, 1, 'Agendamento', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'N', 1, '5c7eacfb4f135'),
+	(145, 1, 'Agendamento', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'N', 1, '5c7eacfb4f135'),
+	(146, 1, 'Agendamento', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'N', 1, '5c7eacfb4f135'),
+	(147, 1, 'Agendamento', 2, '2019-03-05 19:25:00', '2019-03-05 20:21:00', 'N', 1, '5c7eacfb4f135'),
+	(148, 1, 'Agendamento', 2, '2019-03-05 19:30:00', '2019-03-05 20:21:00', 'N', 1, '5c7eacfb4f135'),
+	(149, 1, 'Agendamento', 2, '2019-03-05 19:30:00', '2019-03-05 20:30:00', 'N', 1, '5c7eacfb4f135'),
+	(150, 1, 'Agendamento', 2, '2019-03-05 19:30:00', '2019-03-05 20:30:00', 'N', 1, '5c7eacfb4f135'),
+	(151, 1, 'Agendamento', 1, '2019-03-06 15:00:00', '2019-03-06 16:00:00', 'S', 3, '5c7e8dbeb664f'),
+	(152, 1, 'Agendamento', 1, '2019-03-07 17:00:00', '2019-03-07 17:51:00', 'N', 1, '5c81765a7dce4'),
+	(153, 1, 'Agendamento', 1, '2019-03-07 17:00:00', '2019-03-07 17:51:00', 'S', 4, '5c81765a7dce4'),
+	(154, 1, 'Agendamento', 7, '2019-03-07 19:30:00', '2019-03-07 20:30:00', 'S', 3, '5c81998754d22'),
+	(155, 1, 'Agendamento', 7, '2019-03-07 20:21:00', '2019-03-07 21:21:00', 'S', 3, '5c81a7962cb2e'),
+	(156, 1, 'Agendamento', 7, '2019-03-07 20:30:00', '2019-03-07 21:32:00', 'S', 3, '5c81a86187906'),
+	(157, 1, 'Agendamento', 2, '2019-03-05 19:30:00', '2019-03-05 20:30:00', 'S', 1, '5c7eacfb4f135'),
+	(158, 1, 'Agendamento', 7, '2019-03-07 20:34:00', '2019-03-07 21:34:00', 'N', 3, '5c81aa8c10ac4'),
+	(159, 1, 'Agendamento', 7, '2019-03-07 20:34:00', '2019-03-07 21:34:00', 'S', 2, '5c81aa8c10ac4'),
+	(160, 1, 'Agendamento', 7, '2019-03-07 20:46:00', '2019-03-07 20:53:00', 'S', 2, '5c81af05036f5'),
+	(161, 1, 'Agendamento', 7, '2019-03-07 20:46:00', '2019-03-07 20:47:00', 'S', 4, '5c81af2896036'),
+	(162, 1, 'Agendamento', 7, '2019-03-07 21:05:00', '2019-03-07 21:06:00', 'N', 1, '5c81b1a8d92a2'),
+	(163, 1, 'Agendamento', 7, '2019-03-07 21:06:00', '2019-03-07 21:06:00', 'S', 2, '5c81b1a8d92a2'),
+	(164, 1, 'Agendamento', 7, '2019-03-07 21:09:00', '2019-03-07 21:10:00', 'S', 4, '5c81b2667e66a'),
+	(165, 1, 'Agendamento', 7, '2019-03-07 21:09:00', '2019-03-07 21:10:00', 'S', 1, '5c81b27d588be'),
+	(166, 1, 'Agendamento', 1, '2019-03-09 10:30:00', '2019-03-09 10:50:00', 'S', 1, '5c833abc4ffc6'),
+	(167, 1, 'Agendamento', 1, '2019-03-09 10:30:00', '2019-03-09 10:50:00', 'S', 1, '5c833aeab0063'),
+	(168, 1, 'Agendamento', 1, '2019-03-09 10:30:00', '2019-03-09 10:50:00', 'S', 1, '5c833b04054e1'),
+	(169, 1, 'Agendamento', 1, '2019-03-09 11:00:00', '2019-03-09 12:00:00', 'S', 1, '5c83c4b20c52b');
 /*!40000 ALTER TABLE `scheduling` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela lobby.scheduling_notification
+CREATE TABLE IF NOT EXISTS `scheduling_notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  `contents` text NOT NULL,
+  `active` varchar(1) DEFAULT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB ;
+
+-- Copiando dados para a tabela lobby.scheduling_notification: ~1 rows (aproximadamente)
+/*!40000 ALTER TABLE `scheduling_notification` DISABLE KEYS */;
+INSERT INTO `scheduling_notification` (`id`, `type`, `contents`, `active`, `company_id`) VALUES
+	(4, 'insert_scheduling', '{"abs_id":null,"id":null,"lobby":[{"id":"1","company_id":"1","name":"Portaria recep\\u00e7\\u00e3o nova","start_date":"08:00:00","end_date":"18:48:00","company_user":null,"create_at":null,"update_at":"2019-03-05 11:02:13"}],"procedures":[{"id":"3","name":"Manuten\\u00e7\\u00e3o do aparelho ortodontico"}],"start_date":"2019-03-09 11:00","end_date":"2019-03-09 12:00","responsibles":[{"id":0,"person":{"id":"34","name":"Jorge Guilherme Kohn","active":"S","update_at":"2019-02-23 16:50:21","responsible":"S","company_id":"1","documents":[{"id":"21","person_id":"34","document_type_id":"2","document":"087.668.259-03","update_at":"2019-02-23 16:50:21"}],"emails":[{"id":"32","person_id":"34","contact_type_id":"1","contact":"jorgekg3@gmail.com","update_at":"2019-02-23 16:50:21"}],"phones":[{"id":"33","person_id":"34","contact_type_id":"2","contact":"47989138092","update_at":"2019-02-23 16:50:21"}]}}],"visitors":[{"id":0,"person":{"id":"34","name":"Jorge Guilherme Kohn","active":"S","update_at":"2019-02-23 16:50:21","responsible":"S","company_id":"1","documents":[{"id":"21","person_id":"34","document_type_id":"2","document":"087.668.259-03","update_at":"2019-02-23 16:50:21"}],"emails":[{"id":"32","person_id":"34","contact_type_id":"1","contact":"jorgekg3@gmail.com","update_at":"2019-02-23 16:50:21"}],"phones":[{"id":"33","person_id":"34","contact_type_id":"2","contact":"47989138092","update_at":"2019-02-23 16:50:21"}]}}],"lobby_id":"1","company_id":"1","active":"S"}', NULL, 1);
+/*!40000 ALTER TABLE `scheduling_notification` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.scheduling_procedures
 CREATE TABLE IF NOT EXISTS `scheduling_procedures` (
@@ -404,9 +476,9 @@ CREATE TABLE IF NOT EXISTS `scheduling_procedures` (
   CONSTRAINT `scheduling_procedures_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_procedures_ibfk_2` FOREIGN KEY (`scheduling_id`) REFERENCES `scheduling` (`id`),
   CONSTRAINT `scheduling_procedures_ibfk_3` FOREIGN KEY (`procedure_id`) REFERENCES `procedures` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.scheduling_procedures: ~128 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.scheduling_procedures: ~189 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling_procedures` DISABLE KEYS */;
 INSERT INTO `scheduling_procedures` (`id`, `company_id`, `scheduling_id`, `procedure_id`) VALUES
 	(18, 1, 19, 3),
@@ -536,7 +608,69 @@ INSERT INTO `scheduling_procedures` (`id`, `company_id`, `scheduling_id`, `proce
 	(142, 1, 106, 5),
 	(143, 1, 107, 3),
 	(144, 1, 108, 3),
-	(145, 1, 109, 3);
+	(145, 1, 109, 3),
+	(146, 1, 110, 3),
+	(147, 1, 111, 3),
+	(148, 1, 112, 3),
+	(149, 1, 113, 3),
+	(150, 1, 114, 3),
+	(151, 1, 115, 3),
+	(152, 1, 116, 3),
+	(153, 1, 117, 3),
+	(154, 1, 118, 3),
+	(155, 1, 119, 3),
+	(156, 1, 120, 3),
+	(157, 1, 121, 3),
+	(158, 1, 122, 3),
+	(159, 1, 123, 3),
+	(160, 1, 124, 3),
+	(161, 1, 125, 3),
+	(162, 1, 126, 3),
+	(163, 1, 127, 3),
+	(164, 1, 128, 3),
+	(165, 1, 129, 3),
+	(166, 1, 130, 3),
+	(167, 1, 131, 3),
+	(168, 1, 131, 5),
+	(169, 1, 132, 3),
+	(170, 1, 133, 3),
+	(171, 1, 134, 3),
+	(172, 1, 135, 3),
+	(173, 1, 136, 3),
+	(174, 1, 137, 3),
+	(175, 1, 138, 3),
+	(176, 1, 139, 3),
+	(177, 1, 140, 3),
+	(178, 1, 141, 3),
+	(179, 1, 142, 3),
+	(180, 1, 143, 3),
+	(181, 1, 144, 3),
+	(182, 1, 145, 3),
+	(183, 1, 146, 3),
+	(184, 1, 147, 3),
+	(185, 1, 148, 3),
+	(186, 1, 149, 3),
+	(187, 1, 150, 3),
+	(188, 1, 151, 3),
+	(189, 1, 152, 3),
+	(190, 1, 153, 3),
+	(191, 1, 153, 5),
+	(192, 1, 154, 3),
+	(193, 1, 155, 3),
+	(194, 1, 156, 3),
+	(195, 1, 157, 6),
+	(196, 1, 158, 3),
+	(197, 1, 159, 3),
+	(198, 1, 160, 3),
+	(199, 1, 161, 3),
+	(200, 1, 162, 3),
+	(201, 1, 163, 3),
+	(202, 1, 164, 3),
+	(203, 1, 165, 3),
+	(204, 1, 166, 3),
+	(205, 1, 167, 3),
+	(206, 1, 168, 3),
+	(207, 1, 169, 3);
 /*!40000 ALTER TABLE `scheduling_procedures` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.scheduling_responsible
@@ -553,9 +687,9 @@ CREATE TABLE IF NOT EXISTS `scheduling_responsible` (
   CONSTRAINT `scheduling_responsible_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_responsible_ibfk_2` FOREIGN KEY (`scheduling_id`) REFERENCES `scheduling` (`id`),
   CONSTRAINT `scheduling_responsible_ibfk_3` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.scheduling_responsible: ~99 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.scheduling_responsible: ~181 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling_responsible` DISABLE KEYS */;
 INSERT INTO `scheduling_responsible` (`id`, `company_id`, `scheduling_id`, `person_id`, `active`) VALUES
 	(16, 1, 19, 34, 'S'),
@@ -656,7 +790,90 @@ INSERT INTO `scheduling_responsible` (`id`, `company_id`, `scheduling_id`, `pers
 	(111, 1, 106, 36, 'S'),
 	(112, 1, 107, 34, 'S'),
 	(113, 1, 108, 44, 'S'),
-	(114, 1, 109, 34, 'S');
+	(114, 1, 109, 34, 'S'),
+	(115, 1, 110, 34, 'S'),
+	(116, 1, 111, 34, 'S'),
+	(117, 1, 112, 34, 'S'),
+	(118, 1, 113, 34, 'S'),
+	(119, 1, 114, 34, 'S'),
+	(120, 1, 115, 34, 'S'),
+	(121, 1, 116, 34, 'S'),
+	(122, 1, 117, 34, 'S'),
+	(123, 1, 118, 34, 'S'),
+	(124, 1, 119, 34, 'S'),
+	(125, 1, 120, 34, 'S'),
+	(126, 1, 121, 34, 'S'),
+	(127, 1, 122, 34, 'S'),
+	(128, 1, 123, 34, 'S'),
+	(129, 1, 124, 34, 'S'),
+	(130, 1, 125, 34, 'S'),
+	(131, 1, 126, 34, 'S'),
+	(132, 1, 127, 34, 'S'),
+	(133, 1, 128, 34, 'S'),
+	(134, 1, 129, 36, 'S'),
+	(135, 1, 130, 36, 'S'),
+	(136, 1, 131, 36, 'S'),
+	(137, 1, 132, 36, 'S'),
+	(138, 1, 133, 36, 'S'),
+	(139, 1, 134, 36, 'S'),
+	(140, 1, 135, 44, 'S'),
+	(141, 1, 136, 44, 'S'),
+	(142, 1, 137, 44, 'S'),
+	(143, 1, 138, 44, 'S'),
+	(144, 1, 138, 34, 'S'),
+	(145, 1, 139, 44, 'S'),
+	(146, 1, 139, 34, 'S'),
+	(147, 1, 139, 36, 'S'),
+	(148, 1, 140, 44, 'S'),
+	(149, 1, 141, 44, 'S'),
+	(150, 1, 142, 44, 'S'),
+	(151, 1, 142, 34, 'S'),
+	(152, 1, 142, 36, 'S'),
+	(153, 1, 143, 44, 'S'),
+	(154, 1, 143, 34, 'S'),
+	(155, 1, 143, 36, 'S'),
+	(156, 1, 144, 44, 'S'),
+	(157, 1, 144, 34, 'S'),
+	(158, 1, 144, 36, 'S'),
+	(159, 1, 145, 44, 'S'),
+	(160, 1, 145, 34, 'S'),
+	(161, 1, 145, 36, 'S'),
+	(162, 1, 146, 44, 'S'),
+	(163, 1, 146, 34, 'S'),
+	(164, 1, 146, 36, 'S'),
+	(165, 1, 147, 44, 'S'),
+	(166, 1, 147, 34, 'S'),
+	(167, 1, 147, 36, 'S'),
+	(168, 1, 148, 44, 'S'),
+	(169, 1, 148, 34, 'S'),
+	(170, 1, 148, 36, 'S'),
+	(171, 1, 149, 44, 'S'),
+	(172, 1, 149, 34, 'S'),
+	(173, 1, 149, 36, 'S'),
+	(174, 1, 150, 44, 'S'),
+	(175, 1, 150, 34, 'S'),
+	(176, 1, 150, 36, 'S'),
+	(177, 1, 151, 36, 'S'),
+	(178, 1, 152, 34, 'S'),
+	(179, 1, 153, 34, 'S'),
+	(180, 1, 154, 34, 'S'),
+	(181, 1, 155, 34, 'S'),
+	(182, 1, 156, 44, 'S'),
+	(183, 1, 157, 44, 'S'),
+	(184, 1, 157, 34, 'S'),
+	(185, 1, 157, 36, 'S'),
+	(186, 1, 158, 34, 'S'),
+	(187, 1, 159, 34, 'S'),
+	(188, 1, 160, 34, 'S'),
+	(189, 1, 161, 34, 'S'),
+	(190, 1, 162, 34, 'S'),
+	(191, 1, 163, 34, 'S'),
+	(192, 1, 164, 34, 'S'),
+	(193, 1, 165, 34, 'S'),
+	(194, 1, 166, 34, 'S'),
+	(195, 1, 167, 34, 'S'),
+	(196, 1, 168, 34, 'S'),
+	(197, 1, 169, 34, 'S');
 /*!40000 ALTER TABLE `scheduling_responsible` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.scheduling_visitor
@@ -673,9 +890,9 @@ CREATE TABLE IF NOT EXISTS `scheduling_visitor` (
   CONSTRAINT `scheduling_visitor_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `scheduling_visitor_ibfk_2` FOREIGN KEY (`scheduling_id`) REFERENCES `scheduling` (`id`),
   CONSTRAINT `scheduling_visitor_ibfk_3` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=161;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.scheduling_visitor: ~145 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.scheduling_visitor: ~228 rows (aproximadamente)
 /*!40000 ALTER TABLE `scheduling_visitor` DISABLE KEYS */;
 INSERT INTO `scheduling_visitor` (`id`, `company_id`, `scheduling_id`, `person_id`, `active`) VALUES
 	(16, 1, 19, 44, 'S'),
@@ -822,7 +1039,92 @@ INSERT INTO `scheduling_visitor` (`id`, `company_id`, `scheduling_id`, `person_i
 	(157, 1, 107, 41, 'S'),
 	(158, 1, 108, 34, 'S'),
 	(159, 1, 109, 38, 'S'),
-	(160, 1, 109, 37, 'S');
+	(160, 1, 109, 37, 'S'),
+	(161, 1, 110, 46, 'S'),
+	(162, 1, 111, 46, 'S'),
+	(163, 1, 112, 46, 'S'),
+	(164, 1, 113, 44, 'S'),
+	(165, 1, 113, 46, 'S'),
+	(166, 1, 114, 44, 'S'),
+	(167, 1, 114, 46, 'S'),
+	(168, 1, 115, 44, 'S'),
+	(169, 1, 115, 46, 'S'),
+	(170, 1, 116, 44, 'S'),
+	(171, 1, 116, 46, 'S'),
+	(172, 1, 117, 44, 'S'),
+	(173, 1, 117, 46, 'S'),
+	(174, 1, 118, 44, 'S'),
+	(175, 1, 118, 46, 'S'),
+	(176, 1, 119, 44, 'S'),
+	(177, 1, 119, 46, 'S'),
+	(178, 1, 120, 44, 'S'),
+	(179, 1, 120, 46, 'S'),
+	(180, 1, 121, 44, 'S'),
+	(181, 1, 121, 46, 'S'),
+	(182, 1, 122, 44, 'S'),
+	(183, 1, 122, 46, 'S'),
+	(184, 1, 123, 44, 'S'),
+	(185, 1, 123, 46, 'S'),
+	(186, 1, 124, 44, 'S'),
+	(187, 1, 124, 46, 'S'),
+	(188, 1, 125, 44, 'S'),
+	(189, 1, 125, 46, 'S'),
+	(190, 1, 126, 44, 'S'),
+	(191, 1, 126, 46, 'S'),
+	(192, 1, 127, 44, 'S'),
+	(193, 1, 127, 46, 'S'),
+	(194, 1, 128, 44, 'S'),
+	(195, 1, 128, 46, 'S'),
+	(196, 1, 129, 34, 'S'),
+	(197, 1, 130, 34, 'S'),
+	(198, 1, 131, 34, 'S'),
+	(199, 1, 132, 34, 'S'),
+	(200, 1, 133, 34, 'S'),
+	(201, 1, 134, 41, 'S'),
+	(202, 1, 135, 34, 'S'),
+	(203, 1, 135, 46, 'S'),
+	(204, 1, 136, 34, 'S'),
+	(205, 1, 136, 46, 'S'),
+	(206, 1, 137, 34, 'S'),
+	(207, 1, 137, 46, 'S'),
+	(208, 1, 138, 46, 'S'),
+	(209, 1, 139, 46, 'S'),
+	(210, 1, 140, 34, 'S'),
+	(211, 1, 141, 34, 'S'),
+	(212, 1, 142, 46, 'S'),
+	(213, 1, 143, 46, 'S'),
+	(214, 1, 144, 46, 'S'),
+	(215, 1, 145, 46, 'S'),
+	(216, 1, 146, 46, 'S'),
+	(217, 1, 147, 46, 'S'),
+	(218, 1, 148, 46, 'S'),
+	(219, 1, 149, 46, 'S'),
+	(220, 1, 150, 46, 'S'),
+	(221, 1, 151, 41, 'S'),
+	(222, 1, 151, 35, 'S'),
+	(223, 1, 152, 35, 'S'),
+	(224, 1, 153, 35, 'S'),
+	(225, 1, 154, 35, 'S'),
+	(226, 1, 154, 45, 'S'),
+	(227, 1, 155, 41, 'S'),
+	(228, 1, 156, 34, 'S'),
+	(229, 1, 156, 46, 'S'),
+	(230, 1, 157, 46, 'S'),
+	(231, 1, 158, 38, 'S'),
+	(232, 1, 159, 38, 'S'),
+	(233, 1, 160, 44, 'S'),
+	(234, 1, 161, 44, 'S'),
+	(235, 1, 162, 34, 'S'),
+	(236, 1, 163, 40, 'S'),
+	(237, 1, 164, 37, 'S'),
+	(238, 1, 165, 37, 'S'),
+	(239, 1, 166, 35, 'S'),
+	(240, 1, 166, 40, 'S'),
+	(241, 1, 167, 35, 'S'),
+	(242, 1, 167, 40, 'S'),
+	(243, 1, 168, 35, 'S'),
+	(244, 1, 168, 40, 'S'),
+	(245, 1, 169, 34, 'S');
 /*!40000 ALTER TABLE `scheduling_visitor` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.token
@@ -835,9 +1137,9 @@ CREATE TABLE IF NOT EXISTS `token` (
   UNIQUE KEY `id` (`token`),
   KEY `company_id` (`company_id`),
   CONSTRAINT `token_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.token: ~7 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.token: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
 INSERT INTO `token` (`id`, `company_id`, `token`, `expired`) VALUES
 	(1, 1, '565af178cb8061f526bead516db99b709950f9b0', NULL),
@@ -846,7 +1148,8 @@ INSERT INTO `token` (`id`, `company_id`, `token`, `expired`) VALUES
 	(4, 1, '5a5acc71996238e70cf631333c15238a139e0122', NULL),
 	(5, 1, 'a140ee255aff0b32f2d3fba3255c79c3eccd8151', NULL),
 	(6, 1, 'c44dd8fdf18397163a687ec10d407567cda81105', NULL),
-	(7, 1, '818e894d1c681c679789e78f73e3e5943f3ff854', NULL);
+	(7, 1, '818e894d1c681c679789e78f73e3e5943f3ff854', NULL),
+	(8, 1, '36a10c7896a02a64eb4c994371b69e3b0fe715f9', NULL);
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela lobby.visitor_checkin
@@ -859,9 +1162,9 @@ CREATE TABLE IF NOT EXISTS `visitor_checkin` (
   PRIMARY KEY (`id`),
   KEY `visitor_id` (`visitor_id`),
   CONSTRAINT `visitor_checkin_ibfk_1` FOREIGN KEY (`visitor_id`) REFERENCES `scheduling_visitor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48;
+) ENGINE=InnoDB ;
 
--- Copiando dados para a tabela lobby.visitor_checkin: ~40 rows (aproximadamente)
+-- Copiando dados para a tabela lobby.visitor_checkin: ~126 rows (aproximadamente)
 /*!40000 ALTER TABLE `visitor_checkin` DISABLE KEYS */;
 INSERT INTO `visitor_checkin` (`id`, `visitor_id`, `checkin_date`, `active`, `company_id`) VALUES
 	(8, 154, '2019-03-04 17:20:56', 'N', 1),
@@ -903,7 +1206,102 @@ INSERT INTO `visitor_checkin` (`id`, `visitor_id`, `checkin_date`, `active`, `co
 	(44, 160, '2019-03-04 20:10:25', 'N', 1),
 	(45, 159, '2019-03-04 20:10:38', 'N', 1),
 	(46, 160, '2019-03-04 20:10:49', 'S', 1),
-	(47, 159, '2019-03-04 20:31:14', 'S', 1);
+	(47, 159, '2019-03-04 20:31:14', 'S', 1),
+	(48, 174, '2019-03-05 13:30:29', 'N', 1),
+	(49, 164, '2019-03-05 13:37:00', 'S', 1),
+	(50, 166, '2019-03-05 13:37:03', 'S', 1),
+	(51, 170, '2019-03-05 13:37:08', 'S', 1),
+	(52, 176, '2019-03-05 13:37:10', 'N', 1),
+	(53, 179, '2019-03-05 13:37:32', 'S', 1),
+	(54, 168, '2019-03-05 13:37:38', 'S', 1),
+	(55, 193, '2019-03-05 13:37:51', 'S', 1),
+	(56, 195, '2019-03-05 13:41:24', 'S', 1),
+	(57, 172, '2019-03-05 13:55:30', 'S', 1),
+	(58, 174, '2019-03-05 14:00:56', 'S', 1),
+	(59, 165, '2019-03-05 14:05:30', 'S', 1),
+	(60, 167, '2019-03-05 14:05:32', 'S', 1),
+	(61, 169, '2019-03-05 14:05:33', 'S', 1),
+	(62, 171, '2019-03-05 14:05:33', 'S', 1),
+	(63, 173, '2019-03-05 14:13:32', 'S', 1),
+	(64, 176, '2019-03-05 14:14:02', 'S', 1),
+	(65, 191, '2019-03-05 14:14:43', 'S', 1),
+	(66, 196, '2019-03-05 14:26:30', 'N', 1),
+	(67, 196, '2019-03-05 14:31:20', 'N', 1),
+	(68, 196, '2019-03-05 14:31:26', 'N', 1),
+	(69, 200, '2019-03-05 14:56:29', 'N', 1),
+	(70, 200, '2019-03-05 14:56:59', 'N', 1),
+	(71, 200, '2019-03-05 17:01:24', 'S', 1),
+	(72, 202, '2019-03-05 17:08:49', 'N', 1),
+	(73, 203, '2019-03-05 18:26:03', 'N', 1),
+	(74, 201, '2019-03-05 21:57:24', 'N', 1),
+	(75, 220, '2019-03-05 22:27:10', 'N', 1),
+	(76, 220, '2019-03-05 22:53:17', 'N', 1),
+	(77, 220, '2019-03-05 23:02:02', 'N', 1),
+	(78, 201, '2019-03-06 23:33:38', 'N', 1),
+	(79, 201, '2019-03-06 23:36:44', 'N', 1),
+	(80, 201, '2019-03-06 23:41:34', 'N', 1),
+	(81, 201, '2019-03-07 00:04:37', 'N', 1),
+	(82, 201, '2019-03-07 00:15:29', 'N', 1),
+	(83, 201, '2019-03-07 00:17:38', 'N', 1),
+	(84, 201, '2019-03-07 00:18:08', 'N', 1),
+	(85, 201, '2019-03-07 00:21:19', 'N', 1),
+	(86, 201, '2019-03-07 00:23:29', 'N', 1),
+	(87, 201, '2019-03-07 00:26:46', 'N', 1),
+	(88, 201, '2019-03-07 00:29:27', 'N', 1),
+	(89, 201, '2019-03-07 00:29:34', 'N', 1),
+	(90, 201, '2019-03-07 00:30:40', 'N', 1),
+	(91, 201, '2019-03-07 00:45:57', 'N', 1),
+	(92, 201, '2019-03-07 00:46:31', 'N', 1),
+	(93, 201, '2019-03-07 00:48:53', 'N', 1),
+	(94, 201, '2019-03-07 19:46:33', 'N', 1),
+	(95, 223, '2019-03-07 19:52:20', 'N', 1),
+	(96, 223, '2019-03-07 19:53:11', 'N', 1),
+	(97, 223, '2019-03-07 19:54:49', 'N', 1),
+	(98, 223, '2019-03-07 19:55:45', 'N', 1),
+	(99, 223, '2019-03-07 19:57:13', 'N', 1),
+	(100, 223, '2019-03-07 19:59:59', 'N', 1),
+	(101, 223, '2019-03-07 20:02:14', 'N', 1),
+	(102, 223, '2019-03-07 20:04:33', 'N', 1),
+	(103, 223, '2019-03-07 20:05:20', 'N', 1),
+	(104, 223, '2019-03-07 20:12:03', 'N', 1),
+	(105, 223, '2019-03-07 20:13:45', 'N', 1),
+	(106, 223, '2019-03-07 20:16:45', 'N', 1),
+	(107, 223, '2019-03-07 20:17:37', 'N', 1),
+	(108, 223, '2019-03-07 20:18:13', 'N', 1),
+	(109, 223, '2019-03-07 20:18:55', 'N', 1),
+	(110, 223, '2019-03-07 20:19:27', 'N', 1),
+	(111, 223, '2019-03-07 20:23:03', 'N', 1),
+	(112, 223, '2019-03-07 20:29:37', 'N', 1),
+	(113, 223, '2019-03-07 20:30:28', 'N', 1),
+	(114, 223, '2019-03-07 20:33:19', 'N', 1),
+	(115, 223, '2019-03-07 20:34:52', 'N', 1),
+	(116, 223, '2019-03-07 20:36:03', 'N', 1),
+	(117, 223, '2019-03-07 20:36:16', 'N', 1),
+	(118, 223, '2019-03-07 20:37:18', 'N', 1),
+	(119, 223, '2019-03-07 20:40:02', 'N', 1),
+	(120, 224, '2019-03-07 20:40:25', 'N', 1),
+	(121, 224, '2019-03-07 20:40:47', 'N', 1),
+	(122, 224, '2019-03-07 20:41:13', 'N', 1),
+	(123, 224, '2019-03-07 20:42:20', 'N', 1),
+	(124, 224, '2019-03-07 20:42:53', 'N', 1),
+	(125, 224, '2019-03-07 20:44:00', 'N', 1),
+	(126, 224, '2019-03-07 21:13:19', 'N', 1),
+	(127, 224, '2019-03-07 21:22:43', 'N', 1),
+	(128, 225, '2019-03-07 22:22:37', 'N', 1),
+	(129, 226, '2019-03-07 22:22:43', 'N', 1),
+	(130, 225, '2019-03-07 22:22:46', 'N', 1),
+	(131, 225, '2019-03-07 22:23:38', 'N', 1),
+	(132, 226, '2019-03-07 22:23:42', 'N', 1),
+	(133, 229, '2019-03-07 23:26:51', 'S', 1),
+	(134, 228, '2019-03-07 23:27:09', 'S', 1),
+	(135, 227, '2019-03-07 23:27:12', 'S', 1),
+	(136, 225, '2019-03-07 23:27:17', 'S', 1),
+	(137, 232, '2019-03-07 23:36:00', 'S', 1),
+	(138, 233, '2019-03-08 00:09:51', 'S', 1),
+	(139, 234, '2019-03-08 00:10:03', 'S', 1),
+	(140, 236, '2019-03-08 00:10:07', 'S', 1),
+	(141, 237, '2019-03-08 00:10:11', 'S', 1),
+	(142, 224, '2019-03-09 03:30:35', 'S', 1);
 /*!40000 ALTER TABLE `visitor_checkin` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

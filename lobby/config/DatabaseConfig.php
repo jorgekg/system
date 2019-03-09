@@ -4,19 +4,12 @@
 use Medoo\Medoo;
  
 $database = new Medoo([
-	
 	'database_type' => 'mysql',
 	'database_name' => 'lobby',
 	'server' => 'localhost',
 	'username' => 'root',
 	'password' => 'faccao12',
-	/*
-  'database_type' => 'MariaDB',
-	'database_name' => 'id3944331_lobby',
-	'server' => 'localhost',
-	'username' => 'id3944331_lobby',
-	'password' => 'faccao12',
-	*/
+	
 	// [optional]
 	'charset' => 'utf8mb4',
 	'collation' => 'utf8mb4_general_ci',
@@ -29,7 +22,7 @@ $database = new Medoo([
 	'logging' => true,
  
 	// [optional] MySQL socket (shouldn't be used with server and port)
-	'socket' => '/tmp/mysql.sock',
+	//'socket' => '/tmp/mysql.sock',
  
 	// [optional] driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
 	'option' => [
