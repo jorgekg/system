@@ -24,8 +24,8 @@ namespace Composer\Autoload;
  *     // activate the autoloader
  *     $loader->register();
  *
- *     // to enable searching the include_once path (eg. for PEAR packages)
- *     $loader->setUseinclude_oncePath(true);
+ *     // to enable searching the include path (eg. for PEAR packages)
+ *     $loader->setUseIncludePath(true);
  *
  * In this example, if you try to use a class in the Symfony\Component
  * namespace or one of its children (Symfony\Component\Console for instance),
@@ -51,7 +51,7 @@ class ClassLoader
     private $prefixesPsr0 = array();
     private $fallbackDirsPsr0 = array();
 
-    private $useinclude_oncePath = false;
+    private $useIncludePath = false;
     private $classMap = array();
     private $classMapAuthoritative = false;
     private $missingClasses = array();
@@ -231,24 +231,24 @@ class ClassLoader
     }
 
     /**
-     * Turns on searching the include_once path for class files.
+     * Turns on searching the include path for class files.
      *
-     * @param bool $useinclude_oncePath
+     * @param bool $useIncludePath
      */
-    public function setUseinclude_oncePath($useinclude_oncePath)
+    public function setUseIncludePath($useIncludePath)
     {
-        $this->useinclude_oncePath = $useinclude_oncePath;
+        $this->useIncludePath = $useIncludePath;
     }
 
     /**
-     * Can be used to check if the autoloader uses the include_once path to check
+     * Can be used to check if the autoloader uses the include path to check
      * for classes.
      *
      * @return bool
      */
-    public function getUseinclude_oncePath()
+    public function getUseIncludePath()
     {
-        return $this->useinclude_oncePath;
+        return $this->useIncludePath;
     }
 
     /**
@@ -319,7 +319,7 @@ class ClassLoader
     public function loadClass($class)
     {
         if ($file = $this->findFile($class)) {
-            include_onceFile($file);
+            includeFile($file);
 
             return true;
         }
@@ -425,8 +425,8 @@ class ClassLoader
             }
         }
 
-        // PSR-0 include_once paths.
-        if ($this->useinclude_oncePath && $file = stream_resolve_include_once_path($logicalPathPsr0)) {
+        // PSR-0 include paths.
+        if ($this->useIncludePath && $file = stream_resolve_include_path($logicalPathPsr0)) {
             return $file;
         }
 
@@ -435,11 +435,11 @@ class ClassLoader
 }
 
 /**
- * Scope isolated include_once.
+ * Scope isolated include.
  *
- * Prevents access to $this/self from include_onced files.
+ * Prevents access to $this/self from included files.
  */
-function include_onceFile($file)
+function includeFile($file)
 {
-    include_once $file;
+    include $file;
 }

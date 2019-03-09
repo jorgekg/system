@@ -230,7 +230,9 @@ class SchedulingController extends Controller {
 		$this->isSchedulinPending($scheduling);
 		$id = null;
 		$this->database->action(function($database) use ($scheduling, &$id) {
+			$schedulingNotification = new SchedulingNotificationController($database);
 			if (!empty($scheduling["abs_id"])) {
+				$schedulingNotification->notifyByScheduling($scheduling, true);
 				$schedulingController = new SchedulingController($database);
 				$schedulingController->select([
 					"abs_id" => $scheduling["abs_id"],
@@ -252,6 +254,7 @@ class SchedulingController extends Controller {
 					http_response_code(400);
 					exit;
 				}
+				$schedulingNotification->notifyByScheduling($scheduling, false);
 			}
 			return $this->insertScheduling($database, $scheduling, $id);
 		});
