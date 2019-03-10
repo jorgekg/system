@@ -51,8 +51,11 @@ export interface Lobby {
   id: number;
   company_id?: number;
   name: string;
-  start_date?: string;
-  end_date?: string;
+  state_id: number;
+  city_id: number;
+  district: string;
+  street: string;
+  number: string;
   company_user?: number;
   create_at?: Date;
   update_at?: Date;

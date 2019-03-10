@@ -19,13 +19,13 @@
                 </div>
               </div>
               <div class="table-responsive">
-                <p-table styleClass="table min-table-width" [value]="requirementList" [paginator]="true" 
+                <p-table styleClass="table table-hover" [value]="requirementList" [paginator]="true" 
                   [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                   <ng-template pTemplate="header">
                     <tr>
                       <th width="20px"></th>
                       <th width="40%">{{ "requirement.name" | translate }}</th>
-                      <th width="20%">{{ "requirement.price" | translate }}</th>
+                      <th width="20%" class="hide-cell">{{ "requirement.price" | translate }}</th>
                       <th width="50px"></th>
                     </tr>
                   </ng-template>
@@ -33,14 +33,14 @@
                     <tr>
                       <td><app-delete [classModal]="'requirement_modal'+requirement.id" [id]="requirement.id" (delete)=onDelete($event)></app-delete></td>
                       <td>{{requirement.name}}</td>
-                      <td>R$ {{requirement.price | price}}</td>
+                      <td class="hide-cell">R$ {{requirement.price | price}}</td>
                       <td>
                         <button class="btn btn-link btn-no-padding" [routerLink]="['/dashboard/requirement', requirement.id]">Detalhes</button>
                       </td>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="emptymessage" let-columns>
-                    <tr>
+                    <tr align="center">
                       <td [attr.colspan]="5">
                         {{'not.fount' | translate}}
                       </td>

@@ -6,7 +6,7 @@
         <app-navbar-top [title]="'procedures' | translate"></app-navbar-top>
         <div class="container">
           <div class="d-sm-flex align-items-center justify-content-between">
-            <app-breadcrumb [breadcrumb]="[{name: 'procedures'}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
+            <app-breadcrumb [breadcrumb]="[{name: 'procedures', link: '/dashboard/procedures'}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
           </div>
           <div class="card shadow mb-4">
             <div class="card-body">
@@ -14,12 +14,12 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-8">
-                      <label>{{'procedures.name' | translate}}</label>
+                      <label class="require">{{'procedures.name' | translate}}</label>
                       <input type="name" id="name" formControlName="name" class="form-control form-control-user" 
                         placeholder="{{'procedures.name.input' | translate}}"  maxlength="255" minlength="4">
                     </div>
                     <div class="col-sm-4">
-                      <label>{{'procedures.price' | translate}}</label>
+                      <label class="require">{{'procedures.price' | translate}}</label>
                       <input pInputText type="price" id="price" formControlName="price" class="form-control form-control-user"
                         placeholder="{{'procedures.price.input' | translate}}"  maxlength="255" minlength="0" currencyMask
                         [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
@@ -44,12 +44,12 @@
                 </div>
                 <hr>
                 <div class=row>
-                  <div class="col-sm-2 offset-sm-7 col-4">
+                  <div class="col-sm-3 offset-sm-6 col-5">
                     <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/procedures']">
                       {{(isNew() ? 'cancel' : 'close') | translate}}
                     </button>
                   </div>
-                  <div class="col-sm-3 col-8">
+                  <div class="col-sm-3 col-7">
                     <button #button type="submit" class="btn btn-primary btn-user btn-sm btn-block">
                       {{(isNew() ? 'add' : 'update') | translate}}
                     </button>
@@ -82,13 +82,31 @@
                 </ng-template>
                 <ng-template #template let-requirement>
                   <td>{{requirement.name}}</td>
-                  <td>{{requirement.update_at}}</td>
+                  <td>{{requirement.update_at | datetime}}</td>
                 </ng-template>
               </app-table>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal-procedures-tutorial" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'procedures.add' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p align="center">{{'procedures.add.new' | translate}}</p>
+        <p align="center">{{'procedures.add.exemple' | translate}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'ok' | translate}}</button>
     </div>
   </div>
 </div>

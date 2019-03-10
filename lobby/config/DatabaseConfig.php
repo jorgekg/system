@@ -22,7 +22,7 @@ $database = new Medoo([
 	'logging' => true,
  
 	// [optional] MySQL socket (shouldn't be used with server and port)
-	//'socket' => '/tmp/mysql.sock',
+	'socket' => '/tmp/mysql.sock',
  
 	// [optional] driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
 	'option' => [

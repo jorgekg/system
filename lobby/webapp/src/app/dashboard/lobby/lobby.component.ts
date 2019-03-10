@@ -1,3 +1,4 @@
+import { AppStorageService } from './../../core/app-storage/app-storage.service';
 import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { LobbyService, Lobby } from './../../core/entities/lobby/lobby.service';
@@ -17,10 +18,18 @@ export class LobbyComponent implements OnInit {
   constructor(
     private activedRoute: ActivatedRoute,
     private router: Router,
-    private lobbyService: LobbyService
+    private lobbyService: LobbyService,
+    private appStorageService: AppStorageService
   ) { }
 
   ngOnInit() {
+    if (!this.appStorageService.getToken()) {
+      this.router.navigate(['dashboard/login']);
+    }
+    const tutorial = this.appStorageService.getTutorial();
+    if (!tutorial || !tutorial.procedures) {
+      this.router.navigate(['dashboard/procedures/new']);
+    }
     this.getLobby();
   }
 

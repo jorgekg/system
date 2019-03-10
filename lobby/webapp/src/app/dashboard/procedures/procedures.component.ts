@@ -1,3 +1,4 @@
+import { AppStorageService } from './../../core/app-storage/app-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -20,10 +21,14 @@ export class ProceduresComponent implements OnInit {
     private proceduresService: ProceduresService,
     private proceduresRequirementService: ProcedureRequirementService,
     private route: Router,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private appStorageService: AppStorageService
   ) { }
 
   ngOnInit() {
+    if (!this.appStorageService.getToken()) {
+      this.route.navigate(['dashboard/login']);
+    }
     this.getProcedures();
   }
 

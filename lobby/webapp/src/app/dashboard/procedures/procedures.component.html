@@ -19,14 +19,14 @@
                 </div>
               </div>
               <div class="table-responsive">
-                <p-table styleClass="table min-table-width" [value]="proceduresList" [paginator]="true" 
+                <p-table styleClass="table table-hover" [value]="proceduresList" [paginator]="true" 
                   [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                   <ng-template pTemplate="header">
                     <tr>
                       <th width="20px"></th>
                       <th width="30%">{{ "procedures.name" | translate }}</th>
-                      <th width="15%">{{ "procedures.price" | translate }}</th>
-                      <th width="20%">{{ "procedures.time" | translate }}</th>
+                      <th class="hide-cell" width="15%">{{ "procedures.price" | translate }}</th>
+                      <th class="hide-cell" width="20%">{{ "procedures.time" | translate }}</th>
                       <th width="50px"></th>
                     </tr>
                   </ng-template>
@@ -34,8 +34,8 @@
                     <tr>
                       <td><app-delete [classModal]="'procedures_modal'+procedures.id" [id]="procedures.id" (delete)=onDelete($event)></app-delete></td>
                       <td>{{procedures.name}}</td>
-                      <td>R$ {{procedures.price | price}}</td>
-                      <td>
+                      <td class="hide-cell">R$ {{procedures.price | price}}</td>
+                      <td class="hide-cell">
                         {{procedures.time}}
                       </td>
                       <td nowrap>
@@ -44,7 +44,7 @@
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="emptymessage" let-columns>
-                    <tr>
+                    <tr align="center">
                       <td [attr.colspan]="5">
                         {{'not.fount' | translate}}
                       </td>

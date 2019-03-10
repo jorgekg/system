@@ -15,6 +15,11 @@ const resetSelect2 = () => {
   windows.jQuery('.select2').val('');
 };
 
+const showProceduresTutorial = () => {
+  const wd = window as any;
+  wd.jQuery(`#modal-procedures-tutorial`).modal(`show`);
+};
+
 @Component({
   selector: 'app-persist',
   templateUrl: './persist.component.html',
@@ -47,6 +52,11 @@ export class PersistComponent implements OnInit {
       time: [],
       detail: []
     });
+    const tutorial = this.appStorageService.getTutorial();
+    if (!tutorial || !tutorial.procedures) {
+      showProceduresTutorial();
+      this.appStorageService.setTutorial('procedures', true);
+    }
     this.setEditMode();
     if (!this.isNew()) {
       this.getProcedureRequired();
@@ -117,6 +127,8 @@ export class PersistComponent implements OnInit {
           await this.proceduresService.update(procedures).toPromise();
           this.router.navigate(['dashboard/procedures']);
         }
+        (this.button.nativeElement as HTMLInputElement).innerHTML =
+        this.translateService.instant('update');
       } catch (err) {
         (this.button.nativeElement as HTMLInputElement).innerHTML =
         this.translateService.instant('add');

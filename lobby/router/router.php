@@ -10,3 +10,4 @@ include_once __DIR__.'/mapping/procedures_requirement.php';
 include_once __DIR__.'/mapping/document_type.php';
 include_once __DIR__.'/mapping/scheduling.php';
 include_once __DIR__.'/mapping/checkin.php';
+include_once __DIR__.'/mapping/locale.php';

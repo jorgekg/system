@@ -1,3 +1,4 @@
+import { HomePageResolve } from './home-page/home-page.resolve';
 import { SchedulingPersistResolve } from './scheduling-persist/scheduling-persist.resolve';
 import { SchedulingPersistComponent } from './scheduling-persist/scheduling-persist.component';
 import { ProceduresPersistResolve } from './procedures/persist/procedures-persist.resolve';
@@ -106,7 +107,10 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomePageComponent
+    component: HomePageComponent,
+    resolve: {
+      home: HomePageResolve
+    }
   }
 ];
 
@@ -121,7 +125,8 @@ const routes: Routes = [
     ProceduresResolve,
     ProceduresPersistResolve,
     SchedulingPersistResolve,
-    ReceptionResolve
+    ReceptionResolve,
+    HomePageResolve
   ]
 })
 export class DashboardRoutingModule { }

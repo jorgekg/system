@@ -16,10 +16,28 @@ export class AppStorageService {
     properties: `${this.key}.properties`,
     activeProperties: `${this.key}.activeProperties`,
     lobbies: `${this.key}.lobbies`,
-    activeLobby: `${this.key}.activeLobby`
+    activeLobby: `${this.key}.activeLobby`,
+    tutorial: `${this.key}.tutorial`
   };
 
   constructor() { }
+
+  public setTutorial(key: string, value: boolean) {
+    let tutorial = this.getTutorial() as any;
+    if (!tutorial) {
+      tutorial = {};
+    }
+    tutorial[key] = value;
+    this.setStorage(this.storageKey.tutorial, tutorial);
+  }
+
+  public getTutorial(): Tutorial {
+    const tutorial = localStorage.getItem(this.storageKey.tutorial);
+    if (tutorial) {
+      return JSON.parse(tutorial);
+    }
+    return null;
+  }
 
   public setActiveProperty(property: Property) {
     this.setStorage(this.storageKey.activeProperties, property);
@@ -97,4 +115,9 @@ export class AppStorageService {
   private setStorage(key, param) {
     localStorage.setItem(key, JSON.stringify(param));
   }
+}
+
+export interface Tutorial {
+  lobby_new: boolean;
+  procedures: boolean;
 }

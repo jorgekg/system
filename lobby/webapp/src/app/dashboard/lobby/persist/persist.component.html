@@ -6,7 +6,7 @@
         <app-navbar-top [title]="'lobby' | translate"></app-navbar-top>
         <div class="container">
           <div class="d-sm-flex align-items-center justify-content-between">
-            <app-breadcrumb [breadcrumb]="[{name: 'lobby'}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
+            <app-breadcrumb [breadcrumb]="[{name: 'lobby', link: '/dashboard/lobby'}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
           </div>
           <div class="card shadow mb-4">
             <div class="card-body">
@@ -14,32 +14,52 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
-                      <label>{{'lobby.name' | translate}}</label>
-                      <input pInputText type="name" id="name" formControlName="name" class="form-control form-control-user" 
+                      <label class="require">{{'lobby.name' | translate}}</label>
+                      <input pInputText type="text" id="name" formControlName="name" class="form-control form-control-user" 
                         placeholder="{{'lobby.name.input' | translate}}"  maxlength="255" minlength="4">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                       <br>
-                      <label>{{'lobby.startDate' | translate}}</label>
-                      <input pInputText type="startDate" id="startDate" formControlName="start_date" class="form-control form-control-user" 
-                        placeholder="{{'lobby.startDate.input' | translate}}"  maxlength="255" minlength="4" mask="Hh:sh:sh">
+                      <label class="require">{{'lobby.states' | translate}}</label>
+                      <ng-multiselect-dropdown [placeholder]="'lobby.states.input' | translate"
+                        [data]="statesList" formControlName="state_id" [settings]="statesSettings" [disabled]="form.disabled">
+                      </ng-multiselect-dropdown>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                       <br>
-                      <label>{{'lobby.endDate' | translate}}</label>
-                      <input pInputText type="endDate" id="endDate" formControlName="end_date" class="form-control form-control-user" 
-                        placeholder="{{'lobby.endDate.input' | translate}}"  maxlength="255" minlength="4" mask="Hh:sh:sh">
+                      <label class="require">{{'lobby.city' | translate}}</label>
+                      <ng-multiselect-dropdown [placeholder]="'lobby.city.input' | translate" [disabled]="form.disabled"
+                        [data]="cityList" formControlName="city_id" [settings]="citySettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                      <label class="require">{{'lobby.district' | translate}}</label>
+                      <input pInputText type="text" id="district" formControlName="district" class="form-control form-control-user" 
+                        placeholder="{{'lobby.district.input' | translate}}"  maxlength="255">
+                    </div>
+                    <div class="col-md-5">
+                      <br>
+                      <label class="require">{{'lobby.street' | translate}}</label>
+                      <input pInputText type="text" id="street" formControlName="street" class="form-control form-control-user" 
+                        placeholder="{{'lobby.street.input' | translate}}"  maxlength="255">
+                    </div>
+                    <div class="col-md-3">
+                      <br>
+                      <label class="require">{{'lobby.number' | translate}}</label>
+                      <input pInputText type="text" id="number" formControlName="number" class="form-control form-control-user" 
+                        placeholder="{{'lobby.number.input' | translate}}"  maxlength="255">
                     </div>
                   </div>
                 </div>
                 <hr>
                 <div class=row>
-                  <div class="col-sm-2 offset-sm-7 col-4">
+                  <div class="col-sm-3 offset-sm-6 col-md-3 offset-md-6 col-5">
                     <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/lobby']">
                       {{'cancel' | translate}}
                     </button>
                   </div>
-                  <div class="col-sm-3 col-8">
+                  <div class="col-sm-3 col-7">
                     <button #button type="submit" class="btn btn-primary btn-user  btn-sm btn-block">
                       {{(isNew() ? 'add' : 'update') | translate}}
                     </button>
@@ -50,6 +70,24 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal-lobby-tutorial" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'lobby.add' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p align="center">{{'lobby.add.new' | translate}}</p>
+        <p align="center">{{'lobby.add.exemple' | translate}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'ok' | translate}}</button>
     </div>
   </div>
 </div>

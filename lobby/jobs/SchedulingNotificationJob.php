@@ -18,6 +18,9 @@ $database->action(function($db) use ($notify, $mail, $template) {
 			$template = str_replace("#start_date", $contents->start_date, $template);
 			$template = str_replace("#end_date", $contents->end_date, $template);
 			$template = str_replace("#company", $company[0]["name"], $template);
+			$template = str_replace("#neighborhood", $contents->lobby[0]->district, $template);
+			$template = str_replace("#street", $contents->lobby[0]->street, $template);
+			$template = str_replace("#number", $contents->lobby[0]->number, $template);
 			$mail->Body = $template;
 			if(!$mail->send()) {
 				echo 'Não foi possível enviar a mensagem.<br>';

@@ -140,3 +140,9 @@ body .ui-widget-header {
 .ui-paginator .ui-paginator-element {
   height: 40px;
 }
+
+@media screen and (max-width: 580px) {
+  .hide-cell {
+    display: none;
+  }
+}

@@ -15,6 +15,15 @@ $app->get('/api/company',
 		return $response;
 });
 
+$app->post('/api/company',
+function (Request $request, Response $response, array $args) use($database) {
+	$company = new CompanyController($database);
+	$params = $request->getParsedBody();
+	$params['password'] = sha1($params['password']);
+	$response->getBody()->write($company->insertCompany($params)->asJson());
+	return $response;
+});
+
 $app->get('/api/company_user',
 	function (Request $request, Response $response, array $args) use($database) {
 		$company_user = new CompanyUserController($database);
