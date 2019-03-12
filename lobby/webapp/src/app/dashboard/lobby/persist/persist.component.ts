@@ -1,7 +1,7 @@
 import { LocaleService, States } from './../../../core/entities/locale/locale.service';
 import { AppStorageService } from './../../../core/app-storage/app-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -12,40 +12,27 @@ const showTutorialLobby = () => {
   wd.jQuery('#modal-lobby-tutorial').modal(`show`)
 };
 
+const noCompletelb1 = ()  => {
+  const wd = window as any;
+  wd.jQuery(`#no-complete1`).attr(`autocomplete`, `new-password`);
+};
+
+const noCompletelb2 = ()  => {
+  const wd = window as any;
+  wd.jQuery(`#no-complete2`).attr(`autocomplete`, `new-password`);
+};
+
 @Component({
   selector: 'app-persist',
   templateUrl: './persist.component.html',
   styleUrls: ['./persist.component.css']
 })
-export class PersistComponent implements OnInit {
+export class PersistComponent implements OnInit, AfterViewInit {
   @ViewChild('button') button: ElementRef;
-
-  public statesList: any[] = [];
-  public statesSelect: any[];
-  public statesSettings = {
-    singleSelection: true,
-    idField: 'id',
-    textField: 'name',
-    enableCheckAll: false,
-    itemsShowLimit: 5,
-    allowSearchFilter: true,
-    placeholder: this.translateService.instant('lobby.states.search'),
-    searchPlaceholderText: this.translateService.instant('search')
-  };
-  public cityList: any[] = [];
-  public citySelect: any[];
-  public citySettings = {
-    singleSelection: true,
-    idField: 'id',
-    textField: 'name',
-    enableCheckAll: false,
-    itemsShowLimit: 10,
-    allowSearchFilter: true,
-    placeholder: this.translateService.instant('lobby.city.search'),
-    searchPlaceholderText: this.translateService.instant('search'),
-    noDataAvailablePlaceholderText: this.translateService.instant('select.states')
-  };
+  public uf = null;
   public form: FormGroup;
+  public cityList = [];
+  public stateList = [];
 
   public validator = false;
 
@@ -77,40 +64,52 @@ export class PersistComponent implements OnInit {
       this.appStorageService.setTutorial('lobby_new', true);
     }
     this.setEditMode();
-    this.onChangeState();
   }
 
-  private onChangeState() {
-    this.form.get('state_id').valueChanges.subscribe(async (stateSelect: States) => {
-      try {
-        this.selectStates(stateSelect);
-      } catch (err) {}
-    });
+  ngAfterViewInit() {
+    noCompletelb1();
+    noCompletelb2();
   }
 
-  private async selectStates(stateSelect) {
-    if (stateSelect) {
-      const states = this.activatedRoute.snapshot.data.lobby.states.contents.filter(state =>
-        stateSelect[0].id === state.id);
-      if (states && states.length > 0) {
-        const [state] = states;
-        const cityList = await this.localeService.getCityByState(state.uf).toPromise();
-        this.cityList = cityList.contents;
-      }
+  public async onSearchState(event) {
+    const states = await this.localeService.getStateByName(event.query).toPromise();
+    if (states && states.contents) {
+      this.stateList = states.contents;
+    }
+  }
+
+  public onSelectState(event) {
+    this.uf = event.uf;
+    this.form.get('city_id').enable();
+  }
+
+  public async onSearchCity(event) {
+    const cities = await this.localeService.getCityByName(event.query, this.uf).toPromise();
+    if (cities && cities.contents) {
+      this.cityList = cities.contents;
     }
   }
 
   private async setEditMode() {
-    const states = this.activatedRoute.snapshot.data.lobby.states;
-    this.statesList = states.contents;
     const params = this.activatedRoute.snapshot.params;
     if (params && params.id !== `new`) {
       const lobby = this.activatedRoute.snapshot.data.lobby.lobby;
-      lobby.state_id = this.statesList.filter(state => state.id === lobby.state_id);
+      const states = await this.localeService.getStates(lobby.state_id).toPromise();
+      if (states && states.contents.length > 0) {
+        const [state] = states.contents;
+        lobby.state_id = state;
+        this.uf = state.uf;
+        this.form.get('city_id').enable();
+        const cities = await this.localeService.getCityByState(this.uf, lobby.city_id).toPromise();
+        if (cities && cities.contents.length > 0) {
+          const [city] = cities.contents;
+          lobby.city_id = city;
+        }
+      }
       this.form.patchValue(lobby);
-      await this.selectStates(lobby.state_id);
-      const city = this.cityList.filter(cityFilter => cityFilter.id === lobby.city_id);
-      this.form.get('city_id').patchValue(city);
+    }
+    if (!this.uf) {
+      this.form.get(`city_id`).disable();
     }
   }
 
@@ -127,8 +126,8 @@ export class PersistComponent implements OnInit {
         const lobby = this.form.getRawValue();
         lobby.update_at = new Date();
         lobby.company_id = this.appStorageService.getToken().company_id;
-        lobby.state_id = lobby.state_id[0].id;
-        lobby.city_id = lobby.city_id[0].id;
+        lobby.state_id = lobby.state_id.id;
+        lobby.city_id = lobby.city_id.id;
         if (this.isNew()) {
           await this.lobbyService.insert(lobby).toPromise();
         } else {

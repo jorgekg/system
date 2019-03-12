@@ -11,25 +11,48 @@ export class LocaleService {
     private http: HttpClient
   ) { }
 
-  public getAllStates() {
-    return this.http.get(`${environment.url}/states`, {
+  public getStates(id: number) {
+    return this.http.get<States>(`${environment.url}/states`, {
       params: {
+        id: id.toString(),
         size: `27`
       }
     });
   }
 
-  public getCityByState(uf: string) {
+  public getStateByName(name: string) {
+    return this.http.get<States>(`${environment.url}/states_name`, {
+      params: {
+        name: name
+      }
+    });
+  }
+
+  public getCityByState(uf: string, city: number) {
     return this.http.get<Cities>(`${environment.url}/city`, {
       params: {
         uf: uf,
+        id: city.toString(),
         size: `999`
+      }
+    });
+  }
+  
+  public getCityByName(name: string, uf: string) {
+    return this.http.get<Cities>(`${environment.url}/city_name`, {
+      params: {
+        name: name,
+        uf: uf
       }
     });
   }
 }
 
 export interface States {
+  contents: State[];
+}
+
+export interface State {
   id: number;
   name: string;
   uf: string;

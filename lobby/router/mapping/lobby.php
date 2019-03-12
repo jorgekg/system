@@ -14,6 +14,17 @@ $app->get('/api/lobby',
 		return $response;
 });
 
+$app->get('/api/lobby_name',
+	function (Request $request, Response $response, array $args) use($database) {
+		$lobby = new LobbyController($database);
+		$lobby->sessionIsRequired($request);
+		$response->getBody()->write($lobby->getByName(
+			$request->getQueryParam('name'),
+			$lobby->filter[$lobby->table . ".company_id"]
+		)->asJson());
+		return $response;
+});
+
 $app->post('/api/lobby',
 	function (Request $request, Response $response, array $args) use($database) {
 		$lobby = new LobbyController($database);

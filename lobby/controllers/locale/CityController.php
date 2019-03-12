@@ -8,4 +8,12 @@ class CityController extends Controller {
 		$this->table = 'city';
 		$this->model = new CityModel();
 	}
+
+	public function getByName($uf, $name) {
+		$this->select([
+			"uf" => $uf,
+			"name[~]" => $name
+		]);
+		return $this;
+	}
 }

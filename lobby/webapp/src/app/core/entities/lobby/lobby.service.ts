@@ -25,8 +25,14 @@ export class LobbyService {
     });
   }
 
+  public getByName(name: string) {
+    return this.http.get<Lobbies>(`${environment.url}/lobby_name`, {
+      params: { name: name.toString() }
+    });
+  }
+
   public insert(lobby: Lobby) {
-    return this.http.post<Lobby[]>(this.endpont, lobby);
+    return this.http.post<Lobbies>(this.endpont, lobby);
   }
 
   public update(lobby: Lobby) {
@@ -48,14 +54,15 @@ export interface Lobbies {
 }
 
 export interface Lobby {
-  id: number;
+  id?: number;
   company_id?: number;
-  name: string;
-  state_id: number;
-  city_id: number;
-  district: string;
-  street: string;
-  number: string;
+  name?: string;
+  newName?: string;
+  state_id?: number;
+  city_id?: number;
+  district?: string;
+  street?: string;
+  number?: string;
   company_user?: number;
   create_at?: Date;
   update_at?: Date;

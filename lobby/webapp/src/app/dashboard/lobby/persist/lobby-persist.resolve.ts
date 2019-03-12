@@ -19,18 +19,14 @@ export class LobbyPersistResolve implements Resolve<any> {
   private async getLobby(params) {
     return await new Promise(async resolve => {
       try {
-        const states = await this.localeService.getAllStates().toPromise();
         if (params.id === 'new') {
-          resolve({
-            states: states
-          });
+          resolve();
         } else {
           const lobbies = await this.lobbyService.getById(params.id).toPromise();
           if (lobbies && lobbies.contents.length > 0) {
             const [lobby] = lobbies.contents;
             resolve({
-              lobby: lobby,
-              states: states
+              lobby: lobby
             });
           } else {
             resolve(null);

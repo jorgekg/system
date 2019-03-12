@@ -28,18 +28,6 @@ export class SchedulingPersistComponent implements OnInit {
   @ViewChild(`visitor`) visitor: ElementRef;
   public isSubmit;
   public form: FormGroup;
-  public lobbyList: Lobby[] = [];
-  public lobbySelect: Lobby[];
-  public lobbySettings = {
-    singleSelection: true,
-    idField: 'id',
-    textField: 'name',
-    enableCheckAll: false,
-    itemsShowLimit: 5,
-    allowSearchFilter: false,
-    placeholder: this.translateService.instant('scheduling.lobby.search'),
-    searchPlaceholderText: this.translateService.instant('search')
-  };
   public proceduresList: Procedures[] = [];
   public proceduresSettings = {
     singleSelection: false,
@@ -133,12 +121,10 @@ export class SchedulingPersistComponent implements OnInit {
   }
 
   private setScheduling() {
-    this.schedulingData.data.lobby = [
-      {
-        id: this.schedulingData.data.lobby_id,
-        name: this.schedulingData.data.lobby_name
-      }
-    ];
+    this.schedulingData.data.lobby = {
+      id: this.schedulingData.data.lobby_id,
+      name: this.schedulingData.data.lobby_name
+    };
     this.schedulingData.data.procedures.forEach(procedure => {
       procedure.id = procedure.procedures.id;
       procedure.name = procedure.procedures.name;
@@ -209,17 +195,8 @@ export class SchedulingPersistComponent implements OnInit {
   }
 
   private loadLobby() {
-    this.lobbyList = this.schedulingData.lobbies;
-    if (this.lobbyList && this.lobbyList.length > 0) {
-      let lobby = null;
-      if (this.appStorageService.getactiveLobby()) {
-        lobby = this.lobbyList.filter(lb => this.appStorageService.getactiveLobby().id === lb.id);
-      } else {
-        [lobby] = this.lobbyList;
-        lobby = [lobby];
-      }
-      this.lobbySelect = lobby;
-      this.form.get('lobby').patchValue(this.lobbySelect);
+    if (this.appStorageService.getactiveLobby() && this.isReception()) {
+      this.form.get('lobby').patchValue(this.appStorageService.getactiveLobby());
     }
   }
 
@@ -236,8 +213,7 @@ export class SchedulingPersistComponent implements OnInit {
     this.validator = true;
     if (this.form.valid) {
       const form = this.form.getRawValue();
-      const [lobby] = form.lobby;
-      form.lobby_id = lobby.id;
+      form.lobby_id = form.lobby.id;
       form.company_id = this.appStorageService.getToken().company_id;
       form.start_date = moment(form.start_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');
       form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');

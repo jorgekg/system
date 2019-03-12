@@ -8,9 +8,7 @@
           <div class="d-sm-flex align-items-center justify-content-between">
             <app-breadcrumb [breadcrumb]="[{name: 'reception'}]"></app-breadcrumb>
             <div class="col-sm-4 col-xs-12" style="margin-top: -10px; background: white">
-                <ng-multiselect-dropdown [placeholder]="'scheduling.lobby.input' | translate"
-                  [data]="lobbyList" [(ngModel)]="lobbySelect" [settings]="lobbySettings" (onSelect)="onChangeLobby()">
-                </ng-multiselect-dropdown>
+                <app-fast-lobby (changeLobby)="onChangeLobby()"></app-fast-lobby>
               </div>
           </div>
           <div class="card shadow mb-4">

@@ -22,7 +22,6 @@ export class SchedulingPersistResolve implements Resolve<any> {
     return await new Promise(async resolve => {
       try {
         const procedure = await this.proceduresService.get(0, 999).toPromise();
-        const lobby = await this.lobbyService.get(0, 999).toPromise();
         const documentType = await this.documentTypeService.get().toPromise();
         let schedulingData = null;
         if (params.id !== `new`) {
@@ -34,7 +33,6 @@ export class SchedulingPersistResolve implements Resolve<any> {
         const scheduling = {
           data: schedulingData,
           procedures: procedure.contents,
-          lobbies: lobby.contents,
           documentTypes: documentType.contents
         };
         resolve(scheduling);

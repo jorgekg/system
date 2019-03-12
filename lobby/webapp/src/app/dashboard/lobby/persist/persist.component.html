@@ -21,16 +21,18 @@
                     <div class="col-md-6">
                       <br>
                       <label class="require">{{'lobby.states' | translate}}</label>
-                      <ng-multiselect-dropdown [placeholder]="'lobby.states.input' | translate"
-                        [data]="statesList" formControlName="state_id" [settings]="statesSettings" [disabled]="form.disabled">
-                      </ng-multiselect-dropdown>
+                      <p-autoComplete inputId="no-complete1" formControlName="state_id" (completeMethod)="onSearchState($event)"
+                        field="name" (onSelect)="onSelectState($event)" [placeholder]="'lobby.states' | translate" [dropdown]="true"
+                        [style]="{'width': '100%','display': 'inline-flex','height':'34px'}" [inputStyle]="{'width': '100%'}" [suggestions]="stateList">
+                      </p-autoComplete>
                     </div>
                     <div class="col-md-6">
                       <br>
                       <label class="require">{{'lobby.city' | translate}}</label>
-                      <ng-multiselect-dropdown [placeholder]="'lobby.city.input' | translate" [disabled]="form.disabled"
-                        [data]="cityList" formControlName="city_id" [settings]="citySettings">
-                      </ng-multiselect-dropdown>
+                      <p-autoComplete inputId="no-complete2" autocomplete="new-password" formControlName="city_id" (completeMethod)="onSearchCity($event)"
+                        field="name" [placeholder]="'lobby.city.search' | translate" [dropdown]="true"
+                        [style]="{'width': '100%','display': 'inline-flex','height':'34px'}" [inputStyle]="{'width': '100%'}" [suggestions]="cityList">
+                      </p-autoComplete>
                     </div>
                     <div class="col-md-4">
                         <br>

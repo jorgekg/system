@@ -17,6 +17,27 @@ $app->get('/api/states',
 		return $response;
 });
 
+$app->get('/api/states_name',
+	function (Request $request, Response $response, array $args) use($database) {
+		$state = new StatesController($database);
+		$state->sessionIsRequired($request);
+		$response->getBody()->write($state->getByName(
+			$request->getQueryParam('name')
+		)->asJson());
+		return $response;
+});
+
+$app->get('/api/city_name',
+	function (Request $request, Response $response, array $args) use($database) {
+		$city = new CityController($database);
+		$city->sessionIsRequired($request);
+		$response->getBody()->write($city->getByName(
+			$request->getQueryParam('uf'),
+			$request->getQueryParam('name')
+		)->asJson());
+		return $response;
+});
+
 $app->get('/api/city',
 	function (Request $request, Response $response, array $args) use($database) {
 		$city = new CityController($database);

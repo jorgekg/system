@@ -41,3 +41,14 @@ $app->get('/api/delete/procedures',
 		$response->getBody()->write($procedures->delete($request)->asJson());
 		return $response;
 });
+
+$app->get('/api/procedures_name',
+	function (Request $request, Response $response, array $args) use($database) {
+		$procedures = new ProceduresController($database);
+		$procedures->sessionIsRequired($request);
+		$response->getBody()->write($procedures->getByName(
+			$request->getQueryParam('name'),
+			$procedures->filter[$procedures->table . ".company_id"]
+		)->asJson());
+		return $response;
+});

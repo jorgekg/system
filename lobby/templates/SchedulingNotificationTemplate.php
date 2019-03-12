@@ -423,9 +423,9 @@ $template = '
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #666666; text-align:center; line-height: 30px;" st-content="fulltext-content">
-																								#city - #uf<br>
-																								#neighborhood<br>
-																								#street - #number
+                                                #city - #uf<br>
+                                                #neighborhood<br>
+                                                #street - #number
                                              </td>
                                           </tr>
                                           <!-- End of content -->

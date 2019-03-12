@@ -30,6 +30,8 @@ import { NextDayComponent } from './components/next-day/next-day.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { SelectLobbyComponent } from './components/select-lobby/select-lobby.component';
 import { DatetimePipe } from './pipe/datetime/datetime.pipe';
+import { FastLobbyComponent } from './components/fast-lobby/fast-lobby.component';
+import { FastProceduresComponent } from './components/fast-procedures/fast-procedures.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { DatetimePipe } from './pipe/datetime/datetime.pipe';
     NextDayComponent,
     BreadcrumbComponent,
     SelectLobbyComponent,
-    DatetimePipe
+    DatetimePipe,
+    FastLobbyComponent,
+    FastProceduresComponent
   ],
   imports: [
     CommonModule,
@@ -96,7 +100,9 @@ import { DatetimePipe } from './pipe/datetime/datetime.pipe';
     NextDayComponent,
     BreadcrumbComponent,
     SelectLobbyComponent,
-    DatetimePipe
+    DatetimePipe,
+    FastLobbyComponent,
+    FastProceduresComponent
   ]
 })
 export class SharedModule {}

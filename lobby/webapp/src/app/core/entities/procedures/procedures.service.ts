@@ -22,6 +22,14 @@ export class ProceduresService {
     });
   }
 
+  public getByName(name: string) {
+    return this.http.get<ProceduresList>(`${environment.url}/procedures_name`, {
+      params: {
+        name: name
+      }
+    });
+  }
+
   public getById(id: number) {
     return this.http.get<ProceduresList>(this.endpont, {
       params: {
@@ -53,11 +61,12 @@ export interface ProceduresList {
 }
 
 export interface Procedures {
-  id: number;
-  company_id: number;
-  name: string;
-  price: number;
-  detail: string;
-  active: string;
-  update_at: Date;
+  id?: number;
+  company_id?: number;
+  name?: string;
+  newName?: string;
+  price?: number;
+  detail?: string;
+  active?: string;
+  update_at?: Date;
 }

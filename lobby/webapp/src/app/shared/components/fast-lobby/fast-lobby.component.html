@@ -1,0 +1,68 @@
+<p-autoComplete [(ngModel)]="selectLobby" (completeMethod)="onSearch($event)"
+field="name" (onSelect)="onSelect($event)" [placeholder]="'lobby.search' | translate" [dropdown]="true"
+[style]="{'width': '100%','display': 'inline-flex','height':'34px'}" [inputStyle]="{'width': '100%'}" [suggestions]="lobbyList"></p-autoComplete>
+
+<div class="modal fade" id="fast-lobby-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'lobby.add' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="form" (submit)="save()"  [class]="validator ? 'validate' : ''" autocomplete="off">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-12">
+								<label class="require">{{'lobby.name' | translate}}</label>
+								<input pInputText type="text" autocomplete="new-password" id="name" formControlName="name" class="form-control form-control-user" 
+									placeholder="{{'lobby.name.input' | translate}}"  maxlength="255" minlength="4">
+							</div>
+							<div class="col-md-6">
+								<br>
+								<label class="require">{{'lobby.states' | translate}}</label>
+								<p-autoComplete inputId="no-complete1" formControlName="state_id" (completeMethod)="onSearchState($event)"
+									field="name" (onSelect)="onSelectState($event)" [placeholder]="'lobby.states' | translate" [dropdown]="true"
+									[style]="{'width': '100%','display': 'inline-flex','height':'34px'}" [inputStyle]="{'width': '100%'}" [suggestions]="stateList">
+								</p-autoComplete>
+							</div>
+							<div class="col-md-6">
+								<br>
+								<label class="require">{{'lobby.city' | translate}}</label>
+								<p-autoComplete inputId="no-complete2" autocomplete="new-password" formControlName="city_id" (completeMethod)="onSearchCity($event)"
+									field="name" [placeholder]="'lobby.city.search' | translate" [dropdown]="true"
+									[style]="{'width': '100%','display': 'inline-flex','height':'34px'}" [inputStyle]="{'width': '100%'}" [suggestions]="cityList">
+								</p-autoComplete>
+							</div>
+							<div class="col-md-4">
+									<br>
+								<label class="require">{{'lobby.district' | translate}}</label>
+								<input pInputText type="text" id="district" formControlName="district" class="form-control form-control-user" 
+									placeholder="{{'lobby.district.input' | translate}}"  maxlength="255">
+							</div>
+							<div class="col-md-5">
+								<br>
+								<label class="require">{{'lobby.street' | translate}}</label>
+								<input pInputText type="text" id="street" formControlName="street" class="form-control form-control-user" 
+									placeholder="{{'lobby.street.input' | translate}}"  maxlength="255">
+							</div>
+							<div class="col-md-3">
+								<br>
+								<label class="require">{{'lobby.number' | translate}}</label>
+								<input pInputText type="text" id="number" formControlName="number" class="form-control form-control-user" 
+									placeholder="{{'lobby.number.input' | translate}}"  maxlength="255">
+							</div>
+						</div>
+					</div>
+				</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'close' | translate}}</button>
+        <button type="button" class="btn btn-sm btn-primary" #button 
+          (click)="save()">{{'add' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

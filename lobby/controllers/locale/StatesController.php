@@ -8,4 +8,11 @@ class StatesController extends Controller {
 		$this->table = 'states';
 		$this->model = new StatesModel();
 	}
+
+	public function getByName($name) {
+		$this->select([
+			"name[~]" => $name
+		]);
+		return $this;
+	}
 }

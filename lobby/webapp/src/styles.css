@@ -146,3 +146,17 @@ body .ui-widget-header {
     display: none;
   }
 }
+
+.ui-autocomplete-dropdown {
+  background: transparent!important;
+  border-right: solid 1px #ccc!important;
+  border-top: solid 1px #ccc!important;
+  border-bottom: solid 1px #ccc!important;
+  color: #999999!important;
+  font-size: 30px!important;
+  border-radius: 0px 5px 5px 0px!important;
+}
+
+.ui-autocomplete-input {
+  border-right: none!important
+}

@@ -8,4 +8,12 @@ class ProceduresController  extends Controller {
 		$this->table = 'procedures';
 		$this->model = new ProceduresModel();
 	}
+
+	public function getByName($name, $company) {
+		$this->select([
+			"company_id" => $company,
+			"name[~]" => $name
+		]);
+		return $this;
+	}
 }
