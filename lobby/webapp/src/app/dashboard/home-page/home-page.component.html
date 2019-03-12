@@ -1,6 +1,56 @@
 <div id="page-top" class="sidebar-toggled">
   <div id="wrapper">
     <app-navbar-left></app-navbar-left>
-    <app-navbar-top style="width: 100%"></app-navbar-top>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top style="width: 100%"></app-navbar-top>
+        <div class=container>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card shadow mb-4">
+                  <h5 class="card-header">{{'scheduling.opened' | translate}}</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report [title]="'scheduling.day' | translate"></app-card-report>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report [title]="'scheduling.week' | translate"></app-card-report>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report [title]="'scheduling.month' | translate"></app-card-report>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report [title]="'scheduling.year' | translate"></app-card-report>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card shadow mb-4">
+                <h5 class="card-header">{{'scheduling.canceled' | translate}}</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report theme="danger" [title]="'scheduling.day' | translate"></app-card-report>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report theme="danger" [title]="'scheduling.week' | translate"></app-card-report>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report theme="danger" [title]="'scheduling.month' | translate"></app-card-report>
+                    </div>
+                    <div class="col-xl-6 col-md-6 mb-4">
+                      <app-card-report theme="danger" [title]="'scheduling.year' | translate"></app-card-report>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

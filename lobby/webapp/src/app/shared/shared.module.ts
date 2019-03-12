@@ -32,6 +32,7 @@ import { SelectLobbyComponent } from './components/select-lobby/select-lobby.com
 import { DatetimePipe } from './pipe/datetime/datetime.pipe';
 import { FastLobbyComponent } from './components/fast-lobby/fast-lobby.component';
 import { FastProceduresComponent } from './components/fast-procedures/fast-procedures.component';
+import { CardReportComponent } from './card-report/card-report.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { FastProceduresComponent } from './components/fast-procedures/fast-proce
     SelectLobbyComponent,
     DatetimePipe,
     FastLobbyComponent,
-    FastProceduresComponent
+    FastProceduresComponent,
+    CardReportComponent
   ],
   imports: [
     CommonModule,
@@ -102,7 +104,8 @@ import { FastProceduresComponent } from './components/fast-procedures/fast-proce
     SelectLobbyComponent,
     DatetimePipe,
     FastLobbyComponent,
-    FastProceduresComponent
+    FastProceduresComponent,
+    CardReportComponent
   ]
 })
 export class SharedModule {}

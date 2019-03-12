@@ -6,7 +6,7 @@
         <app-navbar-top [title]="'scheduling' | translate"></app-navbar-top>
         <div class="container">
           <div class="d-sm-flex align-items-center justify-content-between">
-            <app-breadcrumb [breadcrumb]="[{name: (isReception() ? 'reception' : 'scheduling'), router: true}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
+            <app-breadcrumb [breadcrumb]="[{name: (isReception() ? 'reception' : 'scheduling'), link: (isReception() ? '/dashboard/reception' : '/dashboard/scheduling')}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
           </div>
           <div class="card shadow mb-4">
             <div class="card-body">
