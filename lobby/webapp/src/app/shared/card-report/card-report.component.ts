@@ -10,10 +10,14 @@ export class CardReportComponent implements OnInit {
   @Input() theme = 'primary';
   @Input() title: string;
   @Input() icon = 'chart-line';
+  @Input() value = '-';
 
   constructor() { }
 
   ngOnInit() {
+    if (this.value === null || this.value === undefined) {
+      this.value = '-';
+    }
   }
 
 }

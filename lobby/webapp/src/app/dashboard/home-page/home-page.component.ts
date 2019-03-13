@@ -9,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
+  public cardReportScheduling;
+  public cardReportCanceled;
+
   constructor(
     private activedRoute: ActivatedRoute,
     private appStorageService: AppStorageService,
@@ -16,6 +19,12 @@ export class HomePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.activedRoute.snapshot.data.home.cardReport) {
+      this.cardReportScheduling = this.activedRoute.snapshot.data.home.cardReport.contents[0];
+      this.cardReportCanceled = this.activedRoute.snapshot.data.home.cardReport.contents.length > 1
+        ? this.activedRoute.snapshot.data.home.cardReport.contents[1]
+        : null;
+    }
     if (!this.appStorageService.getToken()) {
       this.router.navigate(['dashboard/login']);
     }

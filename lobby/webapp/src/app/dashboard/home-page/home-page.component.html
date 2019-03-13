@@ -12,16 +12,16 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report [title]="'scheduling.day' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportScheduling?.today" [title]="'scheduling.day' | translate"></app-card-report>
                     </div>
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report [title]="'scheduling.week' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportScheduling?.week" [title]="'scheduling.week' | translate"></app-card-report>
                     </div>
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report [title]="'scheduling.month' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportScheduling?.month" [title]="'scheduling.month' | translate"></app-card-report>
                     </div>
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report [title]="'scheduling.year' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportScheduling?.year" [title]="'scheduling.year' | translate"></app-card-report>
                     </div>
                   </div>
                 </div>
@@ -33,16 +33,16 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report theme="danger" [title]="'scheduling.day' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportCanceled?.today" theme="danger" [title]="'scheduling.day' | translate"></app-card-report>
                     </div>
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report theme="danger" [title]="'scheduling.week' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportCanceled?.week" theme="danger" [title]="'scheduling.week' | translate"></app-card-report>
                     </div>
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report theme="danger" [title]="'scheduling.month' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportCanceled?.month" theme="danger" [title]="'scheduling.month' | translate"></app-card-report>
                     </div>
                     <div class="col-xl-6 col-md-6 mb-4">
-                      <app-card-report theme="danger" [title]="'scheduling.year' | translate"></app-card-report>
+                      <app-card-report [value]="cardReportCanceled?.year" theme="danger" [title]="'scheduling.year' | translate"></app-card-report>
                     </div>
                   </div>
                 </div>
