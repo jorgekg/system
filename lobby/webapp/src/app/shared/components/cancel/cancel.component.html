@@ -1,0 +1,28 @@
+<div class="modal fade" id="{{classModal}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'cancel.scheduling.title' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p align="center">{{'cancel.scheduling.message' | translate}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="close()" class="btn btn-link" data-dismiss="modal">{{'close' | translate}}</button>
+        <button type="button" class="btn btn-sm btn-primary"
+          (click)="onRedial()">{{'cancel_redial' | translate}}</button>
+        <button type="button" class="btn btn-sm btn-danger"
+          (click)="onCancel()">{{'cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="btn btn-{{isIcon ? 'link btn-no-padding cancel' : 'danger'}} btn-sm"
+(click)="modaCancel()" style="width: 100%">
+  <i *ngIf="isIcon" class="fas fa-ban"></i>
+  <span *ngIf="!isIcon">{{'cancel.scheduling.title' | translate}}</span>
+</button>

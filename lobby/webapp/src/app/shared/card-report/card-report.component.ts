@@ -15,7 +15,7 @@ export class CardReportComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.value === null || this.value === undefined) {
+    if (this.value === null || this.value === undefined || this.value === '') {
       this.value = '-';
     }
   }

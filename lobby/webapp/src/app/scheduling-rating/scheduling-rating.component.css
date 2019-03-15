@@ -32,6 +32,21 @@
 		
 }
 
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+		color: #4e73df;
+		
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+		color: #4e73df;
+		
+}
+
 .rating > label:active {
 		position:relative;
 		top:2px;

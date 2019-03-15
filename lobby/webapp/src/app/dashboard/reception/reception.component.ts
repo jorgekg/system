@@ -24,8 +24,10 @@ export class ReceptionComponent implements OnInit {
   public situation = SchedulingSituation.PENDING;
   public totalElements = 0;
   public requirements = [] as any[];
+  public schedulingCloneId: number;
 
   public first = 0;
+  public showAdd = true;
 
   private receptionDate = new Date();
 
@@ -41,6 +43,10 @@ export class ReceptionComponent implements OnInit {
   ngOnInit() {
     this.schedulingList = this.activedRoute.snapshot.data.schedulingData.list.contents;
     this.totalElements = this.activedRoute.snapshot.data.schedulingData.list.totalElements;
+  }
+
+  public redial(id) {
+    this.schedulingCloneId = id;
   }
 
   public async getSchedulings(page = 0) {

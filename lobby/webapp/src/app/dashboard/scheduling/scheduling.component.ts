@@ -13,12 +13,18 @@ export class SchedulingComponent implements OnInit {
   public totalElements = 0;
   public first = 0;
 
+  public schedulingCloneId;
+
   constructor(
     private schedulingService: SchedulingService
   ) { }
 
   ngOnInit() {
     this.getSchedulings();
+  }
+
+  public redial(id) {
+    this.schedulingCloneId = id;
   }
 
   public async getSchedulings(page = 0) {

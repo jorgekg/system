@@ -41,6 +41,45 @@ export class SchedulingService {
     return this.http.post<Schedulings>(`${environment.url}/create_scheduling`, scheduling);
   }
 
+  public clone(scheduling: Scheduling) {
+    return this.http.post<Schedulings>(`${environment.url}/clone_scheduling`, scheduling);
+  }
+
+  public getRatingyLink(link: string) {
+    return this.http.get<Ratings>(`${environment.url}/scheduling/rating`, {
+      params: {
+        link: link
+      }
+    });
+  }
+
+  public putRating(rating: Rating) {
+    return this.http.post<Ratings>(`${environment.url}/scheduling/rating`, rating);
+  }
+
+  public getRatingSum(lobbyId: number) {
+    return this.http.get<Ratings>(`${environment.url}/rating/sum`, {
+      params: {
+        lobby_id: lobbyId.toString()
+      }
+    });
+  }
+
+}
+
+export interface Ratings {
+  contents: Rating[];
+  totalElements: number;
+}
+
+export interface Rating {
+  id?: number;
+  company_id?: string;
+  scheduling_id?: string;
+  visitor_id?: string;
+  link?: string;
+  rating?: number;
+  description?: string;
 }
 
 export enum SchedulingSituation {

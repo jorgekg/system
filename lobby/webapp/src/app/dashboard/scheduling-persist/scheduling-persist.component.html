@@ -8,9 +8,9 @@
           <div class="d-sm-flex align-items-center justify-content-between">
             <app-breadcrumb [breadcrumb]="[{name: (isReception() ? 'reception' : 'scheduling'), link: (isReception() ? '/dashboard/reception' : '/dashboard/scheduling')}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
           </div>
-          <div class="card shadow mb-4">
-            <div class="card-body">
-              <form [formGroup]="form" autocomplete="off" [class]="validator ? 'validate' : ''">
+          <form [formGroup]="form" autocomplete="off" [class]="validator ? 'validate' : ''">
+            <div class="card shadow mb-4">
+              <div class="card-body">
                 <div class="form-group">
                   <div class="row">
                     <div class="col-md-6">
@@ -38,58 +38,62 @@
                         mode="daytime" [dpDayPicker]="datePickerConfig" theme="dp-material" appendTo="body" mask="00/00/0000 00:00">
                     </div>
                   </div>
-                  <br>
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a #responsible class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home">
-                        {{'scheduling.responsible' | translate}}
-                      </a>
-                      <a #visitor class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">
-                        {{'scheduling.visitor' | translate}}
-                      </a>
-                    </div>
-                  </nav>
-                  <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                      <app-scheduler-responsible formControlName="responsibles"></app-scheduler-responsible>
-                    </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                      <app-scheduler-visitor [isNew]="isNew()" formControlName="visitors"
-                        (updateScheduling)="update()" [schedulingId]="form.get('id').value"></app-scheduler-visitor>
-                    </div>
-                  </div>
                 </div>
-                <hr>
-                <div class=row>
-                  <div class="col-sm-2 col-3 {{isNew() ? 'offset-sm-7' : (isCanceled() ? 'offset-sm-10' : (!isProgress() && !showCancel() ? 'offset-sm-7' : 'offset-sm-4'))}}">
-                    <button type="button" class="btn btn-link btn-block" (click)="routerBack()">
-                      {{(isNew() ? 'cancel' : 'close') | translate}}
-                    </button>
-                  </div>
-                  <div class="col-sm-3" *ngIf="showCancel() || isNew()">
-                    <button #button *ngIf="isNew()" style="width: 100%" type="submit" (click)="save()" class="btn btn-sm btn-primary">
-                      {{'scheduling.add' | translate}}
-                    </button>
-                    <button *ngIf="showCancel()" style="width: 100%" type="submit" (click)="cancel()" class="btn btn-sm btn-danger">
-                      {{'scheduling.cancel' | translate}}
-                    </button>
-                  </div>
-                  <div class="col-sm-3 col-4" *ngIf="!isNew() && !isProgress() && !isCanceled()">
-                    <button style="width: 100%" type="submit" (click)="save(true)" class="btn btn-sm btn-primary">
-                      {{'scheduling.update' | translate}}
-                    </button>
-                  </div>
-                  <div class="col-sm-3 col-4">
-                    <button *ngIf="isProgress()" style="width: 100%" type="submit" (click)="finalizeScheduling()" class="btn btn-sm btn-primary">
-                      {{'scheduling.action.finish' | translate}}
-                    </button>
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a #responsible class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home">
+                  {{'scheduling.responsible' | translate}}
+                </a>
+                <a #visitor class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">
+                  {{'scheduling.visitor' | translate}}
+                </a>
+              </div>
+            </nav>
+            <div class="card shadow mb-4 no-top">
+              <div class="card-body">
+                  <div class="form-group">
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <app-scheduler-responsible formControlName="responsibles"></app-scheduler-responsible>
+                      </div>
+                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <app-scheduler-visitor [isNew]="isNew()" formControlName="visitors"
+                          (updateScheduling)="update()" [schedulingId]="form.get('id').value"></app-scheduler-visitor>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class=row>
+                    <div class="col-sm-2 col-3 {{isNew() ? 'offset-sm-7' : (isCanceled() ? 'offset-sm-10' : (!isProgress() && !showCancel() ? 'offset-sm-7' : 'offset-sm-4'))}}">
+                      <button type="button" class="btn btn-link btn-block" (click)="routerBack()">
+                        {{(isNew() ? 'cancel' : 'close') | translate}}
+                      </button>
+                    </div>
+                    <div class="col-sm-3" *ngIf="showCancel() || isNew()">
+                      <button #button *ngIf="isNew()" style="width: 100%" type="submit" (click)="save()" class="btn btn-sm btn-primary">
+                        {{'scheduling.add' | translate}}
+                      </button>
+                      <app-cancel [isIcon]="false" *ngIf="showCancel()" (redial)="redial()" [classModal]="'scheduling_modal_pending'+schedulingData.data.id" [id]="schedulingData.data.id" (cancel)=cancel()></app-cancel>
+                    </div>
+                    <div class="col-sm-3 col-4" *ngIf="!isNew() && !isProgress() && !isCanceled()">
+                      <button style="width: 100%" type="submit" (click)="save(true)" class="btn btn-sm btn-primary">
+                        {{'scheduling.update' | translate}}
+                      </button>
+                    </div>
+                    <div class="col-sm-3 col-4">
+                      <button *ngIf="isProgress()" style="width: 100%" type="submit" (click)="finalizeScheduling()" class="btn btn-sm btn-primary">
+                        {{'scheduling.action.finish' | translate}}
+                      </button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+<app-scheduling-clone (update)="update()" [schedulingId]="schedulingCloneId"></app-scheduling-clone>

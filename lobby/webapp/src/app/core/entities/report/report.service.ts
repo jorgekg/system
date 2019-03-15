@@ -11,11 +11,17 @@ export class ReportService {
     private http: HttpClient
   ) { }
 
-  public getCardReport(lobby_id) {
+  public getCardReport(lobbyId) {
     return this.http.get<CardReports>(`${environment.url}/card_report`, {
       params: {
-        lobby_id: lobby_id
+        lobby_id: lobbyId
       }
+    });
+  }
+
+  public updateCardReport(lobbyId: number) {
+    return this.http.post(`${environment.url}/generate_card_report`, {
+      lobby_id: lobbyId
     });
   }
 }

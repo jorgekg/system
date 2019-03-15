@@ -8,33 +8,33 @@
           <div class="d-sm-flex align-items-center justify-content-between">
             <app-breadcrumb [breadcrumb]="[{name: 'scheduling'}]"></app-breadcrumb>
           </div>
-          <div class="card shadow mb-4">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                role="tab" aria-controls="nav-home" aria-selected="true" (click)="setPending()">
+                {{'scheduling.today' | translate}}
+              </a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                role="tab" aria-controls="nav-profile" aria-selected="false" (click)="setFinish()">
+                {{'scheduling.finish' | translate}}
+              </a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                role="tab" aria-controls="nav-contact" aria-selected="false" (click)="setCanceled()">
+                {{'scheduling.canceled' | translate}}
+              </a>
+            </div>
+          </nav>
+          <div class="card shadow mb-4 top-none">
             <div class="card-body">
               <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
                 [routerLink]="['/dashboard/scheduling/new']">
-                {{'add' | translate}}
+                {{'scheduling.add' | translate}}
               </button>
               <br><br>
-              <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                    role="tab" aria-controls="nav-home" aria-selected="true" (click)="setPending()">
-                    {{'scheduling.today' | translate}}
-                  </a>
-                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                    role="tab" aria-controls="nav-profile" aria-selected="false" (click)="setFinish()">
-                    {{'scheduling.finish' | translate}}
-                  </a>
-                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                    role="tab" aria-controls="nav-contact" aria-selected="false" (click)="setCanceled()">
-                    {{'scheduling.canceled' | translate}}
-                  </a>
-                </div>
-              </nav>
               <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                   <div class="table-responsive">
-                    <p-table styleClass="table " [value]="schedulingList" [paginator]="true" [first]="first"
+                    <p-table *ngIf="schedulingList && schedulingList.length > 0; else empty_pending" styleClass="table table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                       [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                       <ng-template pTemplate="header">
                         <tr>
@@ -60,20 +60,16 @@
                           </td>
                         </tr>
                       </ng-template>
-                      <ng-template pTemplate="emptymessage" let-columns>
-                        <tr>
-                          <td [attr.colspan]="5" align=center>
-                            {{'not.fount' | translate}}
-                          </td>
-                        </tr>
-                      </ng-template>
                     </p-table>
-                    </div>
+                    <ng-template #empty_pending>
+                      <app-empty-state icon="fas fa-clock" message="scheduling.pending.empty"></app-empty-state>
+                    </ng-template>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive">
-                      <p-table styleClass="table" [value]="schedulingList" [paginator]="true" [first]="first"
+                      <p-table *ngIf="schedulingList && schedulingList.length > 0; else empty_finish" styleClass="table table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                       [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                         <ng-template pTemplate="header">
                           <tr>
@@ -99,24 +95,21 @@
                             </td>
                           </tr>
                         </ng-template>
-                        <ng-template pTemplate="emptymessage" let-columns>
-                          <tr>
-                            <td [attr.colspan]="5" align=center>
-                              {{'not.fount' | translate}}
-                            </td>
-                          </tr>
-                        </ng-template>
                       </p-table>
+                      <ng-template #empty_finish>
+                        <app-empty-state icon="fas fa-check-circle" message="scheduling.finish.empty"></app-empty-state>
+                      </ng-template>
                     </div>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive">
-                      <p-table styleClass="table" [value]="schedulingList" [paginator]="true" [first]="first"
+                      <p-table *ngIf="schedulingList && schedulingList.length > 0; else empty_cancel" styleClass="table table-hover" [value]="schedulingList" [paginator]="true" [first]="first"
                       [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                         <ng-template pTemplate="header">
                           <tr>
+                            <th width="20px"></th>
                             <th width="20%" class="hide-cell">{{ "scheduling.lobby" | translate }}</th>
                             <th width="18%" class="hide-cell">{{ "scheduling.responsible" | translate }}</th>
                             <th width="18%">{{ "scheduling.visitor" | translate }}</th>
@@ -126,6 +119,11 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-scheduling>
                           <tr>
+                            <td>
+                              <button (click)="redial(scheduling.id)" class="btn btn-link btn-sm btn-no-padding Cancel" style="color: green">
+                                <i class="fas fa-retweet"></i>
+                              </button>
+                            </td>
                             <td class="hide-cell">{{scheduling.lobby_name}}</td>
                             <td class="hide-cell">
                               <app-person-on-list [list]="scheduling?.responsibles"></app-person-on-list>
@@ -139,14 +137,10 @@
                             </td>
                           </tr>
                         </ng-template>
-                        <ng-template pTemplate="emptymessage" let-columns>
-                          <tr>
-                            <td [attr.colspan]="5" align=center>
-                              {{'not.fount' | translate}}
-                            </td>
-                          </tr>
-                        </ng-template>
                       </p-table>
+                      <ng-template #empty_cancel>
+                        <app-empty-state icon="fas fa-ban" message="scheduling.cancel.empty"></app-empty-state>
+                      </ng-template>
                     </div>
                   </div>
                 </div>
@@ -158,3 +152,4 @@
     </div>
   </div>
 </div>
+<app-scheduling-clone (update)="getSchedulings()" [schedulingId]="schedulingCloneId"></app-scheduling-clone>

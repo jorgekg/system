@@ -16,3 +16,16 @@ $app->get('/api/card_report',
 		)->asJson());
 		return $response;
 });
+
+$app->post('/api/generate_card_report',
+	function (Request $request, Response $response, array $args) use($database) {
+		$card = new CardReportController($database);
+		$card->sessionIsRequired($request);
+		$params = $request->getParsedBody();
+		$response->getBody()->write($card->createReport(
+			$card->filter[$card->table . ".company_id"],
+			$params["lobby_id"],
+			false
+		)->asJson());
+		return $response;
+});

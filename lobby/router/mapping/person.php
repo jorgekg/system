@@ -13,7 +13,7 @@ include_once __DIR__.'/../../models/person/PersonContactModel.php';
 $app->get('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
-		//$person->sessionIsRequired($request);
+		$person->sessionIsRequired($request);
 		$response->getBody()->write($person->get($request)->asJson());
 		return $response;
 });

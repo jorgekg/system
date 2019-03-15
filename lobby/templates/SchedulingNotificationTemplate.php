@@ -143,7 +143,7 @@ $template = '
                                           <!-- Title -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 30px; color: #333333; text-align:center; line-height: 30px;" st-title="fulltext-heading">
-                                                Visita agendada!
+                                                #status!
                                              </td>
                                           </tr>
                                           <!-- End of Title -->
@@ -423,9 +423,9 @@ $template = '
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #666666; text-align:center; line-height: 30px;" st-content="fulltext-content">
-                                                #city - #uf<br>
-                                                #neighborhood<br>
-                                                #street - #number
+                                                <b>Cidade:</b> #city - #uf<br>
+                                                <b>Bairro:</b> #neighborhood<br>
+                                                <b>Rua:</b> #street - #number
                                              </td>
                                           </tr>
                                           <!-- End of content -->

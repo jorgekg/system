@@ -160,3 +160,22 @@ body .ui-widget-header {
 .ui-autocomplete-input {
   border-right: none!important
 }
+
+.disabled {
+	background: #bebfce!important
+}
+
+.dropdown-btn {
+  padding: 4px 12px!important
+}
+
+.dropdown-btn .selected-item {
+  padding: 0px!important;
+  font-size: 16px!important;
+  padding-left: 5px!important;
+  padding-right: 5px!important;
+}
+
+.top-none {
+  border-top: none;
+}

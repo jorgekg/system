@@ -160,6 +160,7 @@ export class FastLobbyComponent implements OnInit, ControlValueAccessor, AfterVi
           const [lb] = newLobby.contents;
           this.selectLobby = lb;
           this.appStorageService.setactiveLobby(lb);
+          this.changeLobby.emit();
           fastLobbyModHide();
         }
       } catch (err) {}

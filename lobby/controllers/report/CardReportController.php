@@ -9,6 +9,102 @@ class CardReportController extends Controller {
 		$this->model = new CardReportModel();
 	}
 
+	public function createReport($company, $lobby, $log = true) {
+		date_default_timezone_set('America/Sao_Paulo');
+		$data = new DateTime();
+		$yearDate = (int) $data->format('Y');
+		$dayDate = (int) $data->format('t');
+		$mouthDate = (int) $data->format('m');
+		$weekStart = date("Y-m-d", strtotime('monday this week'));
+		$weekEnd = new DateTime(date("Y-m-d", strtotime('sunday this week')));
+		$weekEnd->add(new DateInterval('P7D'));
+		$totalYear = $this->database->query(
+			"select count(*) as total from scheduling
+			where situation in (1,2,4)
+			and company_id = {$company}
+			and lobby_id = {$lobby}
+			and start_date >= '{$yearDate}-01-01'
+			and start_date < '{($yearDate+1)}-01-01
+			and active = 'S'
+			"
+		)->fetchAll();
+		$totalMonth = $this->database->query(
+			"select count(*) as total from scheduling
+			where situation in (1,2,4)
+			and company_id = {$company}
+			and lobby_id = {$lobby}
+			and start_date >= '{$yearDate}-{$mouthDate}-01'
+			and start_date < '{$yearDate}-{$mouthDate}-{$dayDate}'
+			and active = 'S'
+			"
+		)->fetchAll();
+		$totalWeek = $this->database->query(
+			"select count(*) as total from scheduling
+			where situation in (1,2,4)
+			and company_id = {$company}
+			and lobby_id = {$lobby}
+			and start_date >= '{$weekStart}'
+			and start_date < '{$weekEnd->format('Y-m-d')}'
+			and active = 'S'
+			"
+		)->fetchAll();
+		$this->database->insert('card_report', [
+			"company_id" => $company,
+			"lobby_id" => $lobby,
+			"year" => !empty($totalYear) ? $totalYear[0]["total"] : 0,
+			"month" => !empty($totalMonth) ? $totalMonth[0]["total"] : 0,
+			"week" => !empty($totalWeek) ? $totalWeek[0]["total"] : 0,
+			"update_at" => date('Y-m-d h:i:s'),
+			"type" => 1
+		]);
+		if ($log) {
+			var_dump($this->database->error());
+		}
+		$totalYear = $this->database->query(
+			"select count(*) as total from scheduling
+			where situation = 3
+			and company_id = {$company}
+			and lobby_id = {$lobby}
+			and start_date >= '{$yearDate}-01-01'
+			and start_date < '{($yearDate+1)}-01-01'
+			and active = 'S'
+			"
+		)->fetchAll();
+		$totalMonth = $this->database->query(
+			"select count(*) as total from scheduling
+			where situation = 3
+			and company_id = {$company}
+			and lobby_id = {$lobby}
+			and start_date >= '{$yearDate}-{$mouthDate}-01'
+			and start_date < '{$yearDate}-{$mouthDate}-{$dayDate}'
+			and active = 'S'
+			"
+		)->fetchAll();
+		$totalWeek = $this->database->query(
+			"select count(*) as total from scheduling
+			where situation = 3
+			and company_id = {$company}
+			and lobby_id = {$lobby}
+			and start_date >= '{$weekStart}'
+			and start_date < '{$weekEnd->format('Y-m-d')}'
+			and active = 'S'
+			"
+		)->fetchAll();
+		$this->database->insert('card_report', [
+			"company_id" => $company,
+			"lobby_id" => $lobby,
+			"year" => !empty($totalYear) ? $totalYear[0]["total"] : 0,
+			"month" => !empty($totalMonth) ? $totalMonth[0]["total"] : 0,
+			"week" => !empty($totalWeek) ? $totalWeek[0]["total"] : 0,
+			"update_at" => date('Y-m-d h:i:s'),
+			"type" => 2
+		]);
+		if ($log) {
+			var_dump($this->database->error());
+		}
+		return $this;
+	}
+
 	public function getReport($company_id, $lobby_id) {
 		$this->select([
 			"company_id" => $company_id,
@@ -17,9 +113,9 @@ class CardReportController extends Controller {
 			"ORDER" =>  ["update_at" => "DESC"],
 			"LIMIT" => 1
 		]);
-		$data0 = $this->asObject();
-		if (empty($data0)) {
-			$data0 = [];
+		$open = $this->asObject();
+		if (empty($open)) {
+			$open = [];
 		}
 		$date = new DateTime();
 		$endDate = clone $date;
@@ -34,9 +130,9 @@ class CardReportController extends Controller {
 			"active" => "S"
 		]);
 		if ($schedulingController->asObject()) {
-			$data0[0]["today"] = count($schedulingController->asObject());
+			$open[0]["today"] = count($schedulingController->asObject());
 		} else {
-			$data0[0]["today"] = 0;
+			$open[0]["today"] = 0;
 		}
 
 		$this->select([
@@ -46,9 +142,9 @@ class CardReportController extends Controller {
 			"ORDER" =>  ["update_at" => "DESC"],
 			"LIMIT" => 1
 		]);
-		$data1 = $this->asObject();
-		if (empty($data1)) {
-			$data1 = [];
+		$closed = $this->asObject();
+		if (empty($closed)) {
+			$closed = [];
 		}
 		$date = new DateTime();
 		$endDate = clone $date;
@@ -63,12 +159,12 @@ class CardReportController extends Controller {
 			"active" => "S"
 		]);
 		if ($schedulingController->asObject()) {
-			$data1[0]["today"] = count($schedulingController->asObject());
+			$closed[0]["today"] = count($schedulingController->asObject());
 		} else {
-			$data1[0]["today"] = 0;
+			$closed[0]["today"] = 0;
 		}
-		$data0[1] = $data1[0];
-		$this->data = $data0;
+		$open[1] = $closed[0];
+		$this->data = $open;
 		return $this;
 	}
 }

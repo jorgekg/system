@@ -33,6 +33,9 @@ import { DatetimePipe } from './pipe/datetime/datetime.pipe';
 import { FastLobbyComponent } from './components/fast-lobby/fast-lobby.component';
 import { FastProceduresComponent } from './components/fast-procedures/fast-procedures.component';
 import { CardReportComponent } from './card-report/card-report.component';
+import { CancelComponent } from './components/cancel/cancel.component';
+import { SchedulingCloneComponent } from './components/scheduling-clone/scheduling-clone.component';
+import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,10 @@ import { CardReportComponent } from './card-report/card-report.component';
     DatetimePipe,
     FastLobbyComponent,
     FastProceduresComponent,
-    CardReportComponent
+    CardReportComponent,
+    CancelComponent,
+    SchedulingCloneComponent,
+    EmptyStateComponent
   ],
   imports: [
     CommonModule,
@@ -105,7 +111,10 @@ import { CardReportComponent } from './card-report/card-report.component';
     DatetimePipe,
     FastLobbyComponent,
     FastProceduresComponent,
-    CardReportComponent
+    CardReportComponent,
+    CancelComponent,
+    SchedulingCloneComponent,
+    EmptyStateComponent
   ]
 })
 export class SharedModule {}

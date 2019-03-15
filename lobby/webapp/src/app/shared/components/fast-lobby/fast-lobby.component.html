@@ -1,4 +1,4 @@
-<p-autoComplete [(ngModel)]="selectLobby" (completeMethod)="onSearch($event)"
+<p-autoComplete [(ngModel)]="selectLobby" (completeMethod)="onSearch($event)" [disabled]="disabled" [inputStyleClass]="(disabled ? 'disabled' : '')"
 field="name" (onSelect)="onSelect($event)" [placeholder]="'lobby.search' | translate" [dropdown]="true"
 [style]="{'width': '100%','display': 'inline-flex','height':'34px'}" [inputStyle]="{'width': '100%'}" [suggestions]="lobbyList"></p-autoComplete>
 

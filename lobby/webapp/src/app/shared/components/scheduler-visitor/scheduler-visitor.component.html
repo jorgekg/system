@@ -10,7 +10,7 @@
   </div>
 </div>
 <br>
-<app-table [columns]="columns" [template]="template" [data]="visitorList" [hasDelete]="!disabled"
+<app-table *ngIf="visitorList && visitorList.length > 0; else empty"  [columns]="columns" [template]="template" [data]="visitorList" [hasDelete]="!disabled"
   [headerHide]=true (delete)="onDelete($event)" modalDelete="visitor-delete">
   <ng-template #columns>
     <th>{{'visitor.name' | translate}}</th>
@@ -32,6 +32,9 @@
     </th>
   </ng-template>
 </app-table>
+<ng-template #empty>
+  <app-empty-state icon="fas fa-user-alt" message="scheduling.visitor.empty"></app-empty-state>
+</ng-template>
 <div class="modal fade" id="reception-requirement" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

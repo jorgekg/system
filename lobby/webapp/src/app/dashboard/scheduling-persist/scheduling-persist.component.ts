@@ -74,8 +74,9 @@ export class SchedulingPersistComponent implements OnInit {
     locale: 'pt-br'
   };
 
-  private schedulingData;
+  public schedulingData;
   public validator = false;
+  public schedulingCloneId;
 
   private id;
 
@@ -108,6 +109,10 @@ export class SchedulingPersistComponent implements OnInit {
     if (!this.isNew()) {
       this.setScheduling();
     }
+  }
+
+  public redial() {
+    this.schedulingCloneId = this.schedulingData.data.id;
   }
 
   public async update() {
@@ -206,6 +211,7 @@ export class SchedulingPersistComponent implements OnInit {
       company_id: this.appStorageService.getToken().company_id,
       situation: SchedulingSituation.CANCELED
     }).toPromise();
+    this.appToastService.success('success', 'scheduling.canceled.success');
     this.router.navigate(['dashboard/scheduling']);
   }
 

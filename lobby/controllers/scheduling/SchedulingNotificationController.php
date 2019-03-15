@@ -9,10 +9,10 @@ class SchedulingNotificationController extends Controller {
 		$this->model = new SchedulingNotificationModel();
 	}
 
-	public function notifyByScheduling($scheduling, $isUpdate = false) {
+	public function notifyByScheduling($scheduling, $type) {
 		$this->insert([
 			"company_id" => $scheduling["company_id"],
-			"type" => $isUpdate ?  "update_scheduling" : "insert_scheduling",
+			"type" => $type,
 			"contents" => json_encode($scheduling)
 		]);
 	}

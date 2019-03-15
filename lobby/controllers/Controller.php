@@ -4,7 +4,7 @@ use Slim\Http\Request;
 
 Class Controller {
 	public $table;	
-	protected $database;
+	public $database;
 	protected $model;
 
 	protected $data;

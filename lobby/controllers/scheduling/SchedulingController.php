@@ -27,7 +27,7 @@ class SchedulingController extends Controller {
 				"scheduling.end_date"
 			], [
 				"scheduling.company_id" => $company,
-				"scheduling.situation" => $situation,
+				"scheduling.situation" => $situation == 1 ? [$situation, 4] : $situation,
 				"scheduling.active" => "S",
 				'GROUP' => [
 					"lobby.name",
@@ -63,6 +63,27 @@ class SchedulingController extends Controller {
 		$endDate = clone $startDate;
 		$endDate->add(new DateInterval("P1D"));
 		return [$startDate, $endDate];
+	}
+
+	public function cloneScheduling($scheduling) {
+		$id = null;
+		$this->database->action(function($database) use ($scheduling, &$id) {
+			$schedulingNotification = new SchedulingNotificationController($database);
+			$schedulingNotification->notifyByScheduling($scheduling, "redial_scheduling");
+			$controller = new SchedulingController($database);
+			$controller->filter["company_id"] = $scheduling["company_id"];
+			$controller->update([
+				"id" => $scheduling["id"],
+				"situation" => 3,
+				"active" => "S"
+			]);
+			$controller->hasError();
+			$scheduling["abs_id"] = null;
+			$scheduling["id"] = null;
+			$controller->insertScheduling($database, $scheduling, $id);
+		});
+		$this->getSchedulingById($id, $scheduling["company_id"]);
+		return $this;
 	}
 
 	public function getReceptions($name, $company, $situation = 1, $lobby_id = 0, $date = "", $page = 0) {
@@ -232,7 +253,7 @@ class SchedulingController extends Controller {
 		$this->database->action(function($database) use ($scheduling, &$id) {
 			$schedulingNotification = new SchedulingNotificationController($database);
 			if (!empty($scheduling["abs_id"])) {
-				$schedulingNotification->notifyByScheduling($scheduling, true);
+				$schedulingNotification->notifyByScheduling($scheduling, "update_scheduling");
 				$schedulingController = new SchedulingController($database);
 				$schedulingController->select([
 					"abs_id" => $scheduling["abs_id"],
@@ -254,7 +275,7 @@ class SchedulingController extends Controller {
 					http_response_code(400);
 					exit;
 				}
-				$schedulingNotification->notifyByScheduling($scheduling, false);
+				$schedulingNotification->notifyByScheduling($scheduling, "insert_scheduling");
 			}
 			return $this->insertScheduling($database, $scheduling, $id);
 		});
@@ -334,6 +355,33 @@ class SchedulingController extends Controller {
 			http_response_code(400);
 			exit;
 		}
+	}
+
+	public function notifyFinish($scheudlingId, $company_id) {
+		$this->database->action(function($database) use ($scheudlingId, $company_id) {
+			$schedulingController = new SchedulingController($database);
+			$visitors = $schedulingController->getVisitor($scheudlingId);
+			$schedulingRatingController = new SchedulingRatingController($this->database);
+			$schedulingNotification = new SchedulingNotificationController($this->database);
+			foreach ($visitors as $visitor) {
+				$id = $visitor["id"];
+				$schedulingRatingController->insert([
+					"company_id" => $company_id,
+					"scheduling_id" => $scheudlingId,
+					"visitor_id" => $visitor["id"],
+					"link" => sha1("{$scheudlingId} {$id}")
+				]);
+				$schedulingRatingController->hasError();
+			}
+			$scheduling = [
+				"company_id" => $company_id,
+				"scheduling_id" => $scheudlingId,
+				"visitors" => $visitors
+			];
+			$schedulingNotification->notifyByScheduling($scheduling, "finish_scheduling");
+			$schedulingNotification->hasError();
+			return true;
+		});
 	}
 
 	public function unFinish($scheduling) {

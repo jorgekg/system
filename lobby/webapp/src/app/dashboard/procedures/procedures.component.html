@@ -19,7 +19,7 @@
                 </div>
               </div>
               <div class="table-responsive">
-                <p-table styleClass="table table-hover" [value]="proceduresList" [paginator]="true" 
+                <p-table *ngIf="proceduresList && proceduresList.length > 0; else empty" styleClass="table table-hover" [value]="proceduresList" [paginator]="true" 
                   [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                   <ng-template pTemplate="header">
                     <tr>
@@ -43,14 +43,10 @@
                       </td>
                     </tr>
                   </ng-template>
-                  <ng-template pTemplate="emptymessage" let-columns>
-                    <tr align="center">
-                      <td [attr.colspan]="5">
-                        {{'not.fount' | translate}}
-                      </td>
-                    </tr>
-                  </ng-template>
                 </p-table>
+                <ng-template #empty>
+                  <app-empty-state></app-empty-state>
+                </ng-template>
               </div>
             </div>
           </div>

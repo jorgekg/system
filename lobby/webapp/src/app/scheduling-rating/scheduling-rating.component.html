@@ -1,0 +1,53 @@
+<div class="bg-gradient-primary" style="height: 100vh">
+    <div class="container p-5">
+  
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+  
+        <div class="col-xl-10 col-lg-12 col-md-9">
+  
+          <div class="card o-hidden border-0 shadow-lg">
+            <div class="card-body p-0">
+              <!-- Nested Row within Card Body -->
+              <div class="row">
+                <div class="col-md-6 offset-md-3">
+                  <br><br>
+                  <div class="p-5" *ngIf="!isSave">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">{{'scheduling.rating.title' | translate}}</h1>
+                    </div>
+                    <form [formGroup]="form" (submit)="save()">
+                      <div class="form-group">
+                        <div class="row h-100 justify-content-center ">
+                          <div class="rating">
+                            <input formControlName="rating" type="radio" id="star10" name="rating" value="5"/><label for="star10"></label>
+                            <input formControlName="rating" type="radio" id="star9" name="rating" value="4"/><label for="star9"></label>
+                            <input formControlName="rating" type="radio" id="star8" name="rating" value="3"/><label for="star8"></label>
+                            <input formControlName="rating" type="radio" id="star7" name="rating" value="2"/><label for="star7"></label>
+                            <input formControlName="rating" type="radio" id="star6" name="rating" value="1"/><label for="star6"></label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>{{'scheduling.rating.description' | translate}}</label>
+                        <textarea formControlName="description" class="form-control form-control-user" [placeholder]="'scheduling.rating.description.des' | translate"></textarea>
+                      </div>
+                      <button #button type="submit" class="btn btn-primary btn-user btn-block">
+                        {{'scheduling.rating.btn' | translate}}
+                      </button>
+                    </form>
+                    <br><br>
+                  </div>
+                  <div class="p-5" *ngIf="isSave">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">{{'thanks' | translate}}</h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
