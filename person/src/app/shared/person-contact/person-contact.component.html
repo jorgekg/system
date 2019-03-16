@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-sm-3 col-xs-12">
+      <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        (click)="add()">
+        {{'add' | translate}}
+      </button>
+    </div>
+  </div>
+  <br>
+  <app-table *ngIf="contactList && contactList.length > 0; else empty"  
+    [columns]="columns" [template]="template" [data]="contactList"
+    [headerHide]=true (delete)="delete($event)">
+    <ng-template #columns>
+      <th>{{'contact' | translate}}</th>
+    </ng-template>
+    <ng-template #template let-contact>
+      <td>{{format(contact?.contact)}}</td>
+    </ng-template>
+  </app-table>
+  <ng-template #empty>
+    <app-empty-state message="person.contact.empty"></app-empty-state>
+  </ng-template>
+<div class="modal fade bd-example-modal-lg" id="modal-contacts{{type}}" tabindex="-1" role="dialog" 
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{'person.contacts' | translate}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div autocomplete="off">
+            <form [formGroup]="form" class="form-group {{validator ? 'validate' : ''}}">
+              <div class="row">
+                <div class="col-md-12" *ngIf="type==1">
+                  <label class="require">{{'person.email' | translate}}</label>
+                  <input pInputText autofocus type="text" id="contact" formControlName="contact" class="form-control form-control-user" 
+                    placeholder="{{'person.email.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false" [mask]="mask">
+                </div>
+                <div class="col-md-12" *ngIf="type==2">
+                  <label class="require">{{'person.phone' | translate}}</label>
+                  <sam-phone-mask id="contact" formControlName="contact" styleClass="form-control form-control-user" 
+                    placeholder="{{'person.phone.input' | translate}}" autocomplete="off">
+                  </sam-phone-mask>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link" data-dismiss="modal">{{'cancel' | translate}}</button>
+          <button type="button" #button (click)="save()"
+            class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">{{'add' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

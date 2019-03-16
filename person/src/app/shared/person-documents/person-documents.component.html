@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-sm-3 col-xs-12">
+    <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+      (click)="add()">
+      {{'add' | translate}}
+    </button>
+  </div>
+</div>
+<br>
+<app-table *ngIf="documentList && documentList.length > 0; else empty"  
+  [columns]="columns" [template]="template" [data]="documentList"
+  [headerHide]=true (delete)="delete($event)">
+  <ng-template #columns>
+    <th width="50px">{{'document.type' | translate}}</th>
+    <th>{{'document.email' | translate}}</th>
+  </ng-template>
+  <ng-template #template let-document>
+    <td>{{getDocTypeName(document?.document_type_id)}}</td>
+    <td>{{document?.document}}</td>
+  </ng-template>
+</app-table>
+<ng-template #empty>
+  <app-empty-state message="person.document.empty"></app-empty-state>
+</ng-template>
+<div class="modal fade bd-example-modal-lg" id="modal-documents" tabindex="-1" role="dialog" 
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'person.documents' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div autocomplete="off">
+          <form [formGroup]="form" class="form-group {{validator ? 'validate' : ''}}">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="require">{{'person.document.type' | translate}}</label>
+                <ng-multiselect-dropdown [placeholder]="'person.document.type.input'"
+                  [data]="documentTypeList" formControlName="document_type_id" [settings]="documentTypeSetting">
+                </ng-multiselect-dropdown>
+              </div>
+              <div class="col-md-6">
+                <label class="require">{{'person.document' | translate}}</label>
+                <input pInputText autofocus type="text" id="document" formControlName="document" class="form-control form-control-user" 
+                  placeholder="{{'person.document.input' | translate}}" autocomplete="off" [dropSpecialCharacters]="false" [mask]="mask">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'cancel' | translate}}</button>
+        <button type="button" #button (click)="save()"
+          class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">{{'add' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,11 +14,6 @@ $app->get('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
-		$person->validateUserEntity(
-			$person->tokens["company_user_id"],
-			$person->tokens["company_id"],
-			"view_entity"
-		);
 		$response->getBody()->write($person->get($request)->asJson());
 		return $response;
 });
@@ -61,7 +56,7 @@ $app->post('/api/create_person',
 		return $response;
 });
 
-$app->put('/api/person',
+$app->post('/api/put/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
@@ -82,6 +77,7 @@ $app->get('/api/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
+		$person->filter = [];
 		$response->getBody()->write($person->get($request)->asJson());
 		return $response;
 });
@@ -90,12 +86,13 @@ $app->post('/api/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
+		$person->filter = [];
 		$params = $request->getParsedBody();
 		$response->getBody()->write($person->insert($params)->asJson());
 		return $response;
 });
 
-$app->put('/api/person_document',
+$app->post('/api/put/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
@@ -104,11 +101,17 @@ $app->put('/api/person_document',
 		return $response;
 });
 
-$app->delete('/api/person_document',
+$app->get('/api/delete/person_document',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonDocumentController($database);
 		$person->sessionIsRequired($request);
-		$response->getBody()->write($person->delete($request)->asJson());
+		$person->filter = [];
+		if ($request->getQueryParam('id') && $request->getQueryParam('person_id')) {
+			$response->getBody()->write($person->delete($request)->asJson());
+		} else {
+			http_response_code(403);
+			exit;
+		}
 		return $response;
 });
 
@@ -116,6 +119,7 @@ $app->get('/api/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);
+		$person->filter = [];
 		$response->getBody()->write($person->get($request)->asJson());
 		return $response;
 });
@@ -124,6 +128,7 @@ $app->post('/api/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);
+		$person->filter = [];
 		$params = $request->getParsedBody();
 		$response->getBody()->write($person->insert($params)->asJson());
 		return $response;
@@ -138,10 +143,16 @@ $app->put('/api/person_contact',
 		return $response;
 });
 
-$app->delete('/api/person_contact',
+$app->get('/api/delete/person_contact',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonContactController($database);
 		$person->sessionIsRequired($request);
-		$response->getBody()->write($person->delete($request)->asJson());
+		$person->filter = [];
+		if ($request->getQueryParam('id') && $request->getQueryParam('person_id')) {
+			$response->getBody()->write($person->delete($request)->asJson());
+		} else {
+			http_response_code(403);
+			exit;
+		}
 		return $response;
 });

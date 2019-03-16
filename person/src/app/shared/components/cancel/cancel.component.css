@@ -1,0 +1,11 @@
+.cancel {
+	color: red;
+	width: 100%;
+	transition: all 0.4s;
+	cursor: pointer
+}
+
+.cancel:hover {
+	transform: scale(1.1);
+	transition: all 0.4s
+}

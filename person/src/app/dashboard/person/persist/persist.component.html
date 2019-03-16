@@ -1,0 +1,82 @@
+<div id="page-top" class="sidebar-toggled">
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'person.cliente' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between">
+            <app-breadcrumb [breadcrumb]="[{name: 'person.cliente', link: '/dashboard/person'}, {name: (isNew() ? 'Novo' : 'Editar')}]"></app-breadcrumb>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <form [formGroup]="form" (submit)="save()"  [class]="validator ? 'validate' : ''">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label class="require">{{'person.name' | translate}}</label>
+                      <input pInputText type="text" id="name" formControlName="name" class="form-control form-control-user" 
+                        placeholder="{{'person.name.input' | translate}}"  maxlength="255" minlength="4">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class=row>
+                  <div class="col-sm-3 offset-sm-6 col-md-3 offset-md-6 col-5">
+                    <button type="button" class="btn btn-link btn-user btn-block" [routerLink]="['/dashboard/person']">
+                      {{'cancel' | translate}}
+                    </button>
+                  </div>
+                  <div class="col-sm-3 col-7">
+                    <button #button type="submit" class="btn btn-primary btn-user  btn-sm btn-block">
+                      {{(isNew() ? 'add' : 'update') | translate}}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div *ngIf="!isNew()" >
+            <nav>
+              <div class="nav nav-tabs" id="nav" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                  role="tab" aria-controls="nav-home" aria-selected="true">
+                  {{'person.documents' | translate}}
+                </a>
+                <a class="nav-item nav-link" id="nav-email-tab" data-toggle="tab" href="#nav-email"
+                  role="tab" #inProgress aria-controls="nav-email" aria-selected="false">
+                  {{'person.emails' | translate}}
+                </a>
+                <a class="nav-item nav-link" id="nav-phone-tab" data-toggle="tab" href="#nav-phone"
+                  role="tab" #finish aria-controls="nav-phone" aria-selected="false">
+                  {{'person.phones' | translate}}
+                </a>
+                <a class="nav-item nav-link" id="nav-responsible-tab" data-toggle="tab" href="#nav-responsible"
+                  role="tab" aria-controls="nav-responsible" aria-selected="false">
+                  {{'person.responsible' | translate}}
+                </a>
+              </div>
+            </nav>
+            <div class="card shadow mb-4 no-top">
+              <div class="card-body">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <app-person-documents></app-person-documents>
+                  </div>
+                  <div class="tab-pane fade show" id="nav-email" role="tabpanel" aria-labelledby="nav-email-tab">
+                    <app-person-contact type="1"></app-person-contact>
+                  </div>
+                  <div class="tab-pane fade show" id="nav-phone" role="tabpanel" aria-labelledby="nav-phone-tab">
+                    <app-person-contact type="2"></app-person-contact>
+                  </div>
+                  <div class="tab-pane fade show" id="nav-responsible" role="tabpanel" aria-labelledby="nav-responsible-tab">
+                    <app-person-responsible [responsible]="person?.responsible" [personId]="person?.id"></app-person-responsible>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

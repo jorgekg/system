@@ -1,0 +1,11 @@
+//
+// Visibility utilities
+//
+
+.visible {
+  @include_once invisible(visible);
+}
+
+.invisible {
+  @include_once invisible(hidden);
+}

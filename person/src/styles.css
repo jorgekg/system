@@ -1,0 +1,185 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-btn {
+  border-color: #cccccc !important;
+}
+
+.require::after {
+  content: " *";
+  color: red;
+}
+.validate .ng-invalid .dropdown-btn {
+  border-color: red !important;
+}
+
+.notify-error {
+  background: red !important;
+  color: white;
+}
+
+.fieldRequired {
+  font-size: 11px;
+  color: red;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  padding-bottom: 0;
+}
+
+.backdrop-filter {
+  background: white !important;
+}
+
+.ui-autocomplete-panel {
+  border: solid 1px #cccccc;
+}
+
+.popover {
+  background: red;
+  color: white !important;
+}
+
+.arrow::after {
+  border-left-color: red !important;
+  border-right-color: red !important;
+}
+
+.popover-body {
+  color: white;
+}
+
+.btn-no-padding {
+  padding: 0;
+}
+
+.table thead th {
+  border-top-color: white !important;
+}
+
+.select2 {
+  width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single {
+  border-color: #cccccc !important;
+  padding: 20px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 36px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 0px !important;
+  margin-top: -13px;
+}
+
+.wc-date-container {
+  border-color: #cccccc !important;
+  border-radius: 5px;
+  padding: 10px !important;
+  height: 38px !important;
+}
+
+.wc-date-container span {
+  color: #858796 !important;
+}
+.dp-calendar-weekday {
+  width: 40px !important;
+}
+
+.dp-calendar-day {
+  width: 40px !important;
+}
+
+.validate .ng-invalid {
+  border-color: red !important;
+}
+
+.validate .ng-invalid > .ui-autocomplete {
+  border: solid 1px red!important;
+}
+
+.ui-toast-message-error {
+  background: red;
+  color: white;
+}
+
+body .ui-widget-header {
+  border-color: transparent;
+}
+
+.ui-paginator .ui-paginator-page {
+  height: 40px;
+}
+
+.ui-table .ui-table-thead > tr > th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.ui-table .ui-table-tbody > tr > td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.ui-paginator {
+  text-align: right !important;
+}
+
+.min-table-width {
+  width: 100%;
+  min-width: 700px !important;
+}
+
+.ui-paginator .ui-paginator-element {
+  height: 40px;
+}
+
+@media screen and (max-width: 580px) {
+  .hide-cell {
+    display: none;
+  }
+}
+
+.ui-autocomplete-dropdown {
+  background: transparent!important;
+  border-right: solid 1px #ccc!important;
+  border-top: solid 1px #ccc!important;
+  border-bottom: solid 1px #ccc!important;
+  color: #999999!important;
+  font-size: 30px!important;
+  border-radius: 0px 5px 5px 0px!important;
+}
+
+.ui-autocomplete-input {
+  border-right: none!important
+}
+
+.disabled {
+	background: #bebfce!important
+}
+
+.dropdown-btn {
+  padding: 4px 12px!important
+}
+
+.dropdown-btn .selected-item {
+  padding: 0px!important;
+  font-size: 16px!important;
+  padding-left: 5px!important;
+  padding-right: 5px!important;
+}
+
+.top-none {
+  border-top: none;
+}

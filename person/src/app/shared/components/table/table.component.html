@@ -1,0 +1,31 @@
+<div class="row" *ngIf="!headerHide">
+  <div class="col-sm-8 mb-4">
+    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+      style="color: white" (click)="addItem()">
+      {{'add' | translate}}
+    </a>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <input type="text"  class="form-control form-control-user" [(ngModel)]="searchInput"
+        [placeholder]="'search' | translate" (keyup)="search()">
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-hover min-table-width">
+    <thead>
+      <th width="20px" *ngIf="hasDelete"></th>
+      <ng-container *ngTemplateOutlet="columns; context: {$implicit:null}"></ng-container>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of manipuledData">
+        <td *ngIf="hasDelete"><app-delete [classModal]="modalDelete+item.id" [id]="item.id" (delete)=onDelete($event)></app-delete></td>
+        <ng-container *ngTemplateOutlet="template; context: {$implicit:item}"></ng-container>
+      </tr>
+      <tr *ngIf="!manipuledData || manipuledData.length === 0">
+        <td colspan=20 align=center>Nenhum registro encontrado</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

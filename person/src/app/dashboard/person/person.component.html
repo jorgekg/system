@@ -1,0 +1,49 @@
+<div id="page-top" class="sidebar-toggled">
+  <div id="wrapper">
+    <app-navbar-left></app-navbar-left>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-navbar-top [title]="'person.cliente' | translate"></app-navbar-top>
+        <div class="container">
+          <div class="d-sm-flex align-items-center justify-content-between">
+            <app-breadcrumb [breadcrumb]="[{name: 'person.cliente'}]"></app-breadcrumb>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-8 mb-4">
+                  <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                    style="color: white" [routerLink]="['/dashboard/person/new']">
+                    {{'add' | translate}}
+                  </a>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <p-table *ngIf="personList && personList.length > 0; else empty" styleClass="table table-hover" [value]="personList" [paginator]="true" 
+                  [rows]="10" [totalRecords]="totalPages" (onPage)="onPage($event)">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th width="30%">{{ "perso.list.name" | translate }}</th>
+                      <th width="50px"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-perso>
+                    <tr>
+                      <td>{{perso.name}}</td>
+                      <td>
+                        <button class="btn btn-link  btn-sm btn-no-padding" [routerLink]="['/dashboard/person', perso.id]">Detalhes</button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+                <ng-template #empty>
+                  <app-empty-state></app-empty-state>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

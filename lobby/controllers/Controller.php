@@ -29,11 +29,11 @@ Class Controller {
 
 	public function validateUserEntity($user_id, $company_id, $permission) {
 		$permissionController = new CompanyPermissionController($this->database);
-		// $data = $permissionController->select([
-		// 	"company_id" => $company_id,
-		// 	"company_user_id" => $user_id,
-		// 	"entity" => $this->entity
-		// ])->asObject();
+		$data = $permissionController->select([
+			"company_id" => $company_id,
+			"company_user_id" => $user_id,
+			"entity" => $this->entity
+		])->asObject();
 		if (!empty($data)) {
 			if (!empty($data[0][$permission])) {
 				return true;
@@ -83,6 +83,7 @@ Class Controller {
 	}
 
 	public function hasError() {
+		//var_dump($this->database->error());
 		if ($this->database->error()[0] == 23000) {
 			$this->hasEmpty($this->database->error()[2]);
 			echo json_encode([

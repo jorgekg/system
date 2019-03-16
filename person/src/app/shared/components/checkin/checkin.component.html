@@ -1,0 +1,7 @@
+<button class="btn btn-link btn-no-padding"
+  (click)="process()">
+  <i *ngIf="!showText || hasCheckin" class="fas fa-check-circle {{!hasCheckin ? 'checkin-not-realized' : 'checkin-realized'}}"></i>
+  <span *ngIf="showText && !hasCheckin">
+    {{'visitor.action.checkin' | translate}}
+  </span>
+</button>

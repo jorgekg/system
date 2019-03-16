@@ -1,0 +1,7 @@
+<div *ngIf="!responsible || responsible !== 'S'">
+<app-empty-state icon="fas fa-exclamation-circle" message="responsible.create"
+  [add]="true" (clickAdd)="createResponsible()"></app-empty-state>
+</div>
+<div *ngIf="responsible && responsible === 'S'">
+
+</div>

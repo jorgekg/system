@@ -1,0 +1,9 @@
+{{ list[0]?.person?.name }}
+<span style="color: #4e73df; cursor: pointer; text-decoration: underline"
+  title="Clique para visualizar todos!">
+  {{
+    list.length > 1
+      ? "+" + (list.length - 1)
+      : ""
+  }}
+</span>

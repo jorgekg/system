@@ -1,0 +1,59 @@
+<app-fast-person [personName]="personAdd"
+  (selectPerson)="onAddPerson($event)" classModal="visitor-modal"></app-fast-person>
+<br>
+<div class="row">
+  <div class="col-sm-12">
+    <p-autoComplete [suggestions]="personList" [forceSelection]="true" [(ngModel)]="person"
+      field="label" (completeMethod)="onSeach($event)" (onSelect)="selectPerson($event)"
+      [immutable]=false [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+      [placeholder]="'visitor.search' | translate" [disabled]="disabled"></p-autoComplete>
+  </div>
+</div>
+<br>
+<app-table *ngIf="visitorList && visitorList.length > 0; else empty"  [columns]="columns" [template]="template" [data]="visitorList" [hasDelete]="!disabled"
+  [headerHide]=true (delete)="onDelete($event)" modalDelete="visitor-delete">
+  <ng-template #columns>
+    <th>{{'visitor.name' | translate}}</th>
+    <th>{{'visitor.email' | translate}}</th>
+    <th>{{'visitor.phone' | translate}}</th>
+    <th style="text-align: center">{{'visitor.status' | translate}}</th>
+  </ng-template>
+  <ng-template #template let-visitor>
+    <td>{{visitor?.person?.name}}</td>
+    <td>{{visitor?.person?.emails[0]?.contact}}</td>
+    <td>{{visitor?.person?.phones[0]?.contact | phoneMaskPipe}}</td>
+    <th style="text-align: center">
+      <app-warning *ngIf="isNew" [message]="'visitor.not.status' | translate"></app-warning>
+      <span *ngIf="!isNew && !isReception">-</span>
+      <span *ngIf="!isNew && isReception">
+        <app-checkin [showText]="true" [visitor]="visitor" [checkin]="visitor?.checkin"
+          (updateScheduling)="update($event)" [schedulingId]="schedulingId"></app-checkin>
+      </span>
+    </th>
+  </ng-template>
+</app-table>
+<ng-template #empty>
+  <app-empty-state icon="fas fa-user-alt" message="scheduling.visitor.empty"></app-empty-state>
+</ng-template>
+<div class="modal fade" id="reception-requirement" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{'requirement.modal.title' | translate}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let requirement of requirements">
+          <i class="fas fa-check requirement-item"></i>
+          <span>{{requirement?.name}}</span>
+          <hr>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-dismiss="modal">{{'ok' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
