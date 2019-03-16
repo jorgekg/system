@@ -2,4 +2,7 @@
   <i class="icon {{icon}}"></i>
   <br><br>
   <h5>{{message | translate}}</h5>
+  <p *ngIf="add">
+    <button (click)="onAdd()" class="btn btn-sm btn-primary">{{'add' | translate}}</button>
+  </p>
 </div>

@@ -101,6 +101,10 @@ body {
   border-color: red !important;
 }
 
+.validate .ng-invalid > .ui-autocomplete {
+  border: solid 1px red!important;
+}
+
 .ui-toast-message-error {
   background: red;
   color: white;

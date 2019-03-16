@@ -6,6 +6,7 @@ class PersonController extends Controller {
 	) {
 		$this->database = $database;
 		$this->table = 'person';
+		$this->entity = 'person';
 		$this->model = new PersonModel();
 	}
 

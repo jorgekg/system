@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   public form: FormGroup;
   public isSubmit = false;
+  public validator = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
   public async save() {
-    this.isSubmit = true;
+    this.validator = true;
     if (this.form.valid) {
       (this.button.nativeElement as HTMLInputElement).innerHTML =
         this.translateService.instant('await');

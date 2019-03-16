@@ -15,6 +15,8 @@ export class HomePageComponent implements OnInit {
   public cardReportCanceled;
   public rating = 0;
 
+  public showReport = false;
+
   constructor(
     private activedRoute: ActivatedRoute,
     private appStorageService: AppStorageService,
@@ -39,10 +41,13 @@ export class HomePageComponent implements OnInit {
     if (!this.appStorageService.getToken()) {
       this.router.navigate(['dashboard/login']);
     }
-    const lobby = this.activedRoute.snapshot.data.home.lobby;
-    if (!lobby.contents || lobby.contents.length === 0) {
-      this.router.navigate(['dashboard/lobby/new']);
+    if (this.appStorageService.getactiveLobby()) {
+      this.showReport = true;
     }
+  }
+
+  public gotoLobby() {
+    this.router.navigate(['dashboard/lobby']);
   }
 
   public async updateCardReport() {

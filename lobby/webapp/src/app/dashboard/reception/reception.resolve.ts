@@ -37,8 +37,10 @@ export class ReceptionResolve implements Resolve<any> {
           }
         } else {
           resolve({
-            contents: [],
-            totalElements: []
+            list: {
+              contents: [],
+              totalElements: []
+            }
           });
         }
       } catch (err) {

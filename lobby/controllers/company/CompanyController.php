@@ -9,6 +9,50 @@ class CompanyController extends Controller {
 		$this->model = new CompanyModel();
 	}
 
+	public function getCompanyByToken($token) {
+		$tokenController = new TokenController($this->database);
+		$tokens = $tokenController->getCompanyId($token)->asObject();
+		foreach($tokens as $tk) {
+			$companys = $this->select([
+				"id" => $tk["company_id"]
+			])->asObject();
+			if (!empty($companys)) {
+				$comp = $companys[0];
+				$companyModuleController = new CompanyModuleController($this->database);
+				$comp["modules"] = $companyModuleController->database->select(
+					$companyModuleController->table,
+					[
+						"[><]module" => ["module_id" => "id"]
+					], [
+						"module.name(module)"
+					], [
+					"company_id" => $tk["company_id"],
+					"company_user_id" => $tk["company_user_id"],
+					"active" => "S"
+				]);
+				$companyModuleController->hasError();
+				$companyPermissionController = new CompanyPermissionController($this->database);
+				$comp["permission"] = $companyPermissionController->database->select(
+					$companyPermissionController->table, [
+					"[><]entity" => ["entity_id" => "id"]
+				], [
+					"entity.name(entity)",
+					"company_permission.view_entity",
+					"company_permission.insert_entity",
+					"company_permission.updat_entity",
+					"company_permission.delete_entity"
+				], [
+					"company_permission.company_id" => $tk["company_id"],
+					"company_permission.user_company_id" => $tk["company_user_id"],
+					"company_permission.active" => "S"
+				]);
+				$companyPermissionController->hasError();
+				$this->data = $comp;
+			}
+		}
+		return $this;
+	}
+
 	public function insertCompany($params) {
 		$companyUser = null;
 		$this->database->action(function($database) use ($params, &$companyUser) {
@@ -31,7 +75,24 @@ class CompanyController extends Controller {
 						"password" => $params["password"],
 						"active" => "S"
 					]);
-					$companyUser = $companyUserController->asObject();
+					$companyUsers = $companyUserController->asObject();
+					if (!empty($companyUsers)) {
+						$companyUser = $companyUsers[0];
+						$companyModuleController = new CompanyModuleController($this->database);
+						$companyModuleController->insertAllModules(
+							$company["id"],
+							$companyUser["id"]
+						);
+						$companyPermissionController = new CompanyPermissionController($this->database);
+						$companyPermissionController->insertAllPermission(
+							$company["id"],
+							$companyUser["id"]
+						);
+						return true;
+					}
+					echo json_encode(["code" => 500, "message" => "error"]);
+					http_response_code(500);
+					exit;
 				} else {
 					echo json_encode(["code" => 409, "message" => "company.has.exists"]);
 					http_response_code(409);

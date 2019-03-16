@@ -19,6 +19,7 @@
                     </div>
                     <div class="col-md-6">
                       <label class="require">{{'scheduling.procedures' | translate}}</label>
+                      <a style="float: right" [routerLink]="['/dashboard/procedures/new']"> {{'add' | translate}}</a>
                       <ng-multiselect-dropdown [placeholder]="'scheduling.procedures.input' | translate" [disabled]="form.disabled"
                         [data]="proceduresList" formControlName="procedures" [settings]="proceduresSettings">
                       </ng-multiselect-dropdown>

@@ -5,7 +5,9 @@ use Slim\Http\Request;
 Class Controller {
 	public $table;	
 	public $database;
+	public $token;
 	protected $model;
+	protected $entity;
 
 	protected $data;
 	protected $totalElements;
@@ -17,7 +19,24 @@ Class Controller {
 			$token = new TokenController($this->database);
 			$tokens = $token->getCompanyId($auth[0])->asObject();
 			if (!empty($tokens)) {
+				$this->token = $tokens[0];
 				return $this->filter[$this->table . ".company_id"] = $tokens[0]["company_id"];
+			}
+		}
+		http_response_code(403);
+		exit;
+	}
+
+	public function validateUserEntity($user_id, $company_id, $permission) {
+		$permissionController = new CompanyPermissionController($this->database);
+		// $data = $permissionController->select([
+		// 	"company_id" => $company_id,
+		// 	"company_user_id" => $user_id,
+		// 	"entity" => $this->entity
+		// ])->asObject();
+		if (!empty($data)) {
+			if (!empty($data[0][$permission])) {
+				return true;
 			}
 		}
 		http_response_code(403);

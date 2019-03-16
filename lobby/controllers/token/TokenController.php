@@ -33,6 +33,7 @@ class TokenController extends Controller {
 		}
 		$this->insert([
 			"company_id" => $this->data[0]["company_id"],
+			"company_user_id" => $this->data[0]["id"],
 			"token" => sha1(uniqid())
 		]);
 		return $this;

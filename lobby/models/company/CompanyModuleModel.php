@@ -1,9 +1,9 @@
 <?php
 
-class TokenModel {
+class CompanyModuleModel {
 	public $id;
 	public $company_id;
 	public $company_user_id;
-	public $token;
-	public $expired;
+	public $module_id;
+	public $active;
 }

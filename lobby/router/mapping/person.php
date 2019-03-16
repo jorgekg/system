@@ -14,6 +14,11 @@ $app->get('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {
 		$person = new PersonController($database);
 		$person->sessionIsRequired($request);
+		$person->validateUserEntity(
+			$person->tokens["company_user_id"],
+			$person->tokens["company_id"],
+			"view_entity"
+		);
 		$response->getBody()->write($person->get($request)->asJson());
 		return $response;
 });

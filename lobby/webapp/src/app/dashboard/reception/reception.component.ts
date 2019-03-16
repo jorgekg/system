@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppToastService } from './../../core/app-toast/app-toast.service';
 import { AppStorageService } from './../../core/app-storage/app-storage.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -28,6 +28,7 @@ export class ReceptionComponent implements OnInit {
 
   public first = 0;
   public showAdd = true;
+  public showLobby = false;
 
   private receptionDate = new Date();
 
@@ -37,12 +38,16 @@ export class ReceptionComponent implements OnInit {
     private receptionService: ReceptionService,
     private schedulingService: SchedulingService,
     private procedureRequirementService: ProcedureRequirementService,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.schedulingList = this.activedRoute.snapshot.data.schedulingData.list.contents;
     this.totalElements = this.activedRoute.snapshot.data.schedulingData.list.totalElements;
+    if (this.appStorageService.getactiveLobby()) {
+      this.showLobby = true;
+    }
   }
 
   public redial(id) {
@@ -50,12 +55,18 @@ export class ReceptionComponent implements OnInit {
   }
 
   public async getSchedulings(page = 0) {
-    const schedulingList = await this.receptionService.getReception(
-      ``, this.situation, this.appStorageService.getactiveLobby().id,
-      this.receptionDate, page
-    ).toPromise();
-    this.schedulingList = schedulingList.contents;
-    this.totalElements = schedulingList.totalElements;
+    if (this.appStorageService.getactiveLobby()) {
+      const schedulingList = await this.receptionService.getReception(
+        ``, this.situation, this.appStorageService.getactiveLobby().id,
+        this.receptionDate, page
+      ).toPromise();
+      this.schedulingList = schedulingList.contents;
+      this.totalElements = schedulingList.totalElements;
+    }
+  }
+
+  public gotoLobby() {
+    this.router.navigate(['dashboard/lobby']);
   }
 
   public onChangeLobby() {
