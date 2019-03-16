@@ -96,7 +96,7 @@ $template = '
                                           <!-- Title -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 30px; color: #333333; text-align:center; line-height: 30px;" st-title="fulltext-heading">
-																						 <img src="'.URL_ICON.'templates/icons/icon.png">
+																						 <img src="'.URL_ICON.'templates/icons/success.png">
                                             	</td>
                                           </tr>
                                           <!-- End of Title -->
@@ -108,7 +108,7 @@ $template = '
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #666666; text-align:center; line-height: 30px;" st-content="fulltext-content">
-                                                A <strong>tLobby</strong> informa que a sua vista a <br>#company<br> foi finalizada.
+                                                A <strong>tLobby</strong> informa que a sua visita a <br>#company<br> foi finalizada.
 																								<br><br>
 																								<a href="#link" target="new" style="padding: 10px; background:#4e73df; color: white; cursor: pointer: border-color: #4e73df; border-radius: 5px"
 																								>Avalie a visita</a>

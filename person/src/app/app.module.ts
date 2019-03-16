@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppToastService } from './core/app-toast/app-toast.service';
 import { MessageService } from 'primeng/api';
@@ -14,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, `${environment.url_app}assets/i18n/`, '.json');
 }
 
 @NgModule({

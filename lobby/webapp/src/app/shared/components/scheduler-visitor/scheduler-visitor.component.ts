@@ -90,7 +90,9 @@ export class SchedulerVisitorComponent implements ControlValueAccessor, OnInit {
       const requirements =  await
         this.procedureRequirementService.getByProcedureList(procedureListId).toPromise();
       this.requirements = requirements.contents;
-      showModalRequirement();
+      if (this.requirements && this.requirements.length > 0) {
+        showModalRequirement();
+      }
     }
   }
 

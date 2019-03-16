@@ -178,5 +178,8 @@
 	"checkin.success.message": "Check-in realizado!",
 	"uncheckin.success.message": "Check-in desfeito com sucesso!",
 	"start_date.minor.end_date": "Data inicial menor que data final",
-	"start_date.minor.today": "Data inicial menor que data atual"
+	"start_date.minor.today": "Data inicial menor que data atual",
+	"server.error": "Ocorre um erro :(",
+	"server.error.descript": "Parece que nossos servidores estão offline, tente novamente mais tarde.",
+	"back.modules": "Voltar para os moudulos"
 }

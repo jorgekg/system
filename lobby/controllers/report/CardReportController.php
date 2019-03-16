@@ -13,6 +13,7 @@ class CardReportController extends Controller {
 		date_default_timezone_set('America/Sao_Paulo');
 		$data = new DateTime();
 		$yearDate = (int) $data->format('Y');
+		$yearDateFinish = $yearDate+1;
 		$dayDate = (int) $data->format('t');
 		$mouthDate = (int) $data->format('m');
 		$weekStart = date("Y-m-d", strtotime('monday this week'));
@@ -24,7 +25,7 @@ class CardReportController extends Controller {
 			and company_id = {$company}
 			and lobby_id = {$lobby}
 			and start_date >= '{$yearDate}-01-01'
-			and start_date < '{($yearDate+1)}-01-01
+			and start_date < '{$yearDateFinish}-01-01'
 			and active = 'S'
 			"
 		)->fetchAll();

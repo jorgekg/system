@@ -17,6 +17,13 @@
 	"delete": "apagar",
 	"error": "Falhou :(",
 	"thanks": "Obrigado :)",
+	"company": "Empresa",
+	"lobby": "Portaria",
+	"procedures": "Procedimentos",
+	"requirement": "Exigências",
+	"scheduling": "Agendamento",
+	"reception": "Recepção",
+	"dashboard": "Dashboard",
 	"not.fount": "Nenhum registro encontrado",
 	"person": "Pessoas",
 	"person.cliente": "Clientes",
@@ -49,5 +56,12 @@
 	"contact.insert.success": "Contato adicionado",
 	"perso.list.name": "Nome",
 	"responsible.create": "Adcionar esta pessoa como um colaborador?",
-	"person.email.required": "Esta pessoa não possui e-mail"
+	"person.email.required": "Esta pessoa não possui e-mail",
+	"permission.entity": "Recurso",
+	"permission.view": "Visualizar",
+	"permission.insert": "inserir",
+	"permission.update": "Atualizar",
+	"permission.delete": "Remover",
+	"1": "Sim",
+	"0": "Não"
 }

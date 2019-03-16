@@ -16,7 +16,7 @@ class SchedulingRatingController extends Controller {
 			inner join scheduling t1 on (t1.id = t0.scheduling_id and t0.company_id = t1.company_id)
 			where t0.company_id = $company_id
 			and lobby_id = $lobby_id
-
+			and t0.rating is not null
 			")->fetchAll();
 			return $this;
 		} else {

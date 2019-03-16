@@ -3,5 +3,32 @@
   [add]="true" (clickAdd)="createResponsible()"></app-empty-state>
 </div>
 <div *ngIf="responsible && responsible === 'S'">
-
+  <div class="table-responsive">
+    <p-table *ngIf="permissionList && permissionList?.permission?.length > 0; else empty" styleClass="table table-hover"
+      [value]="permissionList?.permission" [paginator]="true" 
+      [rows]="10" [totalRecords]="1">
+      <ng-template pTemplate="header">
+        <tr>
+          <th width="30%">{{ "permission.entity" | translate }}</th>
+          <th width="30%">{{ "permission.view" | translate }}</th>
+          <th width="30%">{{ "permission.insert" | translate }}</th>
+          <th width="30%">{{ "permission.update" | translate }}</th>
+          <th width="30%">{{ "permission.delete" | translate }}</th>
+          <th width="50px"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-permission>
+        <tr>
+          <td>{{permission.entity | translate}}</td>
+          <td>{{permission.view_entity | translate}}</td>
+          <td>{{permission.insert_entity | translate}}</td>
+          <td>{{permission.updat_entity | translate}}</td>
+          <td>{{permission.delete_entity | translate}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template #empty>
+      <app-empty-state></app-empty-state>
+    </ng-template>
+  </div>
 </div>
