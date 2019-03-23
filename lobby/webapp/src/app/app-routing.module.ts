@@ -5,7 +5,10 @@ import { AppComponent } from './app.component';
 import { SchedulingRatingComponent } from './scheduling-rating/scheduling-rating.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
+  {
+    path: '',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
   {
     path: 'scheduling/rating/:id',
     component: SchedulingRatingComponent

@@ -36,6 +36,8 @@ import { CardReportComponent } from './card-report/card-report.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { SchedulingCloneComponent } from './components/scheduling-clone/scheduling-clone.component';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { DayComponent } from './calendar/day/day.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { EmptyStateComponent } from './components/empty-state/empty-state.compon
     CardReportComponent,
     CancelComponent,
     SchedulingCloneComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    CalendarComponent,
+    DayComponent
   ],
   imports: [
     CommonModule,
@@ -114,7 +118,9 @@ import { EmptyStateComponent } from './components/empty-state/empty-state.compon
     CardReportComponent,
     CancelComponent,
     SchedulingCloneComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    CalendarComponent,
+    DayComponent
   ]
 })
 export class SharedModule {}

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-8 boder-calendar">
+    <div style="height: 30vw; overflow-x: scroll">
+      <table class="table table-hover" style="width: 100%">
+        <tbody>
+          <tr *ngFor="let line of lines">
+            <td (click)="selectRow(line)" style="border: none; width: 30px"
+              [class]="selectedDay === line ? 'selected' : ''">{{line.hour}}</td>
+            <td (click)="selectRow(line)"
+              [class]="selectedDay === line ? 'selected' : ''">
+              <div class="container-success">Jorge Guilherme Kohn - Menutenção aparelho</div>
+              <div class="container-success">Jorge Guilherme Kohn - Menutenção aparelho</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div *ngIf="selectedDay; else emptySelect">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 align="center">21 de março</h4>
+        </div>
+        <div class="col-md-12">
+          <div class="row form-group">
+            <div class="col-md-6">
+              <input type="name" id="name" class="form-control form-control-user">
+            </div>
+            <div class="col-md-6">
+              <input type="name" id="name" class="form-control form-control-user">
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-primary">Adcionar</button>
+    </div>
+    <ng-template #emptySelect>
+      <table style="height: 100%; width: 100%">
+        <tbody>
+          <tr>
+            <td align="center" class="align-middle"><i class="icon fas fa-clock"></i></td>
+          </tr>
+          <tr>
+            <td align="center" class="align-middle">Nenhum agendamento selecionado</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>
+</div>

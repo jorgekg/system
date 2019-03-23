@@ -69,6 +69,7 @@ export class HomePageComponent implements OnInit {
     if (ratings.contents.length > 0) {
       this.rating = ratings.contents[0].rating;
     }
+    this.showReport = true;
   }
 
 }

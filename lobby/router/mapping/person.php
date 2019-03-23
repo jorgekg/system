@@ -4,11 +4,13 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 include_once __DIR__.'/../../controllers/person/PersonController.php';
+include_once __DIR__.'/../../controllers/company/CompanyPermissionController.php';
 include_once __DIR__.'/../../models/person/PersonModel.php';
 include_once __DIR__.'/../../controllers/person/PersonDocumentController.php';
 include_once __DIR__.'/../../models/person/PersonDocumentModel.php';
 include_once __DIR__.'/../../controllers/person/PersonContactController.php';
 include_once __DIR__.'/../../models/person/PersonContactModel.php';
+include_once __DIR__.'/../../models/company/CompanyPermissionModel.php';
 
 $app->get('/api/person',
 	function (Request $request, Response $response, array $args) use($database) {

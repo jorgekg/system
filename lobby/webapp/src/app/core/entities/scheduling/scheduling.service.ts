@@ -18,7 +18,7 @@ export class SchedulingService {
       params: {
         name: personName,
         situation: schedulingSituation,
-        page: page.toString(),
+        offset: page.toString(),
         company_id: this.appStorageSerice.getToken().company_id.toString()
       }
     });

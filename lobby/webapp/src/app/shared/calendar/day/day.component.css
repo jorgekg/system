@@ -1,0 +1,27 @@
+.boder-calendar {
+	border: solid 1px #dddddd;
+	border-radius: 5px;
+}
+
+table tbody tr {
+	cursor: pointer;
+}
+
+.icon {
+	font-size: 80px;
+	color: #cccccc;
+}
+
+.selected {
+	background: #4e73df;
+	color: white;
+}
+
+.container-success {
+	background: green;
+	color: white;
+	padding: 1px;
+	border-radius: 5px;
+	padding-left: 5px;
+	margin-bottom: 3px
+}

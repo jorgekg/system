@@ -103,41 +103,40 @@ class PersonController extends Controller {
 			]);
 			$personResult = $personController->asObject();
 			$id = $personResult[0]["id"];
+			//$companyPermission = new CompanyPermissionController($db);
+			//$companyPermission->insertAllPermission($person["company_id"], $id);
 			if (!empty($personResult)) {
-				$documentController = new PersonDocumentController($db);
-				$documentController->insert([
-					"person_id" => $personResult[0]["id"],
-					"document_type_id" => $person["documents"][0]["document_type_id"],
-					"document"	=> $person["documents"][0]["document"],
-					"update_at" => $person["update_at"]
-				]);
-				$documentResult = $documentController->asObject();
-				if (empty($documentResult)) {
-					return false;
+				if (!empty($person["documents"]) && !empty($person["documents"][0]["document"])) {
+					$documentController = new PersonDocumentController($db);
+					$documentController->insert([
+						"person_id" => $personResult[0]["id"],
+						"document_type_id" => $person["documents"][0]["document_type_id"],
+						"document"	=> $person["documents"][0]["document"],
+						"update_at" => $person["update_at"]
+					]);
+					$documentResult = $documentController->asObject();
 				}
-				$emailContactController = new PersonContactController($db);
-				$emailContactController->insert([
-					"person_id" => $personResult[0]["id"],
-					"contact_type_id" => $person["emails"][0]["contact_type_id"],
-					"contact" => $person["emails"][0]["contact"],
-					"update_at" => $person["update_at"]
-				]);
-				$emailResult = $emailContactController->asObject();
-				if (empty($emailResult)) {
-					return false;
+				if (!empty($person["emails"]) && !empty($person["emails"][0]["contact"])) {
+					$emailContactController = new PersonContactController($db);
+					$emailContactController->insert([
+						"person_id" => $personResult[0]["id"],
+						"contact_type_id" => $person["emails"][0]["contact_type_id"],
+						"contact" => $person["emails"][0]["contact"],
+						"update_at" => $person["update_at"]
+					]);
+					$emailResult = $emailContactController->asObject();
 				}
-				$phoneContactController = new PersonContactController($db);
-				$phoneContactController->insert([
-					"person_id" => $personResult[0]["id"],
-					"contact_type_id" => $person["phones"][0]["contact_type_id"],
-					"contact" => $person["phones"][0]["contact"],
-					"update_at" => $person["update_at"]
-				]);
+				if (!empty($person["phones"]) && !empty($person["phones"][0]["contact"])) {
+					$phoneContactController = new PersonContactController($db);
+					$phoneContactController->insert([
+						"person_id" => $personResult[0]["id"],
+						"contact_type_id" => $person["phones"][0]["contact_type_id"],
+						"contact" => $person["phones"][0]["contact"],
+						"update_at" => $person["update_at"]
+					]);
+					$phoneResult = $phoneContactController->asObject();
+				}
 				$this->getId();
-				$phoneResult = $phoneContactController->asObject();
-				if (empty($phoneResult)) {
-					return false;
-				}
 			} else {
 				return false;
 			}

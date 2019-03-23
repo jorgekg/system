@@ -73,7 +73,7 @@ export class FastPersonComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       document_type_id: new FormControl(``, Validators.compose([Validators.required])),
-      document: new FormControl(``, Validators.compose([Validators.required])),
+      document: [],
       name: new FormControl(``, Validators.compose([Validators.required])),
       email: [],
       phone: []

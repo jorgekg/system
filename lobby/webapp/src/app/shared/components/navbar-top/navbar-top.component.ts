@@ -31,6 +31,7 @@ export class NavbarTopComponent implements OnInit {
   }
 
   public logoff() {
+    debugger
     localStorage.clear();
     this.router.navigate([`dashboard/login`]);
   }
