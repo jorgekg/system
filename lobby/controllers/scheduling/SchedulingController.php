@@ -21,6 +21,7 @@ class SchedulingController extends Controller {
 			], [
 				"lobby.name(lobby_name)",
 				"scheduling.id",
+				"scheduling.abs_id",
 				"scheduling.name",
 				"scheduling.lobby_id",
 				"scheduling.start_date",
@@ -97,6 +98,7 @@ class SchedulingController extends Controller {
 					"lobby.name(lobby_name)",
 					"scheduling_visitor.id(visitor_id)",
 					"scheduling.id",
+					"scheduling.abs_id",
 				], [
 					"lobby.id" => $lobby_id,
 					"scheduling.company_id" => $company,
@@ -148,7 +150,7 @@ class SchedulingController extends Controller {
 				$this->data[$i]["visitor_id"],
 				$this->data[$i]["company_id"]
 			)->asObject();
-			$personData = ($person->getPerson($this->data[$i]["visitor_person_id"]))->asObject();
+			$personData = $person->getPerson($this->data[$i]["visitor_person_id"])->asObject();
 			if (!empty($personData)) {
 				$this->data[$i]["visitors"][0]["person"] = $personData[0];
 			}
@@ -163,11 +165,9 @@ class SchedulingController extends Controller {
 		]);
 		$proceduresController = new ProceduresController($this->database);
 		for($i = 0; $i < count($procedureSchedulingController->data); $i++){
-			$procedures = (
-				$proceduresController->select([
-					"id" => $procedureSchedulingController->data[$i]["procedure_id"]
-				])
-			)->asObject();
+			$procedures = $proceduresController->select([
+				"id" => $procedureSchedulingController->data[$i]["procedure_id"]
+			])->asObject();
 			if (!empty($procedures)) {
 				$procedureSchedulingController->data[$i]["procedures"] = $procedures[0];
 			}
@@ -182,7 +182,7 @@ class SchedulingController extends Controller {
 		]);
 		$person = new PersonController($this->database);
 		for($i = 0; $i < count($responsible->data); $i++){
-			$personData = ($person->getPerson($responsible->data[$i]["person_id"]))->asObject();
+			$personData = $person->getPerson($responsible->data[$i]["person_id"])->asObject();
 			if (!empty($personData)) {
 				$responsible->data[$i]["person"] = $personData[0];
 			}
@@ -198,7 +198,7 @@ class SchedulingController extends Controller {
 		$person = new PersonController($this->database);
 		$checkin = new VisitorCheckinController($this->database);
 		for($i = 0; $i < count($visitor->data); $i++){
-			$personData = ($person->getPerson($visitor->data[$i]["person_id"]))->asObject();
+			$personData = $person->getPerson($visitor->data[$i]["person_id"])->asObject();
 			if (!empty($personData)) {
 				$visitor->data[$i]["person"] = $personData[0];
 			}

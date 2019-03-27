@@ -23,6 +23,7 @@ export interface Tokens {
 export interface Token {
   id: number;
   token: string;
+  company_user_id: number;
   company_id: number;
   expired: Date;
   active: string;

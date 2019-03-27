@@ -35,7 +35,7 @@
 
   <!-- Divider -->
   <hr class="sidebar-divider">
-  <li class="nav-item">
+  <li class="nav-item" *ngIf="permission.view_entity">
     <a class="nav-link" [routerLink]="[ '/dashboard/lobby' ]">
       <i class="fas fa-globe-americas"></i>
       <span>{{'lobby' | translate}}</span>

@@ -12,6 +12,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { TableModule } from 'primeng/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { RequiredDirective } from './diretive/required.directive';
 import { NavbarTopComponent } from './components/navbar-top/navbar-top.component';
@@ -38,6 +41,7 @@ import { SchedulingCloneComponent } from './components/scheduling-clone/scheduli
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DayComponent } from './calendar/day/day.component';
+import { DayViewSchedulerComponent } from './calendar/scheduler/scheduler.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,8 @@ import { DayComponent } from './calendar/day/day.component';
     SchedulingCloneComponent,
     EmptyStateComponent,
     CalendarComponent,
-    DayComponent
+    DayComponent,
+    DayViewSchedulerComponent
   ],
   imports: [
     CommonModule,
@@ -81,7 +86,12 @@ import { DayComponent } from './calendar/day/day.component';
     DpDatePickerModule,
     PhoneMaskModule,
     ToastModule,
-    TableModule
+    TableModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
+
   ],
   exports: [
     TranslateModule,
@@ -120,7 +130,8 @@ import { DayComponent } from './calendar/day/day.component';
     SchedulingCloneComponent,
     EmptyStateComponent,
     CalendarComponent,
-    DayComponent
+    DayComponent,
+    CalendarModule
   ]
 })
 export class SharedModule {}

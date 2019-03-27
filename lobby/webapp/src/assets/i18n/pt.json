@@ -1,7 +1,11 @@
 {
+	"day": "Dia",
+	"week": "Semana",
+	"month": "Mês",
 	"froom": "Portaria",
 	"await": "Aguarde...",
 	"new": "Novo",
+	"empty": "Nada a ser exibido",
 	"exit": "Sair",
 	"yes": "Sim, vamos lá",
 	"no": "Não, talvez mais tarde",

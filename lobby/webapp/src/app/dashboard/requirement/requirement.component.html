@@ -13,7 +13,7 @@
               <div class="row">
                 <div class="col-sm-8 mb-4">
                   <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                    style="color: white" (click)="add()">
+                    style="color: white" (click)="add()" *ngIf="permission.insert_entity">
                     {{'add' | translate}}
                   </a>
                 </div>
@@ -23,7 +23,7 @@
                   [rows]="10" [totalRecords]="totalElements" (onPage)="onPage($event)">
                   <ng-template pTemplate="header">
                     <tr>
-                      <th width="20px"></th>
+                      <th width="20px" *ngIf="permission.delete_entity"></th>
                       <th width="40%">{{ "requirement.name" | translate }}</th>
                       <th width="20%" class="hide-cell">{{ "requirement.price" | translate }}</th>
                       <th width="50px"></th>
@@ -31,7 +31,9 @@
                   </ng-template>
                   <ng-template pTemplate="body" let-requirement>
                     <tr>
-                      <td><app-delete [classModal]="'requirement_modal'+requirement.id" [id]="requirement.id" (delete)=onDelete($event)></app-delete></td>
+                      <td *ngIf="permission.delete_entity">
+                        <app-delete [classModal]="'requirement_modal'+requirement.id" [id]="requirement.id" (delete)=onDelete($event)></app-delete>
+                      </td>
                       <td>{{requirement.name}}</td>
                       <td class="hide-cell">R$ {{requirement.price | price}}</td>
                       <td>

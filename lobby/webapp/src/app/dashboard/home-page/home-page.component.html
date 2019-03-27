@@ -7,12 +7,12 @@
         <div class=container>
           <div class="d-sm-flex align-items-center justify-content-between">
             <app-breadcrumb [breadcrumb]="[]"></app-breadcrumb>
-            <div class="col-sm-4 col-xs-12" style="margin-top: -10px; background: white">
+            <div *ngIf="permissionLobby.view_entity" class="col-sm-4 col-xs-12" style="margin-top: -10px; background: white">
               <app-fast-lobby (changeLobby)="update()"></app-fast-lobby>
             </div>
           </div>
           <div *ngIf="showReport; else lobbyRequired">
-            <div class="row h-100 justify-content-center">
+            <div class="row h-100 justify-content-center" *ngIf="permission.view_entity">
               <div class="rating">
                 <input type="radio" disabled id="star10" name="rating" value="5" [checked]="rating==5"/><label for="star10"></label>
                 <input type="radio" disabled id="star9" name="rating" value="4" [checked]="rating==4"/><label for="star9"></label>
@@ -21,11 +21,11 @@
                 <input type="radio" disabled id="star6" name="rating" value="1" [checked]="rating==1"/><label for="star6"></label>
               </div>
             </div>
-            <div class="row h-100 justify-content-center">
+            <div class="row h-100 justify-content-center" *ngIf="permission.view_entity">
               <h4><span class="badge badge-default">Feedback de clientes</span></h4>
             </div>
             <br>
-            <div class="row">
+            <div class="row" *ngIf="permission.view_entity">
               <div class="col-md-6">
                 <div class="card shadow mb-4" style="background: transparent">
                   <div class="card-header">
@@ -95,6 +95,9 @@
           <ng-template #lobbyRequired>
             <app-empty-state (clickAdd)="gotoLobby()" message="lobby.select.null.empty" [add]="true"></app-empty-state>
           </ng-template>
+          <div *ngIf="!permission.view_entity"> 
+            <app-empty-state message="empty"></app-empty-state>
+          </div>
         </div>
       </div>
     </div>

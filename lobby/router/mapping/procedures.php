@@ -11,7 +11,7 @@ include_once __DIR__.'/../../models/scheduling/VisitorCheckinModel.php';
 $app->get('/api/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
-		$procedures->sessionIsRequired($request);
+		$procedures->sessionIsRequired($request, 'view_entity');
 		$response->getBody()->write($procedures->get($request)->asJson());
 		return $response;
 });
@@ -19,7 +19,7 @@ $app->get('/api/procedures',
 $app->post('/api/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
-		$procedures->sessionIsRequired($request);
+		$procedures->sessionIsRequired($request, 'insert_entity');
 		$params = $request->getParsedBody();
 		$response->getBody()->write($procedures->insert($params)->asJson());
 		return $response;
@@ -28,7 +28,7 @@ $app->post('/api/procedures',
 $app->post('/api/put/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
-		$procedures->sessionIsRequired($request);
+		$procedures->sessionIsRequired($request, 'updat_entity');
 		$params = $request->getParsedBody();
 		$response->getBody()->write($procedures->update($params)->asJson());
 		return $response;
@@ -37,7 +37,7 @@ $app->post('/api/put/procedures',
 $app->get('/api/delete/procedures',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
-		$procedures->sessionIsRequired($request);
+		$procedures->sessionIsRequired($request, 'delete_entity');
 		$response->getBody()->write($procedures->delete($request)->asJson());
 		return $response;
 });
@@ -45,7 +45,7 @@ $app->get('/api/delete/procedures',
 $app->get('/api/procedures_name',
 	function (Request $request, Response $response, array $args) use($database) {
 		$procedures = new ProceduresController($database);
-		$procedures->sessionIsRequired($request);
+		$procedures->sessionIsRequired($request, 'view_entity');
 		$response->getBody()->write($procedures->getByName(
 			$request->getQueryParam('name'),
 			$procedures->filter[$procedures->table . ".company_id"]

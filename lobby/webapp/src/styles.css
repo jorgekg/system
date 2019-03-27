@@ -183,3 +183,22 @@ body .ui-widget-header {
 .top-none {
   border-top: none;
 }
+
+body .day-view-column-header {
+  padding: 5px;
+  border-radius: 2px;
+  border-right: none!important;
+  border-bottom: none!important;
+}
+
+body .day-view-column-header:last-child {
+  border-right: solid 1px #ccc!important;
+}
+
+body .cal-day-view .cal-ends-within-day .cal-event {
+  border-radius: 2px;
+}
+
+body .cal-day-view .cal-event, body .cal-day-view .cal-event a {
+  color: white
+}

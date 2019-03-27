@@ -20,29 +20,30 @@ export class ReceptionResolve implements Resolve<any> {
   private async getreception() {
     return await new Promise(async resolve => {
       try {
-        const lobbeis = await this.lobbyService.get(0, 50).toPromise();
-        if (lobbeis && lobbeis.contents.length > 0) {
-          const lobby = this.appStorageService.getactiveLobby() ?
-          this.appStorageService.getactiveLobby() :
-            lobbeis.contents[0];
-          const schedulingData = {
-            list: await this.receptionService
-              .getReception(``, SchedulingSituation.PENDING, lobby.id, new Date(), 0)
-              .toPromise()
-          };
-          resolve(schedulingData);
-          this.appStorageService.setLobbies(lobbeis.contents);
-          if (!this.appStorageService.getactiveLobby()) {
-            this.appStorageService.setactiveLobby(lobby);
+        let lobby;
+        let lobbeis;
+        if (!this.appStorageService.getactiveLobby()) {
+          lobbeis = await this.lobbyService.get(0, 50).toPromise();
+          if (lobbeis && lobbeis.contents.length > 0) {
+            lobby = this.appStorageService.getactiveLobby() ?
+            this.appStorageService.getactiveLobby() :
+              lobbeis.contents[0];
+            this.appStorageService.setLobbies(lobbeis.contents);
+            if (!this.appStorageService.getactiveLobby()) {
+              this.appStorageService.setactiveLobby(lobby);
+            }
           }
         } else {
-          resolve({
-            list: {
-              contents: [],
-              totalElements: []
-            }
-          });
+          lobby = this.appStorageService.getactiveLobby();
         }
+        let schedulingData = null;
+        if (this.appStorageService.getSchedulings().length === 0) {
+          schedulingData = await this.receptionService
+              .getReception(``, SchedulingSituation.PENDING, lobby.id, new Date(), 0)
+              .toPromise();
+          this.appStorageService.setSchedulings(schedulingData.contents);
+        }
+        resolve(schedulingData ? schedulingData.contents : this.appStorageService.getSchedulings());
       } catch (err) {
         resolve([]);
       }

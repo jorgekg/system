@@ -108,6 +108,15 @@ export class SchedulingPersistComponent implements OnInit {
     this.activedRoute.params.subscribe(params => this.id = params.id);
     if (!this.isNew()) {
       this.setScheduling();
+    } else {
+      if (this.activedRoute.snapshot.params) {
+        this.form.get('start_date').patchValue(
+          moment(this.activedRoute.snapshot.params.startDate)
+        );
+        this.form.get('end_date').patchValue(
+          moment(this.activedRoute.snapshot.params.endDate)
+        );
+      }
     }
   }
 
@@ -225,15 +234,11 @@ export class SchedulingPersistComponent implements OnInit {
       form.end_date = moment(form.end_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');
       form.active = form.active || `S`;
       const schedulings = await this.schedulingService.create(form).toPromise();
+      this.appStorageService.setScheduling(schedulings.contents[0]);
       if (!navigateById && !this.router.url.includes('reception')) {
         this.router.navigate(['dashboard/scheduling']);
       } else {
-        const [scheduling] = schedulings.contents;
-        if (this.isReception()) {
-          this.router.navigate(['dashboard/reception', scheduling.id]);
-        } else {
-          this.router.navigate(['dashboard/scheduling', scheduling.id]);
-        }
+        this.router.navigate(['dashboard/reception']);
       }
       this.appToastService.success(
         'success',

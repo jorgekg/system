@@ -1,4 +1,4 @@
-import { AppStorageService } from './../../core/app-storage/app-storage.service';
+import { AppStorageService, Permission } from './../../core/app-storage/app-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,6 +11,8 @@ import { ProcedureRequirement, ProcedureRequirementService } from 'src/app/core/
   styleUrls: ['./procedures.component.css']
 })
 export class ProceduresComponent implements OnInit {
+
+  public permission: Permission = this.appStorageService.getPermission('procedures');
 
   public proceduresList = [];
   public totalElements = 0;

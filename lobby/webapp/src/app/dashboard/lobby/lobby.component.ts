@@ -1,4 +1,4 @@
-import { AppStorageService } from './../../core/app-storage/app-storage.service';
+import { AppStorageService, Permission } from './../../core/app-storage/app-storage.service';
 import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 
 import { LobbyService, Lobby } from './../../core/entities/lobby/lobby.service';
@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class LobbyComponent implements OnInit {
+
+  public permission: Permission = this.appStorageService.getPermission('lobby');
 
   public lobbyList = [] as Lobby[];
   public totalPages = 0;
@@ -25,10 +27,6 @@ export class LobbyComponent implements OnInit {
   ngOnInit() {
     if (!this.appStorageService.getToken()) {
       this.router.navigate(['dashboard/login']);
-    }
-    const tutorial = this.appStorageService.getTutorial();
-    if (!tutorial || !tutorial.procedures) {
-      this.router.navigate(['dashboard/procedures/new']);
     }
     this.getLobby();
   }

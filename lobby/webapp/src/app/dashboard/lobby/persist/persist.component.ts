@@ -1,5 +1,5 @@
 import { LocaleService, States } from './../../../core/entities/locale/locale.service';
-import { AppStorageService } from './../../../core/app-storage/app-storage.service';
+import { AppStorageService, Permission } from './../../../core/app-storage/app-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -29,6 +29,9 @@ const noCompletelb2 = ()  => {
 })
 export class PersistComponent implements OnInit, AfterViewInit {
   @ViewChild('button') button: ElementRef;
+
+  public permission: Permission = this.appStorageService.getPermission('lobby');
+
   public uf = null;
   public form: FormGroup;
   public cityList = [];
@@ -58,11 +61,6 @@ export class PersistComponent implements OnInit, AfterViewInit {
       street: new FormControl('', Validators.compose([Validators.required])),
       number: new FormControl('', Validators.compose([Validators.required]))
     });
-    const tutorial = this.appStorageService.getTutorial();
-    if (!tutorial || !tutorial.lobby_new) {
-      showTutorialLobby();
-      this.appStorageService.setTutorial('lobby_new', true);
-    }
     this.setEditMode();
   }
 

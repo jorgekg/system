@@ -9,6 +9,7 @@ export class AppRequestService {
   private error = new EventEmitter<HttpErrorResponse>();
   private loader = new EventEmitter<number>();
 
+  private ignoreLoader = false;
   private loaderCount = 0;
 
   constructor() { }
@@ -22,8 +23,21 @@ export class AppRequestService {
   }
 
   public addRequest() {
-    this.loaderCount++;
-    this.loader.emit(this.loaderCount);
+    if (!this.ignoreLoader) {
+      this.loaderCount++;
+      this.loader.emit(this.loaderCount);
+    } else {
+      this.loaderCount = 0;
+      this.loader.emit(this.loaderCount);
+    }
+  }
+
+  public setIgnoreLoader() {
+    this.ignoreLoader = true;
+  }
+
+  public setUnIgnoredLoader() {
+    this.ignoreLoader = false;
   }
 
   public removeRequest() {

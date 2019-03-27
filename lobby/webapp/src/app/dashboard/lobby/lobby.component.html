@@ -13,7 +13,7 @@
               <div class="row">
                 <div class="col-sm-8 mb-4">
                   <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                    style="color: white" (click)="add()">
+                    style="color: white" (click)="add()" *ngIf="permission.insert_entity">
                     {{'add' | translate}}
                   </a>
                 </div>
@@ -23,14 +23,16 @@
                   [rows]="10" [totalRecords]="totalPages" (onPage)="onPage($event)">
                   <ng-template pTemplate="header">
                     <tr>
-                      <th width="20px"></th>
+                      <th width="20px" *ngIf="permission.delete_entity"></th>
                       <th width="30%">{{ "lobby.list.name" | translate }}</th>
                       <th width="50px"></th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-lobby>
                     <tr>
-                      <td><app-delete [classModal]="'lobby_modal'+lobby.id" [id]="lobby.id" (delete)=onDelete($event)></app-delete></td>
+                      <td *ngIf="permission.delete_entity">
+                        <app-delete [classModal]="'lobby_modal'+lobby.id" [id]="lobby.id" (delete)=onDelete($event)></app-delete>
+                      </td>
                       <td>{{lobby.name}}</td>
                       <td>
                         <button class="btn btn-link  btn-sm btn-no-padding" [routerLink]="['/dashboard/lobby', lobby.id]">Detalhes</button>

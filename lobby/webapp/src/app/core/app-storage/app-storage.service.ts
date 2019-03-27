@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Token } from './../entities/token/token.service';
 import { Property } from '../entities/property/property.service';
 import { Lobby } from '../entities/lobby/lobby.service';
+import { Scheduling } from '../entities/scheduling/scheduling.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,10 +18,59 @@ export class AppStorageService {
     activeProperties: `${this.key}.activeProperties`,
     lobbies: `${this.key}.lobbies`,
     activeLobby: `${this.key}.activeLobby`,
-    tutorial: `${this.key}.tutorial`
+    tutorial: `${this.key}.tutorial`,
+    scheduling: `${this.key}.scheduling`,
+    permission: `${this.key}.permission`
   };
 
   constructor() { }
+
+  public setPermissions(permissions) {
+    localStorage.setItem(this.storageKey.permission, JSON.stringify(permissions));
+  }
+
+  public hasPermission() {
+    return localStorage.getItem(this.storageKey.permission);
+  }
+
+  public getPermission(entity): Permission {
+    const permissions = localStorage.getItem(this.storageKey.permission);
+    if (permissions) {
+      const permissionsObject = JSON.parse(permissions);
+      const object = permissionsObject
+        .find(permissionObject => permissionObject.entity === entity) as Permission;
+      if (object) {
+        object.view_entity = this.isPermissionValid(object.view_entity);
+        object.delete_entity = this.isPermissionValid(object.delete_entity);
+        object.insert_entity = this.isPermissionValid(object.insert_entity);
+        object.updat_entity = this.isPermissionValid(object.updat_entity);
+      }
+      return object;
+    }
+    return null;
+  }
+
+  private isPermissionValid(value) {
+    return !!parseInt(value, 0);
+  }
+
+  public setScheduling(scheduling: Scheduling) {
+    const schedulings = this.getSchedulings();
+    schedulings.push(scheduling);
+    localStorage.setItem(this.storageKey.scheduling, JSON.stringify(schedulings));
+  }
+
+  public setSchedulings(schedulings: Scheduling[]) {
+    localStorage.setItem(this.storageKey.scheduling, JSON.stringify(schedulings));
+  }
+
+  public getSchedulings(): Scheduling[] {
+    const scheduling = localStorage.getItem(this.storageKey.scheduling);
+    if (scheduling) {
+      return JSON.parse(scheduling);
+    }
+    return [];
+  }
 
   public setTutorial(key: string, value: boolean) {
     let tutorial = this.getTutorial() as any;
@@ -120,4 +170,11 @@ export class AppStorageService {
 export interface Tutorial {
   lobby_new: boolean;
   procedures: boolean;
+}
+
+export interface Permission {
+  view_entity: boolean;
+  updat_entity: boolean;
+  insert_entity: boolean;
+  delete_entity: boolean;
 }

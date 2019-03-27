@@ -50,7 +50,7 @@
                     </button>
                   </div>
                   <div class="col-sm-3 col-7">
-                    <button #button type="submit" class="btn btn-primary btn-user btn-sm btn-block">
+                    <button #button type="submit" [disabled]="!(permission.updat_entity || permission.insert_entity)" class="btn btn-primary btn-user btn-sm btn-block">
                       {{(isNew() ? 'add' : 'update') | translate}}
                     </button>
                   </div>
@@ -58,7 +58,7 @@
               </form>
             </div>
           </div>
-          <div class="card shadow mb-4" *ngIf="!isNew()">
+          <div class="card shadow mb-4" *ngIf="!isNew() && permissionRequirement.view_entity">
             <div class="card-header">
               {{'procedures.requirement' | translate}}
             </div>

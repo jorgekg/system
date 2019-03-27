@@ -1,5 +1,5 @@
 import { SchedulingService } from './../../core/entities/scheduling/scheduling.service';
-import { AppStorageService } from './../../core/app-storage/app-storage.service';
+import { AppStorageService, Permission } from './../../core/app-storage/app-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/core/entities/report/report.service';
@@ -10,6 +10,9 @@ import { ReportService } from 'src/app/core/entities/report/report.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+
+  public permission: Permission = this.appStorageService.getPermission('dashboard');
+  public permissionLobby: Permission = this.appStorageService.getPermission('lobby');
 
   public cardReportScheduling;
   public cardReportCanceled;

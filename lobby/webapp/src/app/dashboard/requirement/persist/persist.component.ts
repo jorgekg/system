@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
-import { AppStorageService } from './../../../core/app-storage/app-storage.service';
+import { AppStorageService, Permission } from './../../../core/app-storage/app-storage.service';
 import { RequirementService } from 'src/app/core/entities/requirement/requirement.service';
 
 @Component({
@@ -13,6 +13,8 @@ import { RequirementService } from 'src/app/core/entities/requirement/requiremen
 })
 export class PersistComponent implements OnInit {
   @ViewChild('button') button: ElementRef;
+
+  public permission: Permission = this.appStorageService.getPermission('requirement');
 
   public form: FormGroup;
 

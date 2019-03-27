@@ -2,6 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { RequirementService } from 'src/app/core/entities/requirement/requirement.service';
+import { Permission, AppStorageService } from 'src/app/core/app-storage/app-storage.service';
 
 @Component({
   selector: 'app-requirement',
@@ -10,6 +11,8 @@ import { RequirementService } from 'src/app/core/entities/requirement/requiremen
 })
 export class RequirementComponent implements OnInit {
 
+  public permission: Permission = this.appStorageService.getPermission('requirement');
+
   public requirementList = [];
   public totalElements = 0;
   private atualPage = 0;
@@ -17,7 +20,8 @@ export class RequirementComponent implements OnInit {
   constructor(
     private router: Router,
     private requirementService: RequirementService,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private appStorageService: AppStorageService
   ) { }
 
   ngOnInit() {

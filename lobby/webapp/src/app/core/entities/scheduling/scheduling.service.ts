@@ -2,6 +2,9 @@ import { AppStorageService } from './../../app-storage/app-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
+import { AppRequestService } from '../../app-request/app-request.service';
+import { AppToastService } from '../../app-toast/app-toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,9 @@ export class SchedulingService {
 
   constructor(
     private http: HttpClient,
-    private appStorageSerice: AppStorageService
+    private appStorageSerice: AppStorageService,
+    private appRequestService: AppRequestService,
+    private appToastService: AppToastService
   ) { }
 
   public getScheduling(personName, schedulingSituation, page = 0) {
@@ -22,6 +27,24 @@ export class SchedulingService {
         company_id: this.appStorageSerice.getToken().company_id.toString()
       }
     });
+  }
+
+  public async addOnSubscribe(scheduling) {
+    this.appRequestService.setIgnoreLoader();
+    scheduling.company_id = this.appStorageSerice.getToken().company_id;
+    scheduling.start_date = moment(scheduling.start_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');
+    scheduling.end_date = moment(scheduling.end_date, 'DD/MM/YYYY HH:mm').format('YYYY-MM-DD HH:mm');
+    scheduling.active = scheduling.active || `S`;
+    scheduling.procedures.forEach(proc => {
+      proc.id = proc.procedure_id;
+    });
+    const schedulings = await this.clone(scheduling).toPromise();
+    const schedulignStorage = this.appStorageSerice.getSchedulings()
+      .filter(sched => sched.id !== scheduling.id);
+    schedulignStorage.push(schedulings.contents[0]);
+    this.appStorageSerice.setSchedulings(schedulignStorage);
+    this.appToastService.success('success', 'teste');
+    this.appRequestService.setUnIgnoredLoader();
   }
 
   public updateScheduling(scheduling: Scheduling) {
@@ -104,6 +127,8 @@ export interface Scheduling {
   situation?: SchedulingSituation;
   active?: string;
   procedures?: SchedulingProcedures[];
+  responsibles?: SchedulingResponsible[];
+  visitors?: SchedulingVisitor[];
   schedulingProcedures?: SchedulingProcedures[];
   schedulingResponsibles?: SchedulingResponsible[];
   schedulingVisitors?: SchedulingVisitor[];

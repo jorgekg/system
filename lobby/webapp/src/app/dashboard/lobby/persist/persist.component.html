@@ -62,7 +62,8 @@
                     </button>
                   </div>
                   <div class="col-sm-3 col-7">
-                    <button #button type="submit" class="btn btn-primary btn-user  btn-sm btn-block">
+                    <button #button type="submit" [disabled]="!(permission.updat_entity || permission.insert_entity)"
+                      class="btn btn-primary btn-user  btn-sm btn-block">
                       {{(isNew() ? 'add' : 'update') | translate}}
                     </button>
                   </div>

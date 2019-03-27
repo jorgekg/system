@@ -13,13 +13,16 @@ Class Controller {
 	protected $totalElements;
 	public $filter;
 
-	public function sessionIsRequired($request) {
+	public function sessionIsRequired($request, $permission = null) {
 		$auth = $request->getHeader("Authorization");
 		if (!empty($auth)) {
 			$token = new TokenController($this->database);
 			$tokens = $token->getCompanyId($auth[0])->asObject();
 			if (!empty($tokens)) {
 				$this->token = $tokens[0];
+				if (!empty($permission)) {
+					$this->validatePermission($this->table, $permission);
+				}
 				return $this->filter[$this->table . ".company_id"] = $tokens[0]["company_id"];
 			}
 		}
@@ -111,6 +114,31 @@ Class Controller {
 						"message" => "error.{$key}.null"
 					]);
 					http_response_code(400);
+					exit;
+				}
+			}
+		}
+	}
+
+	public function validatePermission($entity, $permission) {
+		$permissions = $this->database->select(
+		'company_permission', 
+		[
+			"[><]entity" => ["entity_id" => "id"]
+		], [
+			"entity.name(entity)",
+			"company_permission.view_entity",
+			"company_permission.insert_entity",
+			"company_permission.updat_entity",
+			"company_permission.delete_entity",
+		], [
+			"company_permission.company_id" => $this->token["company_id"],
+			"company_permission.user_company_id" => $this->token["company_user_id"]
+		]);
+		foreach($permissions as $value) {
+			if ($value['entity'] == $entity) {
+				if ($value[$permission] != 1) {
+					http_response_code(403);
 					exit;
 				}
 			}

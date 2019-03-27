@@ -5,6 +5,7 @@ import { Resolve } from '@angular/router';
 
 import { Lobby, LobbyService } from '../../core/entities/lobby/lobby.service';
 import { ReportService } from 'src/app/core/entities/report/report.service';
+import { CompanyService } from 'src/app/core/entities/company/company.service';
 
 @Injectable()
 export class HomePageResolve implements Resolve<any> {
@@ -12,7 +13,8 @@ export class HomePageResolve implements Resolve<any> {
     private lobbyService: LobbyService,
     private schedulingService: SchedulingService,
     private reportService: ReportService,
-    private appStorageService: AppStorageService
+    private appStorageService: AppStorageService,
+    private companyService: CompanyService
   ) {}
 
   async resolve() {
@@ -22,6 +24,10 @@ export class HomePageResolve implements Resolve<any> {
   private async homePage() {
     return await new Promise(async resolve => {
       try {
+        if (!this.appStorageService.hasPermission()) {
+          const company = await this.companyService.getCompanyByUser().toPromise();
+          this.appStorageService.setPermissions(company.contents.permission);
+        }
         const lobby = await this.lobbyService.get().toPromise();
         let activeLobby = lobby.contents ? lobby.contents[0] : null;
         if (this.appStorageService.getactiveLobby()) {

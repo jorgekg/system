@@ -5,7 +5,7 @@ import {
 import { ProceduresService } from './../../../core/entities/procedures/procedures.service';
 import { RequirementService } from 'src/app/core/entities/requirement/requirement.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppStorageService } from './../../../core/app-storage/app-storage.service';
+import { AppStorageService, Permission } from './../../../core/app-storage/app-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -27,6 +27,9 @@ const showProceduresTutorial = () => {
 })
 export class PersistComponent implements OnInit {
   @ViewChild('button') button: ElementRef;
+
+  public permission: Permission = this.appStorageService.getPermission('procedures');
+  public permissionRequirement: Permission = this.appStorageService.getPermission('requirement');
 
   public form: FormGroup;
   public requirementList = [];
@@ -52,11 +55,6 @@ export class PersistComponent implements OnInit {
       time: [],
       detail: []
     });
-    const tutorial = this.appStorageService.getTutorial();
-    if (!tutorial || !tutorial.procedures) {
-      showProceduresTutorial();
-      this.appStorageService.setTutorial('procedures', true);
-    }
     this.setEditMode();
     if (!this.isNew()) {
       this.getProcedureRequired();
