@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Scheduling, SchedulingSituation, SchedulingService } from 'src/app/core/entities/scheduling/scheduling.service';
 import { ReceptionService } from 'src/app/core/entities/reception/reception.service';
 import { ProcedureRequirementService } from 'src/app/core/entities/procedure_requirement/procedure-requirement.service';
+import { CalendarView } from 'angular-calendar';
 
 const showModalRequirement = () => {
   const wd = window as any;
@@ -19,6 +20,8 @@ const showModalRequirement = () => {
 export class ReceptionComponent implements OnInit {
   @ViewChild(`inProgress`) inProgress: ElementRef;
   @ViewChild(`finish`) finish: ElementRef;
+
+  public viewScreeen = CalendarView.Day;
 
   public schedulingList = [] as Scheduling[];
   public situation = SchedulingSituation.PENDING;
@@ -40,5 +43,13 @@ export class ReceptionComponent implements OnInit {
     if (this.appStorageService.getactiveLobby()) {
       this.showLobby = true;
     }
+  }
+
+  public onDay() {
+    this.viewScreeen = CalendarView.Day;
+  }
+
+  public onWeek() {
+    this.viewScreeen = CalendarView.Week;
   }
 }

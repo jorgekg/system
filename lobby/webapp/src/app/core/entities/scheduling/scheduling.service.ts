@@ -43,8 +43,8 @@ export class SchedulingService {
       .filter(sched => sched.id !== scheduling.id);
     schedulignStorage.push(schedulings.contents[0]);
     this.appStorageSerice.setSchedulings(schedulignStorage);
-    this.appToastService.success('success', 'teste');
     this.appRequestService.setUnIgnoredLoader();
+    return schedulings.contents[0];
   }
 
   public updateScheduling(scheduling: Scheduling) {
@@ -119,6 +119,7 @@ export interface Schedulings {
 
 export interface Scheduling {
   id?: number;
+  abs_id?: string;
   company_id?: number;
   name?: string;
   lobby_id?: number;

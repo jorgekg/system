@@ -153,7 +153,11 @@ Class Controller {
 	}
 
 	public function update($data) {
-		$this->filter["id"] = $data["id"];
+		if (!empty($data["abs_id"])) {
+			$this->filter["abs_id"] = $data["abs_id"];
+		} else {
+			$this->filter["id"] = $data["id"];
+		}
 		$this->database->update(
 			$this->table, $data, $this->filter);
 		$this->hasError();

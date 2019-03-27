@@ -189,6 +189,9 @@ body .day-view-column-header {
   border-radius: 2px;
   border-right: none!important;
   border-bottom: none!important;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 body .day-view-column-header:last-child {
@@ -201,4 +204,13 @@ body .cal-day-view .cal-ends-within-day .cal-event {
 
 body .cal-day-view .cal-event, body .cal-day-view .cal-event a {
   color: white
+}
+
+.fixed {
+  position: fixed;
+  top: 0px!important;
+  background: white!important;
+  z-index: 999999;
+  border-bottom: solid 1px #ccc!important;
+  border-radius: none;
 }

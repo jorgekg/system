@@ -74,12 +74,10 @@ class SchedulingController extends Controller {
 			$controller = new SchedulingController($database);
 			$controller->filter["company_id"] = $scheduling["company_id"];
 			$controller->update([
-				"id" => $scheduling["id"],
-				"situation" => 3,
-				"active" => "S"
+				"abs_id" => $scheduling["abs_id"],
+				"active" => "N"
 			]);
 			$controller->hasError();
-			$scheduling["abs_id"] = null;
 			$scheduling["id"] = null;
 			$controller->insertScheduling($database, $scheduling, $id);
 		});
@@ -89,26 +87,6 @@ class SchedulingController extends Controller {
 
 	public function getReceptions($name, $company, $situation = 1, $lobby_id = 0, $date = "", $page = 0) {
 		$date = $this->getDate($date);
-		$this->totalElements = count(
-			$this->database->select(
-				$this->table,[
-					"[><]scheduling_visitor" => ["scheduling.id" => "scheduling_id"],
-					"[><]lobby" => ["scheduling.lobby_id" => "id"]
-				], [
-					"lobby.name(lobby_name)",
-					"scheduling_visitor.id(visitor_id)",
-					"scheduling.id",
-					"scheduling.abs_id",
-				], [
-					"lobby.id" => $lobby_id,
-					"scheduling.company_id" => $company,
-					"scheduling.situation" => $situation,
-					"scheduling.active" => "S",
-					"scheduling.start_date[>]" => $date[0]->format('Y-m-d H:i:s'),
-					"scheduling.start_date[<]" => $date[1]->format('Y-m-d H:i:s')
-				]
-			)
-		);
 		$this->data = $this->database->select(
 			$this->table,[
 				"[><]scheduling_visitor" => ["scheduling.id" => "scheduling_id"],
@@ -118,6 +96,7 @@ class SchedulingController extends Controller {
 				"scheduling_visitor.id(visitor_id)",
 				"scheduling_visitor.person_id(visitor_person_id)",
 				"scheduling.id",
+				"scheduling.abs_id",
 				"scheduling.name",
 				"scheduling.company_id",
 				"scheduling.lobby_id",
@@ -132,8 +111,7 @@ class SchedulingController extends Controller {
 				"scheduling.start_date[<]" => $date[1]->format('Y-m-d H:i:s'),
 				"ORDER" => [
 					"scheduling.start_date" => "ASC"
-				],
-				'LIMIT' => [$page, 10],
+				]
 			]
 		);
 		$this->hasError();

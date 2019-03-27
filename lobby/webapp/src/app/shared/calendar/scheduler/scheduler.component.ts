@@ -71,7 +71,7 @@ export class DayViewSchedulerComponent extends CalendarDayViewComponent implemen
   @Output() eventTimesChanged = new EventEmitter() as any;
 
   ngOnInit() {
-    this.hours.forEach(hour => hour.segments.forEach(seg => seg.isStart = true))
+    //this.hours.forEach(hour => hour.segments.forEach(seg => seg.isStart = true))
   }
 
   eventDragged(dayEvent: DayViewEvent, xPixels: number, yPixels: number): void {

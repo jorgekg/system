@@ -26,14 +26,26 @@ const colors = [
     secondary: '#4e73df'
   },
   {
-    primary: 'green',
+    primary: '#ffffff',
     secondary: 'green'
   },
   {
-    primary: '#e3bc08',
+    primary: '#ffffff',
     secondary: '#e3bc08'
   }
 ];
+
+const scrollTopFixed = () => {
+  const wd = window as any;
+  wd.jQuery(window).scroll(function(event){
+    const st = $(this).scrollTop();
+    if (st > 200) {
+      wd.jQuery(`.day-view-column-headers`).addClass(`fixed`);
+    } else {
+      wd.jQuery(`.day-view-column-headers`).removeClass(`fixed`);
+    }
+ });
+};
 
 
 @Component({
@@ -60,6 +72,10 @@ export class CalendarComponent implements OnInit {
     );
   }
 
+  @Input() set viewScreeen(view) {
+    this.setView(view);
+  }
+
   public startHour = 0;
   public endHour = 23;
 
@@ -73,24 +89,11 @@ export class CalendarComponent implements OnInit {
 
   locale = 'br';
 
-  public actions: CalendarEventAction[] = [
-   {
-      label: '<i class="fa fa-fw fa-edit"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-trash"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-      }
-    }
-  ];
+  public actions: CalendarEventAction[] = [];
 
   public refresh: Subject<any> = new Subject();
 
   public events: CalendarEvent[] = [];
-
-  public activeDayIsOpen = true;
 
   public responsibles = [];
 
@@ -101,7 +104,8 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.startHour = moment().hour() - 3;
+    scrollTopFixed();
+    this.setView(CalendarView.Day);
   }
 
   private setResponsibles(schedulings: Scheduling[]) {
@@ -124,6 +128,7 @@ export class CalendarComponent implements OnInit {
         scheduling.visitors.forEach((visitor: any) => {
           this.events.push({
             id: scheduling.id,
+            abs_id: scheduling.abs_id,
             start: moment(scheduling.start_date).toDate(),
             end: moment(scheduling.end_date).toDate(),
             actions: this.actions,
@@ -137,24 +142,18 @@ export class CalendarComponent implements OnInit {
               afterEnd: true
             },
             draggable: true
-          });
+          } as any);
         });
       });
     });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-    }
+    
+  }
+
+  public handleEvent(event, object) {
+    this.router.navigate(['dashboard/reception', object.id]);
   }
 
   eventTimesChanged({
@@ -165,7 +164,7 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.map(iEvent => {
       if (iEvent === event) {
         const scheduling = this.appStorageService.getSchedulings()
-          .find(appScheduling => appScheduling.id === event.id);
+          .find(appScheduling => appScheduling.abs_id === (event as any).abs_id );
         scheduling.end_date = newEnd;
         scheduling.start_date = newStart;
         this.schedulingService.addOnSubscribe(scheduling);

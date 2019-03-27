@@ -8,12 +8,24 @@
           <div class="d-sm-flex align-items-center justify-content-between">
             <app-breadcrumb [breadcrumb]="[{name: 'reception'}]"></app-breadcrumb>
             <div class="col-sm-4 col-xs-12" style="margin-top: -10px; background: white">
-                <app-fast-lobby (changeLobby)="onChangeLobby()"></app-fast-lobby>
-              </div>
+              <app-fast-lobby (changeLobby)="onChangeLobby()"></app-fast-lobby>
+            </div>
           </div>
-          <div class="card shadow mb-4">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                aria-controls="nav-home" aria-selected="true" (click)="onDay()">
+                {{'day' | translate}}
+              </a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                aria-controls="nav-profile" aria-selected="false" (click)="onWeek()">
+                {{'week' | translate}}
+              </a>
+            </div>
+          </nav>
+          <div class="card shadow mb-4 top-none">
             <div class="card-body">
-              <app-calendar [schedulings]="schedulingList"></app-calendar>
+              <app-calendar [viewScreeen]="viewScreeen" [schedulings]="schedulingList"></app-calendar>
             </div>
           </div>
           <ng-template #lobbyRequired>
